@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: rh_db
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: rh
+    volumes:
+      - rh_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  rh_data:
+    driver: local
