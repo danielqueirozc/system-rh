@@ -3,9 +3,9 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 import { PrismaClient } from "../generated/prisma/client.js";
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+const adapter = new PrismaPg(pool)
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   // Serviços
@@ -13,25 +13,25 @@ async function main() {
     where: { id: 1 },
     update: {},
     create: { name: "Encanamento", description: "Reparos, instalação e manutenção hidráulica" },
-  });
+  })
 
   const eletrica = await prisma.service.upsert({
     where: { id: 2 },
     update: {},
     create: { name: "Elétrica", description: "Instalação elétrica e reparos" },
-  });
+  })
 
   const pintura = await prisma.service.upsert({
     where: { id: 3 },
     update: {},
     create: { name: "Pintura", description: "Pintura interna e externa" },
-  });
+  })
 
   const servicosGerais = await prisma.service.upsert({
     where: { id: 4 },
     update: {},
     create: { name: "Serviços Gerais", description: "Manutenção e consertos diversos" },
-  });
+  })
 
   // Funcionários
   const employees = await Promise.all([
@@ -112,7 +112,7 @@ async function main() {
         phone: "(11) 91111-0007",
       },
     }),
-  ]);
+  ])
 
   const [carlos, marcos, roberto, andre, fernanda, paulo, diego] = employees;
 
@@ -128,14 +128,14 @@ async function main() {
     { employeeId: paulo.id,    serviceId: pintura.id },
     { employeeId: paulo.id,    serviceId: servicosGerais.id },
     { employeeId: diego.id,    serviceId: servicosGerais.id },
-  ];
+  ]
 
   for (const link of links) {
     await prisma.employeeService.upsert({
       where: { employeeId_serviceId: link },
       update: {},
       create: link,
-    });
+    })
   }
 
   console.log("Seed concluído com sucesso.");
