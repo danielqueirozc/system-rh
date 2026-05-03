@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --blue: #020290;
+  --purple: #E8E8FF;
+  --gray-50: #F9F9F9;
+  --gray-300: #A9ADB5;
+}
+
+@theme inline {
+  --color-blue: var(--blue);
+  --color-purple: var(--purple);
+  --color-gray-50: var(--gray-50);
+  --color-gray-300: var(--gray-300);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+  }
+}
+
+body {
+  background: #ffffff;
+  color: var(--gray-300);
+  font-family: 'Roboto', sans-serif;
+}
