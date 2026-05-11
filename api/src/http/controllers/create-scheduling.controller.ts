@@ -48,7 +48,7 @@ export class CreateScheduling {
     if (!employee) {
       throw new NotFoundException(`Nenhum funcionário disponivel para "${serviceName}"`)
     }
-    // cria o cliente se não existir, ou atualiza se já existir (pelo email)
+    // cria o cliente se não existir, ou atualiza se ja existir
     const client = await this.prisma.client.upsert({
       where: { email: clientEmail },
       update: { name: clientName, phone: clientPhone, address: clientAddress },
