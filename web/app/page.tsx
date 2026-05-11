@@ -1,4 +1,7 @@
-import { Header } from "./components/header";
+import { Footer } from "./components/footer"
+import { Header } from "./components/header"
+import { Services } from "./components/services"
+import { Stepper } from "./components/stepper"
 
 export default function Home() {
   const steps = [
@@ -9,8 +12,11 @@ export default function Home() {
 ]
 
   return (
-   <div className="">
+   <div className="bg-gray-50">
     <Header />
+    <Stepper steps={steps} currentStep={1} />
+    <Services />
+    <Footer />
    </div>
   )
 }
