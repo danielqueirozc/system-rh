@@ -3,7 +3,7 @@ import { CardService } from "./ui/card-service"
 
 export function Services() {
   return (
-    <section className="flex flex-col text-center px-4">
+    <section className="flex flex-col text-center">
       <div className="flex flex-col gap-2">
         <h1 className="text-black font-medium">Escolha o Serviço</h1>
         <h2 className="text-gray-400">Selecione o tipo de serviço que você precisa</h2>
