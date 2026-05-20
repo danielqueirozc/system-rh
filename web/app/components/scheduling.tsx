@@ -1,4 +1,6 @@
-import Date from "./date/page";
+import Confirmation from "../confirmation/page";
+import { Data } from "../data/page";
+import { DatePage } from "../date/page";
 import { Services } from "./services";
 import { Stepper } from "./stepper";
 
@@ -11,10 +13,12 @@ export default function Scheduling() {
   ]
   
   return (
-    <div>
+    <div className="px-4">
       <Stepper steps={steps} currentStep={2} />
       {/* <Services /> */}
-      <Date />
+      {/* <DatePage /> */}
+      {/* <Data /> */}
+      <Confirmation />
     </div>
   )
 }
