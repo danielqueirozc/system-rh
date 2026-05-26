@@ -26,7 +26,9 @@ export default function ClientLayout({ children }: ChildrenType) {
       <div className="lg:w-full lg:flex lg:justify-center">
         <Stepper steps={steps} currentStep={step} />
       </div>
-      {children}
+      <main className="flex-1">
+        {children}
+      </main>
       <Footer />
     </div>
   )
