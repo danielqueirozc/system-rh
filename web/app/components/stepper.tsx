@@ -58,7 +58,7 @@ export function Stepper({ steps, currentStep }: StepperProps) {
             <div
               key={stepNumber}
               className={cn(
-                "text-xs font-medium shrink-0 flex-1",
+                "text-xs lg:text-lg text-left font-medium shrink-0 flex-1",
                 isActive ? "text-blue-700" : "text-gray-400"
               )}
             >
