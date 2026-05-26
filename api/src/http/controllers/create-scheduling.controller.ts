@@ -10,6 +10,7 @@ const bodySchema = z.object({
   clientEmail: z.email(),
   clientPhone: z.string(),
   clientAddress: z.string(),
+  clientDescription: z?.string()
 })
 
 type CreateSchedulingType = z.infer<typeof bodySchema>
