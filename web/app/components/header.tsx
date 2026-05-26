@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export function Header() {
   return (
-    <header className="text-white bg-blue pt-6 pb-4 px-4 flex flex-col gap-2">
+    <header className="text-white bg-blue pt-6 pb-4 px-4 lg:px-64 flex flex-col gap-2">
       <div className="flex gap-2">
         <House size={28} />
         <h1 className="text-xl font-medium">Ávila Manutenção e Reparos</h1>
