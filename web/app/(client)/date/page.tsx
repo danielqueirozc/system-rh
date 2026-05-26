@@ -45,37 +45,39 @@ export default function DatePage() {
         <p className="text-gray-500 text-sm font-medium">Selecione o melhor dia e horário para o serviço de encanamento</p>
       </div>
 
-      <div className="bg-white border border-purple rounded-lg flex flex-col gap-16 p-8 mt-10">
-        <span>Selecione a data</span>
+      <div className="flex lg:justify-center lg:gap-8 flex-col lg:flex-row w-full lg:items-stretch">
+        <div className="lg:w-102 bg-white border border-purple rounded-lg flex flex-col gap-4 p-8 mt-10">
+          <span>Selecione a data</span>
 
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="rounded-lg border border-purple w-full"
-          captionLayout="dropdown"
-          disabled={day => {
-            const today = new Date()
-            today.setHours(0,0,0,0)
-            return day <= today
-          }}
-        />
-      </div>
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            captionLayout="dropdown"
+            classNames={{ root: "w-full" }}
+            disabled={day => {
+              const today = new Date()
+              today.setHours(0,0,0,0)
+              return day <= today
+            }}
+          />
+        </div>
 
-      <div className="bg-white border border-purple rounded-lg flex flex-col gap-12 p-7 mt-10">
-        <span>Horários Disponíveis</span>
+        <div className="lg:w-102 bg-white border border-purple rounded-lg flex flex-col gap-12 lg:gap-8 p-7 mt-10">
+          <span>Horários Disponíveis</span>
 
-        <div className="grid grid-cols-3 gap-3">
-          {times.map(time => (
-            <Button
-              key={time}
-              variant="date"
-              className="px-10 py-2"
-              onClick={() => handleConfirm(time)}
-            >
-              {time}
-            </Button>
-          ))}
+          <div className="grid grid-cols-3 gap-3">
+            {times.map(time => (
+              <Button
+                key={time}
+                variant="date"
+                className="px-10 py-2"
+                onClick={() => handleConfirm(time)}
+              >
+                {time}
+              </Button>
+            ))}
+          </div>
         </div>
       </div>
 
