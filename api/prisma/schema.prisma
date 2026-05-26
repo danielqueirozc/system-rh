@@ -80,6 +80,7 @@ model Scheduling {
   status      SchedulingStatus
   serviceDate DateTime
 
+  description String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
