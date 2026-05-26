@@ -28,7 +28,7 @@ export function Stepper({ steps, currentStep }: StepperProps) {
                 className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border lg:border-2 shrink-0 transition-colors",
                   isActive || isCompleted
-                    ? "bg-blue-700 border-blue-700 text-white"
+                    ? "bg-blue-800 border-blue-800 text-white"
                     : "bg-white border-purple text-gray-400"
                 )}
               >
