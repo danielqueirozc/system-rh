@@ -89,12 +89,6 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-body {
-  background: #ffffff;
-  color: var(--gray-300);
-  font-family: 'Inter', sans-serif;
-}
-
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -127,4 +121,10 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+body {
+  background: #ffffff;
+  color: var(--gray-300);
+  font-family: 'Inter', sans-serif;
 }
