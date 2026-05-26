@@ -21,7 +21,7 @@ export default function ClientLayout({ children }: ChildrenType) {
   ]
 
   return (
-    <div className="bg-[#F9F9F9]">
+    <div className="bg-[#F9F9F9] min-h-screen flex flex-col">
       <Header />
       <div className="lg:w-full lg:flex lg:justify-center">
         <Stepper steps={steps} currentStep={step} />
