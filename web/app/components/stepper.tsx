@@ -12,7 +12,7 @@ type StepperProps = {
 
 export function Stepper({ steps, currentStep }: StepperProps) {
   return (
-    <div className="w-full px-4 py-4 mt-4 mb-4">
+    <div className="w-full lg:w-lg px-4 py-4 mt-4 mb-4">
 
       {/* Linha 1: círculos + conectores */}
       <div className="flex items-center">
