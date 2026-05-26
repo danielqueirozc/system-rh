@@ -26,7 +26,7 @@ export function Stepper({ steps, currentStep }: StepperProps) {
             <Fragment key={stepNumber}>
               <div
                 className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border shrink-0 transition-colors",
+                  "w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border lg:border-2 shrink-0 transition-colors",
                   isActive || isCompleted
                     ? "bg-blue-700 border-blue-700 text-white"
                     : "bg-white border-purple text-gray-400"
