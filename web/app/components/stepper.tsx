@@ -38,7 +38,7 @@ export function Stepper({ steps, currentStep }: StepperProps) {
               {!isLast && (
                 <div
                   className={cn(
-                    "flex-1 h-1 mx-2",
+                    "flex-1 lg:max-w-20 h-1 mx-2",
                     isCompleted ? "bg-blue-700" : "bg-purple"
                   )}
                 />
