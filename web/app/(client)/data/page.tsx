@@ -56,7 +56,7 @@ export default function Data() {
     }
 
     try {
-      await setData({
+      await createScheduling({
         name: name as string,
         email: email as string,
         phone: phone as string,
