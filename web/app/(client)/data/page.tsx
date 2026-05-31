@@ -4,6 +4,8 @@ import { Mail, MapPin, Phone, User } from "lucide-react";
 import { Input } from "../../components/ui/input";
 import Link from "next/link";
 import { useSchedulingStore } from "@/context/scheduling-store";
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'
 
 export default function Data() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth) // window.innerWidth = pega a largura atual da tela
@@ -69,17 +71,18 @@ export default function Data() {
     } catch(error) {
       console.log('erro ao enviar os dados para o context', error)
     }
+
   }
 
   return (
-    <div className="flex flex-col pb-25">
+    <div className="flex flex-col lg:items-center pb-25">
       <div className="text-center">
         <h1 className="text-black font-semibold">Seus Dados</h1>
         <h2 className="text-gray-500">Preencha suas informações para confirmar o agendamento</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="lg:w-2/6 rounded-lg border border-purple py-6 px-8 flex flex-col gap-4 lg:mt-8 text-gray-900 bg-white">
-
+       
          <div className="flex flex-col gap-2">
           <div className="flex gap-4">
             <User size={16} />
@@ -123,31 +126,33 @@ export default function Data() {
           </div>
         ) : (
           <div className="flex flex-col">
-         <div className="flex flex-col gap-2">
-          <div className="flex gap-4">
-            <Mail size={16} />
-            <label className="text-sm font-medium">Email  *</label>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-4">
+                <Mail size={16} />
+                <label className="text-sm font-medium">Email  *</label>
+              </div>
+
+              <Input
+                className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
+                placeholder="Seu @email.com"
+                name="email"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-4">
+                <Phone size={16} />
+                <label className="text-sm font-medium">Telefone  *</label>
+              </div>
+
+              <Input
+                className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
+                placeholder="(00) 00000 0000"
+                name="phone"
+              />
+            </div>
           </div>
-
-          <Input
-            className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
-            placeholder="Seu @email.com"
-            name="email"
-          />
-        </div>
-
-         <div className="flex flex-col gap-2">
-          <div className="flex gap-4">
-            <Phone size={16} />
-            <label className="text-sm font-medium">Telefone  *</label>
-          </div>
-
-          <Input
-            className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
-            placeholder="(00) 00000 0000"
-            name="phone"
-          />
-        </div>
+        )}
 
          <div className="flex flex-col gap-2">
           <div className="flex gap-4">
@@ -175,9 +180,9 @@ export default function Data() {
 
         </div>
 
-        <div className="flex gap-5 justify-between text-sm">
+        <div className="flex gap-5 justify-between text-sm text-center">
           <Link
-            className="border border-purple rounded-lg py-2 px-6"
+            className="lg:w-full flex items-center justify-center bg-white text-gray-900 hover:bg-purple hover:text-purple-800 hover:border-purple-200 border border-purple rounded-sm cursor-pointer"
             href='/date'
           >
             Voltar
@@ -188,7 +193,7 @@ export default function Data() {
             className="text-white font-medium bg-blue rounded-lg py-2 px-4 lg:w-full"
           >
             Confirmar Agendamento
-          </Link>
+          </button>
         </div>
       </form>
     </div>
