@@ -67,18 +67,22 @@ export default function DatePage() {
           <span>Horários Disponíveis</span>
 
           {date ? (
-          <div className="grid grid-cols-3 gap-3">
-            {times.map(time => (
-              <Button
-                key={time}
-                variant="date"
-                className="px-10 py-2"
-                onClick={() => handleConfirm(time)}
-              >
-                {time}
-              </Button>
-            ))}
-          </div>
+            <div className="grid grid-cols-3 gap-3">
+              {times.map(time => (
+                <Button
+                  key={time}
+                  variant="date"
+                  className="px-10 py-2"
+                  onClick={() => handleConfirm(time)}
+                >
+                  {time}
+                </Button>
+              ))}
+            </div>
+          ) : 
+          (
+            <span className="text-sm text-gray-500 mt-8">Selecione uma data para ver os horários disponíveis</span>
+          )}
         </div>
       </div>
 
