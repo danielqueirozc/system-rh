@@ -23,7 +23,9 @@ export class CreateScheduling {
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(bodySchema))
   async handle(@Body() body: CreateSchedulingType) {
-    const { serviceName, serviceDate, clientName, clientEmail, clientPhone, clientAddress } = body;
+    const { serviceName, serviceDate, clientName, clientEmail, clientPhone, clientAddress } = body
+
+    console.log(body)
 
     // 1. Busca o serviço pelo nome — ele já deve existir no banco
     const service = await this.prisma.service.findFirst({
