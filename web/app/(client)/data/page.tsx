@@ -93,6 +93,36 @@ export default function Data() {
           />
         </div>
 
+        {windowWidth >= 1024 ? (
+          <div className="flex gap-2">
+            <div className="flex flex-col gap-2 w-full">
+              <div className="flex gap-4">
+                <Mail size={16} />
+                <label className="text-sm font-medium">Email  *</label>
+              </div>
+
+              <Input
+                className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
+                placeholder="Seu @email.com"
+                name="email"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2 w-full">
+              <div className="flex gap-4">
+                <Phone size={16} />
+                <label className="text-sm font-medium">Telefone  *</label>
+              </div>
+
+              <Input
+                className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
+                placeholder="(00) 00000 0000"
+                name="phone"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col">
          <div className="flex flex-col gap-2">
           <div className="flex gap-4">
             <Mail size={16} />
