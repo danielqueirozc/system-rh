@@ -66,6 +66,7 @@ export default function DatePage() {
         <div className="lg:w-102 bg-white border border-purple rounded-lg flex flex-col gap-12 lg:gap-8 p-7 mt-10">
           <span>Horários Disponíveis</span>
 
+          {date ? (
           <div className="grid grid-cols-3 gap-3">
             {times.map(time => (
               <Button
