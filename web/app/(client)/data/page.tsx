@@ -6,7 +6,22 @@ import Link from "next/link";
 import { useSchedulingStore } from "@/context/scheduling-store";
 
 export default function Data() {
-  const { setData } = useSchedulingStore()
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth) // window.innerWidth = pega a largura atual da tela
+  
+  const router = useRouter()
+
+  const { setData, createScheduling } = useSchedulingStore()
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth)
+
+      window.addEventListener('resize', handleResize)
+    }
+
+    return () => window.removeEventListener('resize', handleResize)
+
+  }, [windowWidth])
     
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
