@@ -8,7 +8,7 @@ import { Button } from "@/app/components/ui/button"
 import { useRouter } from "next/navigation"
 
 export default function DatePage() {
-  const [date, setDate] = useState<Date | undefined>(new Date())
+  const [date, setDate] = useState<Date | undefined>(undefined)
 
   const { setDateScheduling, setStep } = useSchedulingStore()
 
