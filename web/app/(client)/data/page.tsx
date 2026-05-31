@@ -183,9 +183,9 @@ export default function Data() {
             Voltar
           </Link>
 
-          <Link
-            className="text-white font-medium bg-blue rounded-lg py-2 px-4"
-            href='/confirmation'
+          <button
+            type="submit"
+            className="text-white font-medium bg-blue rounded-lg py-2 px-4 lg:w-full"
           >
             Confirmar Agendamento
           </Link>
