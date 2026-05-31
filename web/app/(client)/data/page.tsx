@@ -63,6 +63,9 @@ export default function Data() {
         address: address as string,
         description: description as string
       })
+
+      router.push('/confirmation')
+
     } catch(error) {
       console.log('erro ao enviar os dados para o context', error)
     }
@@ -75,8 +78,7 @@ export default function Data() {
         <h2 className="text-gray-500">Preencha suas informações para confirmar o agendamento</h2>
       </div>
 
-      <form onSubmit={handleSubmit} className="rounded-lg border border-purple py-6 px-8 flex flex-col gap-4 text-gray-900 bg-white">
-       
+      <form onSubmit={handleSubmit} className="lg:w-2/6 rounded-lg border border-purple py-6 px-8 flex flex-col gap-4 lg:mt-8 text-gray-900 bg-white">
 
          <div className="flex flex-col gap-2">
           <div className="flex gap-4">
