@@ -30,12 +30,12 @@ interface SchedulingStoreType {
   setService: (service: string) => void
   setDateScheduling: (date: Date) => void
   setData: (data: DataProps) => void
-  createScheduling: (data :SchedulingProps) => Promise<void>
-} 
+  createScheduling: (data: DataProps) => Promise<void>
+}
 
 export const useSchedulingStore = create<SchedulingStoreType>()(
-  persist(
-    (set) => ({
+  // persist(
+    (set, get) => ({
     service: '',
     date: null,
     data: {
@@ -52,26 +52,33 @@ export const useSchedulingStore = create<SchedulingStoreType>()(
     setDateScheduling: (date) => set({ date }),
     setData: (data) => { set({ data }), console.log(data) },
     createScheduling: async (data) => {
+      const { service, date } = get()
       try {
-        const response = await SchedulingService.create(data)
+        const response = await SchedulingService.create({
+          serviceName: service,
+          serviceDate: date!,
+          clientName: data.name,
+          clientEmail: data.email,
+          clientAddress: data.address,
+          clientPhone: data.phone,
+          clientDescription: data.description ?? '',
+        })
 
-        // set(state => ({
-
-        // }))
+        console.log(response, 'response store')
       } catch (error) {
         console.error('Erro ao criar Scheduling', error)
         throw error
       }
     },
   }),
-  {
-      name: 'scheduling-storage',
-      partialize: (state) => ({
-        service: state.service,
-        date: state.date,
-        data: state.data,
-        step: state.step,
-      }),
-    }
-  )
+  // {
+  //     name: 'scheduling-storage',
+  //     partialize: (state) => ({
+  //       service: state.service,
+  //       date: state.date,
+  //       data: state.data,
+  //       step: state.step,
+  //     }),
+  //   }
+  // )
 )
