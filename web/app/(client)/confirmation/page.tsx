@@ -3,7 +3,8 @@ import Link from "next/link";
 
 export default function Confirmation() {
   return (
-    <div className="flex flex-col border border-purple bg-white p-8 pb-25 text-center rounded-lg">
+    <section className="lg:flex lg:justify-center lg:pb-32 ">
+      <div className="flex flex-col lg:w-2/6 border- border-purple bg-white p-8 pb-25 text-center rounded-lg">
       <div className="flex flex-col gap-10 items-center">
         <div className="flex items-center justify-center w-20 h-20 bg-[#DBFCE7] rounded-full">
           <CircleCheck size={46} color="#00A63E" />
@@ -14,7 +15,7 @@ export default function Confirmation() {
           <p className="text-gray-500">Seu agendamento foi realizado com sucesso. Enviamos os detalhes para o e-mail danielkeirozz@gmail.com</p>
         </div>
 
-        <div className="bg-[#F9F9F9] p-6 rounded-lg flex flex-col items-start gap-4 text-left">
+        <div className="lg:w-full bg-[#F9F9F9] p-6 rounded-lg flex flex-col items-start gap-4 text-left">
           <span className="text-gray-700">Detalhes do Agendamento</span>
 
           <div className="text-sm flex gap-2">
@@ -62,5 +63,6 @@ export default function Confirmation() {
         </Link>
       </div>
     </div>
+    </section>
   )
-}
+} 
