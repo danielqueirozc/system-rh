@@ -50,7 +50,7 @@ export const useSchedulingStore = create<SchedulingStoreType>()(
     setStep: (step) => set ({ step }),
     setService: (service) => set({ service }),
     setDateScheduling: (date) => set({ date }),
-    setData: (data) => set({ data }),
+    setData: (data) => { set({ data }), console.log(data) },
     createScheduling: async (data) => {
       try {
         const response = await SchedulingService.create(data)
