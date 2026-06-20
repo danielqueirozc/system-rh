@@ -29,9 +29,9 @@ model Service {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  schedulings Scheduling[]      @relation("schedulingService")
-  employee    EmployeeService[]
-  budgets     Budget[]          @relation("budgetService")
+  appointments Appointment[]     @relation("appointmentService")
+  employee     EmployeeService[]
+  budgets      Budget[]          @relation("budgetService")
 
   @@map("services")
 }
@@ -49,8 +49,8 @@ model Client {
   address String
   status  Status
 
-  schedulings Scheduling[] @relation("schedulingClient")
-  budgets     Budget[]     @relation("budgetClient")
+  appointments Appointment[] @relation("appointmentClient")
+  budgets      Budget[]      @relation("budgetClient")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -58,33 +58,33 @@ model Client {
   @@map("clients")
 }
 
-enum SchedulingStatus {
+enum AppointmentStatus {
   CONFIRMED
   IN_PROGRESS
   PENDING
   COMPLETED
 }
 
-model Scheduling {
+model Appointment {
   id String @id @default(uuid())
 
-  client   Client @relation("schedulingClient", fields: [clientId], references: [id])
+  client   Client @relation("appointmentClient", fields: [clientId], references: [id])
   clientId String
 
-  service   Service @relation("schedulingService", fields: [serviceId], references: [id])
+  service   Service @relation("appointmentService", fields: [serviceId], references: [id])
   serviceId Int
 
-  employee   Employee? @relation("employeeScheduling", fields: [employeeId], references: [id])
+  employee   Employee? @relation("employeeAppointment", fields: [employeeId], references: [id])
   employeeId String?
 
-  status      SchedulingStatus
+  status      AppointmentStatus
   serviceDate DateTime
 
   description String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("schedulings")
+  @@map("appointments")
 }
 
 enum EmployeeStatus {
@@ -105,7 +105,7 @@ model Employee {
   updatedAt DateTime @updatedAt
 
   employeeServices EmployeeService[]
-  scheduling       Scheduling[]      @relation("employeeScheduling")
+  appointment      Appointment[]     @relation("employeeAppointment")
 
   @@map("employees")
 }

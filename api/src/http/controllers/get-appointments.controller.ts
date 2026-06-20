@@ -2,18 +2,18 @@ import { PrismaService } from "@/database/prisma/prisma.service";
 import { Controller, Get, HttpCode } from "@nestjs/common";
 
 @Controller()
-export class GetScheduling {
+export class GetAppointment {
   constructor(private prisma: PrismaService) {}
 
-  @Get('/scheduling')
+  @Get('/appointment')
   @HttpCode(200)
   async handle() {
-    const schedulings = await this.prisma.scheduling.findMany({
+    const appointments = await this.prisma.appointment.findMany({
       orderBy: {
         serviceDate: 'desc'
       }
     })
 
-    return { schedulings }
+    return { appointments }
   }
 }

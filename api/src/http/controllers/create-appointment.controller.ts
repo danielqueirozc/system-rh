@@ -13,21 +13,20 @@ const bodySchema = z.object({
   clientDescription: z?.string()
 })
 
-type CreateSchedulingType = z.infer<typeof bodySchema>
+type CreateAppointmentType = z.infer<typeof bodySchema>
 
 @Controller()
-export class CreateScheduling {
+export class CreateAppointment {
   constructor(private prisma: PrismaService) {}
 
-  @Post("/scheduling")
+  @Post("/appointment")
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(bodySchema))
-  async handle(@Body() body: CreateSchedulingType) {
+  async handle(@Body() body: CreateAppointmentType) {
     const { serviceName, serviceDate, clientName, clientEmail, clientPhone, clientAddress } = body
 
     console.log(body)
 
-    // 1. Busca o serviço pelo nome — ele já deve existir no banco
     const service = await this.prisma.service.findFirst({
       where: { name: serviceName },
     })
@@ -40,7 +39,6 @@ export class CreateScheduling {
       where: {
       status: "ACTIVE",
       employeeServices: {
-        // some: pelo menos um registro em employee_servicesque que aponte para este serviceId
         some: {
           serviceId: service.id,
         },
@@ -51,7 +49,7 @@ export class CreateScheduling {
     if (!employee) {
       throw new NotFoundException(`Nenhum funcionário disponivel para "${serviceName}"`)
     }
-    // cria o cliente se não existir, ou atualiza se ja existir
+
     const client = await this.prisma.client.upsert({
       where: { email: clientEmail },
       update: { name: clientName, phone: clientPhone, address: clientAddress },
@@ -64,8 +62,7 @@ export class CreateScheduling {
       },
     })
 
-    // cria o agendamento conectando cliente e serviço pelos IDs
-    const scheduling = await this.prisma.scheduling.create({
+    const appointment = await this.prisma.appointment.create({
       data: {
         serviceDate,
         status: "PENDING",
@@ -75,6 +72,6 @@ export class CreateScheduling {
       },
     })
 
-    return { schedulingId: scheduling.id };
+    return { appointmentId: appointment.id };
   }
 }
