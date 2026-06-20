@@ -4,7 +4,7 @@ import type { INestApplication } from "@nestjs/common"
 import { Test } from "@nestjs/testing"
 import request from 'supertest'
 
-describe("Create Scheduling", () => {
+describe("Create Appointment", () => {
   let app: INestApplication
   let prisma: PrismaService
 
@@ -18,7 +18,6 @@ describe("Create Scheduling", () => {
 
     await app.init()
 
-    // Cria o serviço e o funcionário necessários para o teste
     const service = await prisma.service.create({
       data: { name: 'Pintura', description: 'Pintura interna e externa' },
     })
@@ -38,8 +37,8 @@ describe("Create Scheduling", () => {
     })
   })
 
-  test('[POST] /scheduling', async () => {
-    const response = await request(app.getHttpServer()).post('/scheduling').send({
+  test('[POST] /appointment', async () => {
+    const response = await request(app.getHttpServer()).post('/appointment').send({
       serviceName: 'Pintura',
       serviceDate: new Date(),
       clientName: 'Thiago',
