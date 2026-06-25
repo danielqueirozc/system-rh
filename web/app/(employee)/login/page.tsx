@@ -4,6 +4,18 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 
 export default function Login() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth)
+
+      window.addEventListener('resize', handleResize)
+    }
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
     <div className="flex flex-col gap-10 px-8 pt-40 pb-30">
       <header className="flex flex-col">
