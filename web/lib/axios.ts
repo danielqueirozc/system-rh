@@ -27,7 +27,7 @@ export const api = axios.create({
 //   }
 // )
 
-export const SchedulingService = {
+export const schedulingService = {
   create: async (data: SchedulingProps) => {
 
     console.log(data, 'indo a partir do axios')
@@ -36,4 +36,8 @@ export const SchedulingService = {
     console.log('vindo a partir do axios')
     return response
   }
+}
+
+export const authService = {
+  create: async () => {}
 }
