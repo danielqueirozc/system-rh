@@ -1,4 +1,4 @@
-import { SchedulingService } from '@/lib/axios'
+import { schedulingService } from '@/lib/axios'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -54,7 +54,7 @@ export const useSchedulingStore = create<SchedulingStoreType>()(
     createScheduling: async (data) => {
       const { service, date } = get()
       try {
-        const response = await SchedulingService.create({
+        const response = await schedulingService.create({
           serviceName: service,
           serviceDate: date!,
           clientName: data.name,
