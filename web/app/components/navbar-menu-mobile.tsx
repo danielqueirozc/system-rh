@@ -17,7 +17,7 @@ export function NavbarMenuMobile() {
     { label: "Dashboard",    href: "/dashboard",    icon: LayoutDashboard },
     { label: "Clientes",     href: "/clients",      icon: Users },
     { label: "Agendamentos", href: "/appointments",  icon: Calendar },
-    { label: "Orçamentos",   href: "/orcamentos",    icon: FileText },
+    { label: "Orçamentos",   href: "/budgets",    icon: FileText },
     { label: "Funcionários", href: "/funcionarios",  icon: UserCog },
     { label: "Relatórios",   href: "/relatorios",    icon: BarChart2 },
   ]
