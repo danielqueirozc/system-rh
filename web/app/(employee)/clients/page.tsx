@@ -1,5 +1,6 @@
 'use client'
 
+import { HeaderMobile } from "@/app/components/header-mobile";
 import { NavbarMenuMobile } from "@/app/components/navbar-menu-mobile";
 import { cn } from "@/lib/utils";
 import { Mail, Phone, Plus, Search, SquarePen, Trash2 } from "lucide-react";
@@ -23,10 +24,7 @@ export default function Clients() {
 
   return (
     <div className="flex flex-col">
-      <header className="fixed top-0 left-0 w-full flex items-center gap-8 p-7 border-b border-gray-200 bg-white z-10">
-        <NavbarMenuMobile />
-        <span className="text-black text-sm font-medium">Clientes</span>
-      </header>
+      <HeaderMobile title="Clientes" />
 
       <main className="flex flex-col gap-6 pt-28 px-4">
         <div className="flex flex-col gap-4 bg-white rounded-2xl border border-gray-200 p-4">

@@ -1,5 +1,6 @@
 'use client'
 
+import { HeaderMobile } from "@/app/components/header-mobile";
 import { NavbarMenuMobile } from "@/app/components/navbar-menu-mobile";
 import { cn } from "@/lib/utils";
 import { Calendar, Plus, User } from "lucide-react";
@@ -12,10 +13,7 @@ export default function Appointments() {
 
   return (
     <div className="flex flex-col">
-      <header className="fixed top-0 left-0 w-full flex items-center gap-8 p-7 border-b border-gray-200 bg-white z-10">
-        <NavbarMenuMobile />
-        <span className="text-black text-sm font-medium">Agendamentos</span>
-      </header>
+      <HeaderMobile title='Agendamentos' />
 
       <main className="flex flex-col gap-6 pt-28 px-4">
         <div className="flex flex-col gap-4">
@@ -23,7 +21,7 @@ export default function Appointments() {
             Gestão de Agendamentos
           </span>
 
-          <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-sm font-semibold px-4 py-2 rounded-lg w-fit">
+          <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-xs font-semibold px-4 py-2 rounded-lg w-fit">
             <Plus size={16} />
             Novo Agendamento
           </button>
@@ -41,13 +39,13 @@ export default function Appointments() {
           </div>
         </div>
 
-        <div className="border border-purple rounded-lg p-3 flex flex-col gap-8">
+        <div className="border border-purple rounded-lg p-3 flex flex-col gap-8 text-sm">
           <div className="flex justify-between">
             <div className="flex flex-col">
               <p className="text-gray-800 font-medium">Joao Silva</p>
               <span className="text-gray-500">Reparo Elétrico</span>
             </div>
-            <span className="text-xs flex items-center font-semibold rounded-lg px-2 h-5 bg-blue text-white">Confirmado</span>
+            <span className="flex items-center font-semibold rounded-lg px-3 h-5 bg-blue text-white text-xs">Confirmado</span>
           </div>
 
           <div className="flex flex-col gap-4 text-gray-500 font-medium">
