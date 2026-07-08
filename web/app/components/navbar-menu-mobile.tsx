@@ -18,8 +18,8 @@ export function NavbarMenuMobile() {
     { label: "Clientes",     href: "/clients",      icon: Users },
     { label: "Agendamentos", href: "/appointments",  icon: Calendar },
     { label: "Orçamentos",   href: "/budgets",    icon: FileText },
-    { label: "Funcionários", href: "/funcionarios",  icon: UserCog },
-    { label: "Relatórios",   href: "/relatorios",    icon: BarChart2 },
+    { label: "Funcionários", href: "/employees",  icon: UserCog },
+    { label: "Relatórios",   href: "/reports",    icon: BarChart2 },
   ]
 
   return (
