@@ -49,6 +49,32 @@ export default function Reports() {
 
               <p className="text-[#00A63E]">+18.2% vs ano anterior</p>
             </Card>
+
+            <Card className="flex flex-col gap-8 p-6">
+              <div className="flex items-center justify-between">
+                <p className="text-gray-500">Serviços Realizados</p>
+                <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
+              </div>
+
+              <span>543</span>
+
+              <p className="text-[#00A63E]">+12.5% vs ano anterior</p>
+            </Card>
+            
+            <Card className="flex flex-col gap-8 p-6">
+              <div className="flex items-center justify-between">
+                <p className="text-gray-500">Ticket Médio</p>
+                <TrendingUp 
+                  className="text-blue-500" 
+                  size={18} 
+                  strokeWidth={2.25} 
+                />
+              </div>
+
+              <span>R$ 609</span>
+
+              <p className="text-blue-500">+12.5% vs ano anterior</p>
+            </Card>
           </div>
         </div>
       </div>
