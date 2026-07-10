@@ -9,7 +9,7 @@ export default function Service() {
   const {setService, setStep } = useSchedulingStore()
 
   return (
-    <section className="flex flex-col text-center pb-25 px-4">
+    <section className="flex flex-col text-center pb-25 px-4 md:px-16">
       <div className="flex flex-col gap-2">
         <h1 className="text-black font-medium">Escolha o Serviço</h1>
         <h2 className="text-gray-400">Selecione o tipo de serviço que você precisa</h2>
@@ -34,12 +34,12 @@ export default function Service() {
           href='/date'
         >
           <CardService
-              img={<Paintbrush size={28} />}
-              service="Elétrica"
-              description="instalação, elétrica e reparos"
-              time="2-3 horas"
-              price={150}
-            />
+            img={<Paintbrush size={28} />}
+            service="Elétrica"
+            description="instalação, elétrica e reparos"
+            time="2-3 horas"
+            price={150}
+          />
 
         </Link>
         <Link 

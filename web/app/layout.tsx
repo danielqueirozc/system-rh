@@ -24,9 +24,9 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={cn("h-full", "antialiased", inter.variable,)}
+      className={cn("h-full antialiased", inter.variable,)}
     >
-      <body className="bg-background h-full" suppressHydrationWarning>
+      <body className="bg-background h-full w-full]" suppressHydrationWarning>
         {children}
       </body>
     </html>

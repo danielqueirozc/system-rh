@@ -112,7 +112,7 @@ export default function Login() {
           </div>
         </div>  
       ) : (
-        <div className="flex flex-col gap-10 px-8 pt-40 pb-30">
+        <div className="flex flex-col gap-10 px-8 md:px-32 pt-40 pb-30 md:text-base">
         <header className="flex flex-col">
           <div className="flex flex-col items-center gap-6">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-blue text-white">

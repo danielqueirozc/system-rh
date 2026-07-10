@@ -1,15 +1,14 @@
 import { HeaderMobile } from "@/app/components/header-mobile";
 import { Card } from "@/app/components/ui/card";
+import { SelectYear } from "@/app/components/ui/seletct-year";
+import { Download, TrendingUp } from "lucide-react";
 
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/components/ui/select"
-import { Download, TrendingUp } from "lucide-react";
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/app/components/ui/chart"
 
 export default function Reports() {
   return (
@@ -17,21 +16,12 @@ export default function Reports() {
       <HeaderMobile title='Relatórios' />
 
       <div className="pt-24 px-4">
-        <div className="flex flex-col gap-4 text-gray-900 text-sm">
+        <div className="flex flex-col gap-6 text-gray-900 text-sm">
           <p>Relatórios e Análises</p>
           <div className="flex justify-baseline gap-4">
-            <Select>
-              <SelectTrigger className="w-30 border-0 bg-gray-50 py-4">
-                <SelectValue placeholder="2026" />
-              </SelectTrigger>
-              <SelectContent className="min-w-0 w-30">
-                <SelectGroup>
-                  <SelectItem value="light">2026</SelectItem>
-                  <SelectItem value="dark">2025</SelectItem>
-                  <SelectItem value="system">2024</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            
+            <SelectYear />
+
             <button className="flex items-center gap-3 border border-purple rounded-lg px-3">
               <Download size={14} />
               Exportar
@@ -74,6 +64,16 @@ export default function Reports() {
               <span>R$ 609</span>
 
               <p className="text-blue-500">+12.5% vs ano anterior</p>
+            </Card>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <Card className="flex flex-col gap-8 p-6">
+                <p className="text-gray-500">Receita Total</p>
+
+                <div>
+                  
+                </div>
             </Card>
           </div>
         </div>
