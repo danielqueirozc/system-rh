@@ -2,13 +2,24 @@ import { HeaderMobile } from "@/app/components/header-mobile";
 import { Card } from "@/app/components/ui/card";
 import { SelectYear } from "@/app/components/ui/seletct-year";
 import { Download, TrendingUp } from "lucide-react";
+import { MonthlyRevenueChart } from "@/app/components/ui/monthly-revenue-chart";
+import { ServiceTypeChart } from "@/app/components/ui/service-type-chart";
+import { ServicesQuantityChart } from "@/app/components/ui/services-quantity-chart";
+import { EmployeePerformanceChart } from "@/app/components/ui/employee-performance-chart";
+import { cn } from "@/lib/utils";
 
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/app/components/ui/chart"
+const employeePerformance = [
+  { id: 1, funcionario: "Carlos Tech", servicosConcluidos: 45, receitaGerada: 12500.00, mediaPorServico: 277.78 },
+  { id: 2, funcionario: "Ana Pintura", servicosConcluidos: 52, receitaGerada: 15200.00, mediaPorServico: 292.31 },
+  { id: 3, funcionario: "Pedro Hidro", servicosConcluidos: 38, receitaGerada: 10800.00, mediaPorServico: 284.21 },
+  { id: 4, funcionario: "João Reforma", servicosConcluidos: 67, receitaGerada: 18900.00, mediaPorServico: 282.09 },
+  { id: 5, funcionario: "Maria Geral", servicosConcluidos: 28, receitaGerada: 7920.00, mediaPorServico: 282.86 },
+]
+
+const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+})
 
 export default function Reports() {
   return (
@@ -68,12 +79,42 @@ export default function Reports() {
           </div>
 
           <div className="flex flex-col gap-6">
-            <Card className="flex flex-col gap-8 p-6">
-                <p className="text-gray-500">Receita Total</p>
+            <MonthlyRevenueChart />
+            <ServiceTypeChart />
+            <ServicesQuantityChart />
+            <EmployeePerformanceChart />
 
-                <div>
-                  
-                </div>
+            <Card className="flex flex-col gap-16 px-8 py-6">
+              <span className="text-base font-medium">Desempenho Detalhado dos Funcionários</span>
+              <div className="overflow-x-auto">
+                <table className="text-sm">
+                  <thead>
+                    <tr className="text-left">
+                      <th className="pb-3 pr-6 font-semibold whitespace-nowrap">Funcionário</th>
+                      <th className="pb-3 pr-6 font-semibold whitespace-nowrap">Serviços Concluídos</th>
+                      <th className="pb-3 pr-6 font-semibold whitespace-nowrap">Receita Gerada</th>
+                      <th className="pb-3 font-semibold whitespace-nowrap">Média por Serviço</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {employeePerformance.map((employee, i) => (
+                      <tr
+                        key={employee.funcionario}
+                        className={cn(
+                          'border-t border-gray-100 rounded-lg text-center',
+                          i % 2 === 0 ? 'bg-[#f0f0fa]' : 'bg-white'
+                        )}
+                      >
+                        <td className="py-2 pr-6 whitespace-nowrap">{employee.funcionario}</td>
+                        <td className="py-2 pr-6 whitespace-nowrap">{employee.servicosConcluidos}</td>
+                        <td className="py-2 pr-6 whitespace-nowrap">{currencyFormatter.format(employee.receitaGerada)}</td>
+                        <td className="py-2 whitespace-nowrap">{currencyFormatter.format(employee.mediaPorServico)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Card>
           </div>
         </div>
