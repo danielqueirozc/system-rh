@@ -1,11 +1,8 @@
 'use client'
 
-import { ButtonHamburguer } from "@/app/components/ui/button-hamburguer";
 import { CardDashboard } from "@/app/components/card-dashboard";
 import { CardTodaySchedule } from "@/app/components/card-today schedule";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/app/components/ui/sheet";
-import { Calendar, ChartColumn, FileText, LayoutDashboard, LogOut, UserCog, Users } from "lucide-react";
-import Link from "next/link";
+import { Calendar, FileText, Users } from "lucide-react";
 import { useState } from "react";
 import { CardPendingBudgets } from "@/app/components/ui/card-pending-bugets";
 import { usePathname } from "next/navigation";
@@ -24,7 +21,7 @@ export default function Dashboard() {
       <HeaderMobile title='Dashboard' />
 
       <main className="flex flex-col gap-8 pt-20">
-        <div className="p-4 flex flex-col gap-4">
+        <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <CardDashboard
             number={12}
             name='Total de Clientes'

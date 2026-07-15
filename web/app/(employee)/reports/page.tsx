@@ -26,7 +26,7 @@ export default function Reports() {
     <div className="flex flex-col">
       <HeaderMobile title='Relatórios' />
 
-      <div className="pt-24 px-4">
+      <div className="pt-24 px-4 pb-8">
         <div className="flex flex-col gap-6 text-gray-900 text-sm">
           <p>Relatórios e Análises</p>
           <div className="flex justify-baseline gap-4">

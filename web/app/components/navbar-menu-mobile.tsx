@@ -30,8 +30,8 @@ export function NavbarMenuMobile() {
 
       <SheetContent side="left" className="">
         <header className="flex flex-col border-b border-gray-200 p-6">
-          <SheetTitle className="text-lg">Sistema Ávila</SheetTitle>
-          <span className="text-gray-500 font-medium">Gestão Completa</span>
+          <SheetTitle className="text-lg md:text-xl">Sistema Ávila</SheetTitle>
+          <span className="text-gray-500 font-medium md:text-lg">Gestão Completa</span>
         </header>
 
         <main className="flex flex-col justify-between h-full pb-8">
@@ -42,7 +42,7 @@ export function NavbarMenuMobile() {
                 route === href ? "bg-[#1a1a8c] text-white" : "text-gray-800"
               )}>
                 <Icon size={20} />
-                <span>{label}</span>
+                <span className="md:text-lg">{label}</span>
               </Link>
             ))}
           </div>
@@ -50,7 +50,7 @@ export function NavbarMenuMobile() {
           <div className="flex flex-col gap-2 px-6">
             <button className="flex gap-4 items-center text-gray-800 font-semibold py-2 px-3">
               <LogOut size={20} />
-              <span>Sair</span>
+              <span className="md:text-lg">Sair</span>
             </button>
           </div>
         </main>
