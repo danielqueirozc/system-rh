@@ -12,7 +12,7 @@ interface CardDashboardProps {
 
 export function CardDashboard({ icon, name, number, totalClients, background }: CardDashboardProps) {
   return (
-    <Card className="flex flex-col gap-10 p-6">
+    <Card className="lg:h-56 flex flex-col gap-10 lg:gap-12 p-6">
       <div className="flex justify-between">
         <div className={cn(background, "p-2.5 rounded-lg")}>
           {icon}
@@ -23,7 +23,7 @@ export function CardDashboard({ icon, name, number, totalClients, background }: 
         </span>
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 lg:gap-10">
         <p className="text-gray-500">{name}</p>
         <span>{totalClients}</span>
       </div>
