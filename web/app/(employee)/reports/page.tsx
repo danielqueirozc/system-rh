@@ -100,7 +100,7 @@ export default function Reports() {
                   <tbody>
                     {employeePerformance.map((employee, i) => (
                       <tr
-                        key={employee.funcionario}
+                        key={employee.id}
                         className={cn(
                           'border-t border-gray-100 rounded-lg text-center',
                           i % 2 === 0 ? 'bg-[#f0f0fa]' : 'bg-white'
