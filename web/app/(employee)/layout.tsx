@@ -29,7 +29,7 @@ export default function ClientLayout({ children }: ChildrenType) {
           {children}
         </div>
       ) : (
-        <div className="flex-col">
+        <div className="flex flex-col">
           <HeaderMobile title='Dashboard' />
           {children}
         </div>
