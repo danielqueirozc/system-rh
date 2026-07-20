@@ -28,12 +28,12 @@ export default function Dashboard() {
   return (
     <Fragment>
       {windowWidth >= 1024 ? (
-        <div className="flex-1 flex flex-col gap-2">
+        <div className="flex-1 flex flex-col gap-6">
           <header className="p-5.5 text-gray-700 border-b border-gray-200">
             Dashboard
           </header>
 
-          <div className="p-4 grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-4 px-4">
             <CardDashboard
               number={12}
               name='Total de Clientes'
@@ -58,6 +58,7 @@ export default function Dashboard() {
               icon={<Users color="white" size={22} />}
             />
 
+
             <CardDashboard
               number={18}
               name='Receita do Mês'
@@ -67,7 +68,7 @@ export default function Dashboard() {
             />
           </div>
 
-          <div className="p-4 grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 px-4">
             <CardTodaySchedule />
             <CardPendingBudgets />
           </div>
