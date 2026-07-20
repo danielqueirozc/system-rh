@@ -33,9 +33,9 @@ export default function Budgets() {
         </Card>
 
         <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-xs font-semibold px-4 py-2 rounded-lg w-fit">
-            <Plus size={16} />
-            Novo Orçamento
-          </button>
+          <Plus size={16} />
+          Novo Orçamento
+        </button>
 
         <div className="flex flex-col gap-4 bg-white rounded-2xl border border-gray-200 p-4">
           <div className="overflow-x-auto">
