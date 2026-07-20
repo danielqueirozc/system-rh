@@ -12,9 +12,9 @@ export default function Login() {
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth)
-
-      window.addEventListener('resize', handleResize)
     }
+
+    window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
   }, [])
@@ -36,7 +36,7 @@ export default function Login() {
             </div>
 
             <p>Gerencie seus serviços de manutenção e reparos de forma moderna, ágil e segura.</p>
-          
+
             <div className="flex flex-col gap-3">
               <p>✓ Controle completo de clientes</p>
               <p>✓ Agendamentos automatizados</p>
@@ -45,7 +45,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center gap-10 px-32 pt-40 pb-30">
+          <div className="flex flex-col justify-center gap-10 px-58 pt-40 pb-30">
             <header className="flex flex-col">
               <Link
                 href='/'
@@ -71,7 +71,7 @@ export default function Login() {
                   <label className="text-black font-medium text-sm">E-mail</label>
                   <Input
                     className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
-                    placeholder="seu@email.com" 
+                    placeholder="seu@email.com"
                   />
                 </div>
 
@@ -86,7 +86,7 @@ export default function Login() {
 
               <div className="flex justify-between">
                 <span className="text-gray-500">Lembrar-me</span>
-                <Link 
+                <Link
                   className="text-blue"
                   href='/'>
                   Esqueceu a senha?
@@ -94,7 +94,7 @@ export default function Login() {
               </div>
 
               <Link
-                className="w-full"  
+                className="w-full"
                 href='/dashboard'
               >
                 <Button className="bg-blue py-4.5 w-full">Entrar</Button>
@@ -102,7 +102,7 @@ export default function Login() {
 
               <div className="flex justify-center gap-2">
                 <p className="text-gray-600 text-sm">Não tem uma conta?</p>
-                <Link 
+                <Link
                   className="text-blue text-sm"
                   href='/'>
                   Entre em contato
@@ -110,7 +110,7 @@ export default function Login() {
               </div>
             </form>
           </div>
-        </div>  
+        </div>
       ) : (
         <div className="flex flex-col gap-10 px-8 md:px-32 pt-40 pb-30 md:text-base">
         <header className="flex flex-col">
@@ -149,7 +149,7 @@ export default function Login() {
               <label className="text-black font-medium text-sm">E-mail</label>
               <Input
                 className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
-                placeholder="seu@email.com" 
+                placeholder="seu@email.com"
               />
             </div>
 
@@ -164,7 +164,7 @@ export default function Login() {
 
           <div className="flex justify-between">
             <span className="text-gray-500">Lembrar-me</span>
-            <Link 
+            <Link
               className="text-blue"
               href='/'>
               Esqueceu a senha?
@@ -175,7 +175,7 @@ export default function Login() {
 
           <div className="flex justify-center gap-2">
             <p className="text-gray-500 text-sm">Não tem uma conta?</p>
-            <Link 
+            <Link
               className="text-blue text-sm"
               href='/'>
               Entre em contato
