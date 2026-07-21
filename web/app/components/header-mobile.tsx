@@ -1,3 +1,5 @@
+'use client'
+
 import { NavbarMenuMobile } from "./navbar-menu-mobile";
 import { usePathname } from 'next/navigation'
 
