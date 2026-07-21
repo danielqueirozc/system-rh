@@ -43,7 +43,7 @@ export default function Clients() {
           </header>
 
           <main className="flex flex-col gap-6 px-4">
-            <div className="flex flex-col gap-4 bg-white rounded-2xl border border-gray-200 p-4">
+            <div className="flex flex-col gap-14 bg-white rounded-2xl border border-gray-200 p-4">
 
               <div className="flex justify-between">
                 <div className="w-104 flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2 focus-within:outline-none focus-within:ring-4 focus-within:ring-[#8080C7] transition-shadow">
@@ -67,12 +67,12 @@ export default function Clients() {
                 <table className="w-full text-sm mt-2 min-w-150">
                   <thead>
                     <tr className="text-left">
-                      <th className="pb-3 font-semibold text-gray-900">Cliente</th>
-                      <th className="pb-3 font-semibold text-gray-900">Contato</th>
-                      <th className="pb-3 font-semibold text-gray-900">Endereço</th>
-                      <th className="pb-3 font-semibold text-gray-900 text-center">Serviços</th>
-                      <th className="pb-3 font-semibold text-gray-900 text-center">Status</th>
-                      <th className="pb-3 font-semibold text-gray-900 text-center">Ações</th>
+                      <th className="pb-3 pl-4 font-bold text-base text-gray-900">Cliente</th>
+                      <th className="pb-3 pl-4 font-bold text-base text-gray-900">Contato</th>
+                      <th className="pb-3 pl-4 font-bold text-base text-gray-900">Endereço</th>
+                      <th className="pb-3 pl-4 font-bold text-base text-gray-900 text-center">Serviços</th>
+                      <th className="pb-3 pl-4 font-bold text-base text-gray-900 text-center">Status</th>
+                      <th className="pb-3 pl-4 font-bold text-base text-gray-900 text-center">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -126,7 +126,7 @@ export default function Clients() {
           </main>
         </div>
       ) : (
-        <main className="flex flex-col gap-6 pt-28 px-4">
+        <div className="flex flex-col gap-6 pt-28 px-4">
           <div className="flex flex-col gap-4 bg-white rounded-2xl border border-gray-200 p-4">
 
             <div className="flex items-center gap-2 border border-[#1a1a8c] rounded-lg px-3 py-2">
@@ -205,7 +205,7 @@ export default function Clients() {
             </table>
             </div>
           </div>
-        </main>
+        </div>
       )}
      </Fragment>
   )
