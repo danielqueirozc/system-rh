@@ -59,7 +59,7 @@ export function ServiceTypeChart() {
         </CardTitle>
       </CardHeader>
       <CardContent className="px-0">
-        <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-72">
+        <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-72 w-full">
           <PieChart>
             <ChartTooltip content={<ChartTooltipContent hideLabel nameKey="type" />} />
             <Pie
