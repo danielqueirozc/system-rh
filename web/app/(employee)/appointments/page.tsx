@@ -9,7 +9,7 @@ import { Fragment, useEffect, useState } from "react";
 
 export default function Appointments() {
   const [activeStatus, setActiveStatus] = useState("Todos")
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(0)
 
 
   const status = ["Todos", "Pendentes", "Confirmados", "Em Andamento", "Concluídos"]
@@ -18,6 +18,8 @@ export default function Appointments() {
     function handleResize() {
       setWindowWidth(window.innerWidth)
     }
+
+    handleResize()
     
     window.addEventListener('resize', handleResize)
 
