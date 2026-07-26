@@ -13,10 +13,10 @@ export function NavbarMenuDesktop() {
     { label: "Relatórios",   href: "/reports",    icon: BarChart2 },
   ]
 
-   const route = usePathname()
+  const route = usePathname()
 
   return (
-    <div className="h-screen w-full max-w-68 flex flex-col border-r border-gray-200">
+    <div className="sticky top-0 h-screen w-full max-w-68 shrink-0 flex flex-col border-r border-gray-200">
       <header className="flex flex-col border-b border-gray-200 p-6">
         <span className="text-lg font-medium text-black">Sistema Ávila</span>
         <span className="text-gray-400 text-sm">Gestão Completa</span>
