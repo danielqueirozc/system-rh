@@ -51,7 +51,7 @@ export default function Confirmation() {
           </div>
         </div>
 
-        <div className="bg-purple rounded-lg border border-violet-300 p-4">
+        <div className="bg-violet-100 rounded-lg border border-violet-300 p-4">
           <strong className="text-blue">💡 Importante:</strong>
           <p className="text-blue text-sm">Nossa equipe entrará em contato até 1 hora antes do horário agendado para confirmar a visita.</p>
         </div>

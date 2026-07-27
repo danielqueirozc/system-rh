@@ -61,7 +61,7 @@ export default function Appointments() {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <Card className="border-purple rounded-lg p-4 flex flex-col gap-12 text-sm">
+              <Card className="rounded-lg p-4 flex flex-col gap-12 text-sm">
                 <div className="flex justify-between">
                   <div className="flex flex-col">
                     <p className="text-gray-800 font-medium">Joao Silva</p>
@@ -88,12 +88,12 @@ export default function Appointments() {
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Editar</button>
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Detalhes</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Editar</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Detalhes</button>
                 </div>
               </Card>
 
-              <Card className="border-purple rounded-lg p-4  flex flex-col gap-12 text-sm">
+              <Card className="rounded-lg p-4  flex flex-col gap-12 text-sm">
                 <div className="flex justify-between">
                   <div className="flex flex-col">
                     <p className="text-gray-800 font-medium">Joao Silva</p>
@@ -120,12 +120,12 @@ export default function Appointments() {
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Editar</button>
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Detalhes</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Editar</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Detalhes</button>
                 </div>
               </Card>
 
-              <Card className="border-purple rounded-lg p-4  flex flex-col gap-12 text-sm">
+              <Card className="rounded-lg p-4  flex flex-col gap-12 text-sm">
                 <div className="flex justify-between">
                   <div className="flex flex-col">
                     <p className="text-gray-800 font-medium">Joao Silva</p>
@@ -152,12 +152,12 @@ export default function Appointments() {
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Editar</button>
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Detalhes</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Editar</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Detalhes</button>
                 </div>
               </Card>
 
-              <Card className="border-purple rounded-lg p-4  flex flex-col gap-12 text-sm"> hover:bg-purple hover:text-purple-900
+              <Card className="rounded-lg p-4  flex flex-col gap-12 text-sm"> hover:bg-violet-100 hover:text-violet-900
                 <div className="flex justify-between">
                   <div className="flex flex-col">
                     <p className="text-gray-800 font-medium">Joao Silva</p>
@@ -184,12 +184,12 @@ export default function Appointments() {
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Editar</button>
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Detalhes</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Editar</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Detalhes</button>
                 </div>
               </Card>
               
-              <Card className="border-purple rounded-lg p-4  flex flex-col gap-12 text-sm"> hover:bg-purple hover:text-purple-900
+              <Card className="rounded-lg p-4  flex flex-col gap-12 text-sm"> hover:bg-violet-100 hover:text-violet-900
                 <div className="flex justify-between">
                   <div className="flex flex-col">
                     <p className="text-gray-800 font-medium">Joao Silva</p>
@@ -216,12 +216,12 @@ export default function Appointments() {
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Editar</button>
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Detalhes</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Editar</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Detalhes</button>
                 </div>
               </Card>
 
-              <Card className="border-purple rounded-lg p-4  flex flex-col gap-12 text-sm"> hover:bg-purple hover:text-purple-900
+              <Card className="rounded-lg p-4  flex flex-col gap-12 text-sm"> hover:bg-violet-100 hover:text-violet-900
                 <div className="flex justify-between">
                   <div className="flex flex-col">
                     <p className="text-gray-800 font-medium">Joao Silva</p>
@@ -248,8 +248,8 @@ export default function Appointments() {
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Editar</button>
-                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-purple hover:text-purple-900">Detalhes</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Editar</button>
+                  <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Detalhes</button>
                 </div>
               </Card>
              
@@ -282,7 +282,7 @@ export default function Appointments() {
             </div>
           </div>
 
-          <div className="border border-purple rounded-lg p-3 flex flex-col gap-8 text-sm">
+          <div className="border border-violet-100 rounded-lg p-3 flex flex-col gap-8 text-sm">
             <div className="flex justify-between">
               <div className="flex flex-col">
                 <p className="text-gray-800 font-medium">Joao Silva</p>

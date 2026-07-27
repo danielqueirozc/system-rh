@@ -182,7 +182,7 @@ export default function Data() {
 
         <div className="flex gap-5 justify-between text-sm text-center">
           <Link
-            className="lg:w-full flex items-center justify-center bg-white text-gray-900 hover:bg-purple hover:text-purple-800 hover:border-purple-200 border border-purple rounded-sm cursor-pointer"
+            className="lg:w-full flex items-center justify-center bg-white text-gray-900 hover:bg-violet-100 hover:text-purple-800 hover:border-purple-200 border border-purple rounded-sm cursor-pointer"
             href='/date'
           >
             Voltar

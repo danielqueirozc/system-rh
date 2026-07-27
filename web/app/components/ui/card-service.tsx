@@ -14,7 +14,7 @@ export function CardService({ img, service, description, time, price }: CardServ
   return (
     <Card className="hover:ring hover:ring-blue transition-shadow lg:h-68 lg:w-64">
         <CardContent className="flex flex-col justify-center items-center">
-         <div className="w-14 h-14 rounded-full bg-purple flex items-center justify-center">
+         <div className="w-14 h-14 rounded-full bg-violet-100 flex items-center justify-center">
            {img}
          </div>
 

@@ -9,7 +9,7 @@ interface ItemTodayScheduleProps {
 
 export function ItemTodaySchedule({clientName, service, time, status}: ItemTodayScheduleProps) {
   return (
-    <div className="flex justify-between bg-purple p-6 rounded-lg">
+    <div className="flex justify-between bg-violet-100 p-6 rounded-lg">
       <div className="flex flex-col">
         <p className="font-medium">{clientName}</p>
         <p className="text-gray-600">{service}</p>

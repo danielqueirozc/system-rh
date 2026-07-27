@@ -66,7 +66,7 @@ export default function Clients() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm mt-2 min-w-150">
                   <thead>
-                    <tr className="text-left">
+                    <tr className="text-left border-b border-violet-100">
                       <th className="pb-3 pl-4 font-bold text-base text-gray-900">Cliente</th>
                       <th className="pb-3 pl-4 font-bold text-base text-gray-900">Contato</th>
                       <th className="pb-3 pl-4 font-bold text-base text-gray-900">Endereço</th>
@@ -80,8 +80,7 @@ export default function Clients() {
                       <tr
                         key={client.id}
                         className={cn(
-                          "border-t border-gray-100 rounded-lg",
-                          i % 2 === 0 ? "bg-[#f0f0fa]" : "bg-white"
+                          "border-b border-violet-100 rounded-lg bg-white transition-colors hover:bg-violet-50",
                         )}
                       >
                         <td className="py-4 px-2 pr-4 font-medium text-gray-800">{client.name}</td>
@@ -109,7 +108,7 @@ export default function Clients() {
                         </td>
                         <td className="py-4 text-center">
                           <div className="flex items-center justify-center gap-5 px-2">
-                            <button className="text-gray-500 hover:text-gray-800">
+                            <button className="text-gray-500 hover:text-gray-800 hover:p-2 hover:bg-violet-100">
                               <SquarePen size={16} />
                             </button>
                             <button className="text-red-400 hover:text-red-600">

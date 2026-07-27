@@ -27,7 +27,7 @@ export function NavbarMenuDesktop() {
           {navItems.map(({ label, href, icon: Icon }) => (
             <Link key={href} href={href} className={cn(
               "flex gap-4 items-center font-normal py-3 px-3 rounded-lg",
-              route === href ? "bg-[#1a1a8c] text-white hover:none" : "text-gray-800 hover:bg-purple"
+              route === href ? "bg-[#1a1a8c] text-white hover:none" : "text-gray-800 hover:bg-violet-100"
             )}>
               <Icon size={20} />
               <span>{label}</span>
