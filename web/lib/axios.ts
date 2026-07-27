@@ -41,3 +41,10 @@ export const appointmentService = {
 export const authService = {
   create: async () => {}
 }
+
+export const employeeService = {
+  get: async () => {
+    const response = await api.get('/employee')
+    return response.data
+  }
+}
