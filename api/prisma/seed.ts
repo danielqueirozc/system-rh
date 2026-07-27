@@ -138,6 +138,266 @@ async function main() {
     })
   }
 
+  // Clientes
+  const clients = await Promise.all([
+    prisma.client.upsert({
+      where: { email: "maria.fernandes@gmail.com" },
+      update: {},
+      create: {
+        name: "Maria Fernandes",
+        email: "maria.fernandes@gmail.com",
+        phone: "(11) 92222-0001",
+        address: "Rua das Acácias, 120 - Vila Mariana, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "joao.pereira@gmail.com" },
+      update: {},
+      create: {
+        name: "João Pereira",
+        email: "joao.pereira@gmail.com",
+        phone: "(11) 92222-0002",
+        address: "Av. Paulista, 1500, apto 82 - Bela Vista, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "ana.beatriz@gmail.com" },
+      update: {},
+      create: {
+        name: "Ana Beatriz Souza",
+        email: "ana.beatriz@gmail.com",
+        phone: "(11) 92222-0003",
+        address: "Rua Voluntários da Pátria, 845 - Santana, São Paulo - SP",
+        status: "INACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "ricardo.nunes@hotmail.com" },
+      update: {},
+      create: {
+        name: "Ricardo Nunes",
+        email: "ricardo.nunes@hotmail.com",
+        phone: "(11) 92222-0004",
+        address: "Rua Augusta, 2200 - Consolação, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "juliana.rocha@outlook.com" },
+      update: {},
+      create: {
+        name: "Juliana Rocha",
+        email: "juliana.rocha@outlook.com",
+        phone: "(11) 92222-0005",
+        address: "Alameda Santos, 450 - Jardim Paulista, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "fernando.melo@gmail.com" },
+      update: {},
+      create: {
+        name: "Fernando Melo",
+        email: "fernando.melo@gmail.com",
+        phone: "(11) 92222-0006",
+        address: "Rua Cardeal Arcoverde, 780 - Pinheiros, São Paulo - SP",
+        status: "INACTIVE",
+      },
+    }),
+  ])
+
+  const [maria, joao, anaBeatriz, ricardo, juliana, fernando] = clients;
+
+  // Orçamentos
+  const budgets = [
+    {
+      id: 1,
+      description: "Troca de tubulação hidráulica da cozinha",
+      value: 850.0,
+      date: new Date("2026-05-10"),
+      status: "APPROVED" as const,
+      clientId: maria.id,
+      serviceId: encanamento.id,
+    },
+    {
+      id: 2,
+      description: "Instalação de quadro de disjuntores",
+      value: 1200.5,
+      date: new Date("2026-06-02"),
+      status: "APPROVED" as const,
+      clientId: joao.id,
+      serviceId: eletrica.id,
+    },
+    {
+      id: 3,
+      description: "Pintura completa de apartamento 2 quartos",
+      value: 3200.0,
+      date: new Date("2026-07-01"),
+      status: "PENDING" as const,
+      clientId: ricardo.id,
+      serviceId: pintura.id,
+    },
+    {
+      id: 4,
+      description: "Reparo de vazamento no banheiro social",
+      value: 250.0,
+      date: new Date("2026-07-20"),
+      status: "PENDING" as const,
+      clientId: anaBeatriz.id,
+      serviceId: encanamento.id,
+    },
+    {
+      id: 5,
+      description: "Revisão geral da rede elétrica da casa",
+      value: 4800.75,
+      date: new Date("2026-08-05"),
+      status: "PENDING" as const,
+      clientId: juliana.id,
+      serviceId: eletrica.id,
+    },
+    {
+      id: 6,
+      description: "Manutenção de portão e fechaduras",
+      value: 180.9,
+      date: new Date("2026-04-18"),
+      status: "REJECTED" as const,
+      clientId: fernando.id,
+      serviceId: servicosGerais.id,
+    },
+    {
+      id: 7,
+      description: "Pintura de fachada externa",
+      value: 5600.0,
+      date: new Date("2026-09-12"),
+      status: "PENDING" as const,
+      clientId: maria.id,
+      serviceId: pintura.id,
+    },
+    {
+      id: 8,
+      description: "Troca de fiação antiga do escritório",
+      value: 999.99,
+      date: new Date("2026-03-22"),
+      status: "REJECTED" as const,
+      clientId: ricardo.id,
+      serviceId: eletrica.id,
+    },
+  ]
+
+  for (const budget of budgets) {
+    const { id, ...data } = budget
+    await prisma.budget.upsert({
+      where: { id },
+      update: {},
+      create: { id, ...data },
+    })
+  }
+
+  // Agendamentos
+  const appointments = [
+    {
+      id: "a1111111-0000-4000-8000-000000000001",
+      clientId: maria.id,
+      serviceId: encanamento.id,
+      employeeId: carlos.id,
+      status: "COMPLETED" as const,
+      serviceDate: new Date("2026-05-12T09:00:00"),
+      description: "Concluído sem intercorrências",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000002",
+      clientId: joao.id,
+      serviceId: eletrica.id,
+      employeeId: roberto.id,
+      status: "COMPLETED" as const,
+      serviceDate: new Date("2026-06-05T14:00:00"),
+      description: null,
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000003",
+      clientId: ricardo.id,
+      serviceId: pintura.id,
+      employeeId: fernanda.id,
+      status: "IN_PROGRESS" as const,
+      serviceDate: new Date("2026-07-25T08:00:00"),
+      description: "Cliente pediu para priorizar a sala",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000004",
+      clientId: anaBeatriz.id,
+      serviceId: encanamento.id,
+      employeeId: marcos.id,
+      status: "CONFIRMED" as const,
+      serviceDate: new Date("2026-08-02T10:30:00"),
+      description: null,
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000005",
+      clientId: juliana.id,
+      serviceId: eletrica.id,
+      employeeId: andre.id,
+      status: "CONFIRMED" as const,
+      serviceDate: new Date("2026-08-10T13:00:00"),
+      description: "Levar escada e multímetro",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000006",
+      clientId: fernando.id,
+      serviceId: servicosGerais.id,
+      employeeId: diego.id,
+      status: "PENDING" as const,
+      serviceDate: new Date("2026-08-15T09:00:00"),
+      description: null,
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000007",
+      clientId: maria.id,
+      serviceId: pintura.id,
+      employeeId: paulo.id,
+      status: "PENDING" as const,
+      serviceDate: new Date("2026-09-01T08:30:00"),
+      description: "Aguardando confirmação de disponibilidade do cliente",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000008",
+      clientId: ricardo.id,
+      serviceId: eletrica.id,
+      employeeId: undefined,
+      status: "PENDING" as const,
+      serviceDate: new Date("2026-09-05T11:00:00"),
+      description: "Ainda sem funcionário designado",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000009",
+      clientId: joao.id,
+      serviceId: servicosGerais.id,
+      employeeId: carlos.id,
+      status: "CONFIRMED" as const,
+      serviceDate: new Date("2026-07-30T15:00:00"),
+      description: null,
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000010",
+      clientId: anaBeatriz.id,
+      serviceId: pintura.id,
+      employeeId: fernanda.id,
+      status: "COMPLETED" as const,
+      serviceDate: new Date("2026-02-14T09:00:00"),
+      description: "Retrabalho de pintura da varanda",
+    },
+  ]
+
+  for (const appointment of appointments) {
+    const { id, ...data } = appointment
+    await prisma.appointment.upsert({
+      where: { id },
+      update: {},
+      create: { id, ...data },
+    })
+  }
+
   console.log("Seed concluído com sucesso.");
 }
 
