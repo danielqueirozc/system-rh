@@ -3,10 +3,10 @@
 import { Droplet, Paintbrush, Wrench } from "lucide-react"
 import { CardService } from "./ui/card-service"
 import Link from "next/link"
-import { useSchedulingStore } from "@/context/scheduling-store"
+import { useAppointmentStore } from "@/context/appointment-store"
 
 export default function Services() {
-  const { service, setService, setStep } = useSchedulingStore()
+  const { service, setService, setStep } = useAppointmentStore()
 
   function handleService() {
     if (service) setStep(2)

@@ -2,11 +2,11 @@
 
 import { Droplet, Paintbrush, Wrench } from "lucide-react"
 import Link from "next/link"
-import { useSchedulingStore } from "@/context/scheduling-store"
+import { useAppointmentStore } from "@/context/appointment-store"
 import { CardService } from "@/app/components/ui/card-service"
 
 export default function Service() {
-  const {setService, setStep } = useSchedulingStore()
+  const {setService, setStep } = useAppointmentStore()
 
   return (
     <section className="flex flex-col text-center pb-25 px-4 md:px-16">

@@ -4,14 +4,14 @@ import type { ReactNode } from "react";
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 import { Stepper } from "../components/stepper";
-import { useSchedulingStore } from "@/context/scheduling-store";
+import { useAppointmentStore } from "@/context/appointment-store";
 
 interface ChildrenType {
   children: ReactNode
 }
 
 export default function ClientLayout({ children }: ChildrenType) {
-  const {step} = useSchedulingStore()
+  const {step} = useAppointmentStore()
 
   const steps = [
     { label: "Serviço" },

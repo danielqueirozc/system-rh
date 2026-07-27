@@ -3,7 +3,7 @@
 import { Mail, MapPin, Phone, User } from "lucide-react";
 import { Input } from "../../components/ui/input";
 import Link from "next/link";
-import { useSchedulingStore } from "@/context/scheduling-store";
+import { useAppointmentStore } from "@/context/appointment-store";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
 
@@ -12,7 +12,7 @@ export default function Data() {
   
   const router = useRouter()
 
-  const { setData, createScheduling } = useSchedulingStore()
+  const { setData, createAppointment } = useAppointmentStore()
 
   useEffect(() => {
     function handleResize() {
@@ -58,7 +58,7 @@ export default function Data() {
     }
 
     try {
-      await createScheduling({
+      await createAppointment({
         name: name as string,
         email: email as string,
         phone: phone as string,

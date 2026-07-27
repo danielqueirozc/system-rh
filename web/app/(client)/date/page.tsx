@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useSchedulingStore } from "@/context/scheduling-store"
+import { useAppointmentStore } from "@/context/appointment-store"
 import { Calendar } from "@/app/components/ui/calendar"
 import { Button } from "@/app/components/ui/button"
 import { useRouter } from "next/navigation"
@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"
 export default function DatePage() {
   const [date, setDate] = useState<Date | undefined>(undefined)
 
-  const { setDateScheduling, setStep } = useSchedulingStore()
+  const { setDateAppointment, setStep } = useAppointmentStore()
 
   const router = useRouter()
 
@@ -33,7 +33,7 @@ export default function DatePage() {
     const conbined = new Date(date)
     conbined.setHours(Number(hours), Number(minutes))
 
-    setDateScheduling(conbined)
+    setDateAppointment(conbined)
     setStep(3)
     router.push('/data')
   }

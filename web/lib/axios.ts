@@ -1,4 +1,4 @@
-import type { SchedulingProps } from "@/context/scheduling-store"
+import type { AppointmentProps } from "@/context/appointment-store"
 import axios from "axios"
 
 export const api = axios.create({
@@ -27,11 +27,11 @@ export const api = axios.create({
 //   }
 // )
 
-export const schedulingService = {
-  create: async (data: SchedulingProps) => {
+export const appointmentService = {
+  create: async (data: AppointmentProps) => {
 
     console.log(data, 'indo a partir do axios')
-    const response = await api.post('/scheduling', data)
+    const response = await api.post('/appointment', data)
 
     console.log('vindo a partir do axios')
     return response

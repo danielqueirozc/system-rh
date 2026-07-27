@@ -1,6 +1,5 @@
-import { schedulingService } from '@/lib/axios'
+import { appointmentService } from '@/lib/axios'
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 interface DataProps {
     name: string
@@ -10,17 +9,17 @@ interface DataProps {
     description?: string
 }
 
-export interface SchedulingProps {
-  serviceName: string 
-  serviceDate: Date 
-  clientName: string 
-  clientEmail: string 
-  clientAddress: string 
-  clientPhone: string 
-  clientDescription: string 
+export interface AppointmentProps {
+  serviceName: string
+  serviceDate: Date
+  clientName: string
+  clientEmail: string
+  clientAddress: string
+  clientPhone: string
+  clientDescription: string
 }
 
-interface SchedulingStoreType {
+interface AppointmentStoreType {
   service: string
   date: Date | null
   data: DataProps
@@ -28,12 +27,12 @@ interface SchedulingStoreType {
 
   setStep: (step: number) => void
   setService: (service: string) => void
-  setDateScheduling: (date: Date) => void
+  setDateAppointment: (date: Date) => void
   setData: (data: DataProps) => void
-  createScheduling: (data: DataProps) => Promise<void>
+  createAppointment: (data: DataProps) => Promise<void>
 }
 
-export const useSchedulingStore = create<SchedulingStoreType>()(
+export const useAppointmentStore = create<AppointmentStoreType>()(
   // persist(
     (set, get) => ({
     service: '',
@@ -49,12 +48,12 @@ export const useSchedulingStore = create<SchedulingStoreType>()(
 
     setStep: (step) => set ({ step }),
     setService: (service) => set({ service }),
-    setDateScheduling: (date) => set({ date }),
+    setDateAppointment: (date) => set({ date }),
     setData: (data) => { set({ data }), console.log(data) },
-    createScheduling: async (data) => {
+    createAppointment: async (data) => {
       const { service, date } = get()
       try {
-        const response = await schedulingService.create({
+        const response = await appointmentService.create({
           serviceName: service,
           serviceDate: date!,
           clientName: data.name,
@@ -66,13 +65,13 @@ export const useSchedulingStore = create<SchedulingStoreType>()(
 
         console.log(response, 'response store')
       } catch (error) {
-        console.error('Erro ao criar Scheduling', error)
+        console.error('Erro ao criar Appointment', error)
         throw error
       }
     },
   }),
   // {
-  //     name: 'scheduling-storage',
+  //     name: 'appointment-storage',
   //     partialize: (state) => ({
   //       service: state.service,
   //       date: state.date,
