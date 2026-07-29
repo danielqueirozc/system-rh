@@ -108,10 +108,10 @@ export default function Clients() {
                         </td>
                         <td className="py-4 text-center">
                           <div className="flex items-center justify-center gap-5 px-2">
-                            <button className="text-gray-500 hover:text-gray-800 hover:p-2 hover:bg-violet-100">
+                            <button className="w-10 h-10 flex items-center justify-center rounded-lg text-gray-500 transition-colors hover:text-blue hover:bg-violet-100">
                               <SquarePen size={16} />
                             </button>
-                            <button className="text-red-400 hover:text-red-600">
+                            <button className="w-10 h-10 flex items-center justify-center rounded-lg text-red-400 transition-colors hover:text-red-600 hover:bg-violet-100">
                               <Trash2 size={16} />
                             </button>
                           </div>

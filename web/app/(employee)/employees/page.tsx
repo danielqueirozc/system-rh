@@ -97,12 +97,12 @@ export default function Enployees() {
                   </div>
 
                   <div className="flex gap-2">
-                    <button className="w-full flex justify-center items-center gap-4 py-1 border font-medium transition-colors border-purple rounded-lg hover:bg-violet-100 hover:text-blue">
+                    <button className="w-full flex justify-center items-center gap-4 py-1 border font-medium transition-colors border-violet-100 rounded-lg hover:bg-violet-50 hover:text-blue">
                       <SquarePen size={16} />
                       Editar
                     </button>
 
-                    <button className="border border-purple px-2.5 py-1 rounded-lg hover:bg-violet-100">
+                    <button className="border border-violet-100 px-2.5 py-1 rounded-lg hover:bg-violet-50">
                       <Trash2 className="text-red-500" size={16} />
                     </button>
                   </div>
