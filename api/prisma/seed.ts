@@ -33,6 +33,30 @@ async function main() {
     create: { name: "Serviços Gerais", description: "Manutenção e consertos diversos" },
   })
 
+  const marcenaria = await prisma.service.upsert({
+    where: { id: 5 },
+    update: {},
+    create: { name: "Marcenaria", description: "Fabricação e reparo de móveis planejados e estruturas de madeira" },
+  })
+
+  const jardinagem = await prisma.service.upsert({
+    where: { id: 6 },
+    update: {},
+    create: { name: "Jardinagem", description: "Manutenção de jardins, poda de árvores e paisagismo" },
+  })
+
+  const limpezaPosObra = await prisma.service.upsert({
+    where: { id: 7 },
+    update: {},
+    create: { name: "Limpeza Pós-obra", description: "Limpeza pesada e remoção de entulho após reformas e construções" },
+  })
+
+  const arCondicionado = await prisma.service.upsert({
+    where: { id: 8 },
+    update: {},
+    create: { name: "Ar-condicionado", description: "Instalação, manutenção e higienização de aparelhos de ar-condicionado" },
+  })
+
   // Funcionários
   const employees = await Promise.all([
     prisma.employee.upsert({
@@ -112,22 +136,99 @@ async function main() {
         phone: "(11) 91111-0007",
       },
     }),
+    prisma.employee.upsert({
+      where: { email: "juliana.martins@avila.com" },
+      update: {},
+      create: {
+        name: "Juliana Martins",
+        function: "Marceneira",
+        status: "ACTIVE",
+        email: "juliana.martins@avila.com",
+        phone: "(11) 91111-0008",
+      },
+    }),
+    prisma.employee.upsert({
+      where: { email: "bruno.tavares@avila.com" },
+      update: {},
+      create: {
+        name: "Bruno Tavares",
+        function: "Marceneiro",
+        status: "ACTIVE",
+        email: "bruno.tavares@avila.com",
+        phone: "(11) 91111-0009",
+      },
+    }),
+    prisma.employee.upsert({
+      where: { email: "camila.ribeiro@avila.com" },
+      update: {},
+      create: {
+        name: "Camila Ribeiro",
+        function: "Jardineira",
+        status: "ACTIVE",
+        email: "camila.ribeiro@avila.com",
+        phone: "(11) 91111-0010",
+      },
+    }),
+    prisma.employee.upsert({
+      where: { email: "rafael.barbosa@avila.com" },
+      update: {},
+      create: {
+        name: "Rafael Barbosa",
+        function: "Técnico de Ar-condicionado",
+        status: "ACTIVE",
+        email: "rafael.barbosa@avila.com",
+        phone: "(11) 91111-0011",
+      },
+    }),
+    prisma.employee.upsert({
+      where: { email: "sandra.nogueira@avila.com" },
+      update: {},
+      create: {
+        name: "Sandra Nogueira",
+        function: "Auxiliar de Limpeza Pós-obra",
+        status: "INACTIVE",
+        email: "sandra.nogueira@avila.com",
+        phone: "(11) 91111-0012",
+      },
+    }),
+    prisma.employee.upsert({
+      where: { email: "thiago.correia@avila.com" },
+      update: {},
+      create: {
+        name: "Thiago Correia",
+        function: "Eletricista",
+        status: "ACTIVE",
+        email: "thiago.correia@avila.com",
+        phone: "(11) 91111-0013",
+      },
+    }),
   ])
 
-  const [carlos, marcos, roberto, andre, fernanda, paulo, diego] = employees;
+  const [
+    carlos, marcos, roberto, andre, fernanda, paulo, diego,
+    julianaMartins, bruno, camila, rafael, sandra, thiago,
+  ] = employees;
 
   // Vincula funcionários aos serviços (N:N via EmployeeService)
   const links = [
-    { employeeId: carlos.id,   serviceId: encanamento.id },
-    { employeeId: carlos.id,   serviceId: servicosGerais.id },
-    { employeeId: marcos.id,   serviceId: encanamento.id },
-    { employeeId: roberto.id,  serviceId: eletrica.id },
-    { employeeId: roberto.id,  serviceId: servicosGerais.id },
-    { employeeId: andre.id,    serviceId: eletrica.id },
-    { employeeId: fernanda.id, serviceId: pintura.id },
-    { employeeId: paulo.id,    serviceId: pintura.id },
-    { employeeId: paulo.id,    serviceId: servicosGerais.id },
-    { employeeId: diego.id,    serviceId: servicosGerais.id },
+    { employeeId: carlos.id,         serviceId: encanamento.id },
+    { employeeId: carlos.id,         serviceId: servicosGerais.id },
+    { employeeId: marcos.id,         serviceId: encanamento.id },
+    { employeeId: roberto.id,        serviceId: eletrica.id },
+    { employeeId: roberto.id,        serviceId: servicosGerais.id },
+    { employeeId: andre.id,          serviceId: eletrica.id },
+    { employeeId: fernanda.id,       serviceId: pintura.id },
+    { employeeId: paulo.id,          serviceId: pintura.id },
+    { employeeId: paulo.id,          serviceId: servicosGerais.id },
+    { employeeId: diego.id,          serviceId: servicosGerais.id },
+    { employeeId: diego.id,          serviceId: limpezaPosObra.id },
+    { employeeId: julianaMartins.id, serviceId: marcenaria.id },
+    { employeeId: bruno.id,          serviceId: marcenaria.id },
+    { employeeId: bruno.id,          serviceId: servicosGerais.id },
+    { employeeId: camila.id,         serviceId: jardinagem.id },
+    { employeeId: rafael.id,         serviceId: arCondicionado.id },
+    { employeeId: sandra.id,         serviceId: limpezaPosObra.id },
+    { employeeId: thiago.id,         serviceId: eletrica.id },
   ]
 
   for (const link of links) {
@@ -206,9 +307,78 @@ async function main() {
         status: "INACTIVE",
       },
     }),
+    prisma.client.upsert({
+      where: { email: "patricia.gomes@gmail.com" },
+      update: {},
+      create: {
+        name: "Patrícia Gomes",
+        email: "patricia.gomes@gmail.com",
+        phone: "(11) 92222-0007",
+        address: "Rua Harmonia, 320 - Sumaré, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "eduardo.martins@hotmail.com" },
+      update: {},
+      create: {
+        name: "Eduardo Martins",
+        email: "eduardo.martins@hotmail.com",
+        phone: "(11) 92222-0008",
+        address: "Rua dos Pinheiros, 900 - Pinheiros, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "camila.duarte@gmail.com" },
+      update: {},
+      create: {
+        name: "Camila Duarte",
+        email: "camila.duarte@gmail.com",
+        phone: "(11) 92222-0009",
+        address: "Av. Rebouças, 3200 - Pinheiros, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "bruno.azevedo@outlook.com" },
+      update: {},
+      create: {
+        name: "Bruno Azevedo",
+        email: "bruno.azevedo@outlook.com",
+        phone: "(11) 92222-0010",
+        address: "Rua Teodoro Sampaio, 1120 - Pinheiros, São Paulo - SP",
+        status: "INACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "larissa.cardoso@gmail.com" },
+      update: {},
+      create: {
+        name: "Larissa Cardoso",
+        email: "larissa.cardoso@gmail.com",
+        phone: "(11) 92222-0011",
+        address: "Rua Girassol, 210 - Vila Madalena, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
+    prisma.client.upsert({
+      where: { email: "marcelo.teixeira@hotmail.com" },
+      update: {},
+      create: {
+        name: "Marcelo Teixeira",
+        email: "marcelo.teixeira@hotmail.com",
+        phone: "(11) 92222-0012",
+        address: "Rua Cardoso de Almeida, 560 - Perdizes, São Paulo - SP",
+        status: "ACTIVE",
+      },
+    }),
   ])
 
-  const [maria, joao, anaBeatriz, ricardo, juliana, fernando] = clients;
+  const [
+    maria, joao, anaBeatriz, ricardo, julianaRocha, fernando,
+    patricia, eduardo, camilaDuarte, brunoAzevedo, larissa, marcelo,
+  ] = clients;
 
   // Orçamentos
   const budgets = [
@@ -254,7 +424,7 @@ async function main() {
       value: 4800.75,
       date: new Date("2026-08-05"),
       status: "PENDING" as const,
-      clientId: juliana.id,
+      clientId: julianaRocha.id,
       serviceId: eletrica.id,
     },
     {
@@ -283,6 +453,78 @@ async function main() {
       status: "REJECTED" as const,
       clientId: ricardo.id,
       serviceId: eletrica.id,
+    },
+    {
+      id: 9,
+      description: "Fabricação de armário planejado para cozinha",
+      value: 6200.0,
+      date: new Date("2026-06-15"),
+      status: "APPROVED" as const,
+      clientId: patricia.id,
+      serviceId: marcenaria.id,
+    },
+    {
+      id: 10,
+      description: "Poda de árvores e manutenção geral do jardim",
+      value: 780.0,
+      date: new Date("2026-07-05"),
+      status: "PENDING" as const,
+      clientId: eduardo.id,
+      serviceId: jardinagem.id,
+    },
+    {
+      id: 11,
+      description: "Limpeza pós-obra de apartamento reformado",
+      value: 950.0,
+      date: new Date("2026-08-01"),
+      status: "PENDING" as const,
+      clientId: camilaDuarte.id,
+      serviceId: limpezaPosObra.id,
+    },
+    {
+      id: 12,
+      description: "Instalação de 2 aparelhos de ar-condicionado split",
+      value: 2400.0,
+      date: new Date("2026-08-12"),
+      status: "APPROVED" as const,
+      clientId: brunoAzevedo.id,
+      serviceId: arCondicionado.id,
+    },
+    {
+      id: 13,
+      description: "Reforma de deck de madeira na varanda",
+      value: 3100.5,
+      date: new Date("2026-09-01"),
+      status: "PENDING" as const,
+      clientId: larissa.id,
+      serviceId: marcenaria.id,
+    },
+    {
+      id: 14,
+      description: "Manutenção preventiva de 4 aparelhos de ar-condicionado",
+      value: 890.0,
+      date: new Date("2026-05-28"),
+      status: "REJECTED" as const,
+      clientId: marcelo.id,
+      serviceId: arCondicionado.id,
+    },
+    {
+      id: 15,
+      description: "Instalação de gramado sintético no quintal",
+      value: 4500.0,
+      date: new Date("2026-09-20"),
+      status: "PENDING" as const,
+      clientId: patricia.id,
+      serviceId: jardinagem.id,
+    },
+    {
+      id: 16,
+      description: "Limpeza pesada de terreno após demolição",
+      value: 1750.25,
+      date: new Date("2026-04-10"),
+      status: "REJECTED" as const,
+      clientId: eduardo.id,
+      serviceId: limpezaPosObra.id,
     },
   ]
 
@@ -335,7 +577,7 @@ async function main() {
     },
     {
       id: "a1111111-0000-4000-8000-000000000005",
-      clientId: juliana.id,
+      clientId: julianaRocha.id,
       serviceId: eletrica.id,
       employeeId: andre.id,
       status: "CONFIRMED" as const,
@@ -386,6 +628,96 @@ async function main() {
       status: "COMPLETED" as const,
       serviceDate: new Date("2026-02-14T09:00:00"),
       description: "Retrabalho de pintura da varanda",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000011",
+      clientId: patricia.id,
+      serviceId: marcenaria.id,
+      employeeId: julianaMartins.id,
+      status: "CONFIRMED" as const,
+      serviceDate: new Date("2026-08-20T09:00:00"),
+      description: "Levar medidas finais do armário",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000012",
+      clientId: eduardo.id,
+      serviceId: jardinagem.id,
+      employeeId: camila.id,
+      status: "COMPLETED" as const,
+      serviceDate: new Date("2026-06-10T08:00:00"),
+      description: "Poda concluída, jardim aparado",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000013",
+      clientId: camilaDuarte.id,
+      serviceId: limpezaPosObra.id,
+      employeeId: sandra.id,
+      status: "PENDING" as const,
+      serviceDate: new Date("2026-08-25T07:30:00"),
+      description: null,
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000014",
+      clientId: brunoAzevedo.id,
+      serviceId: arCondicionado.id,
+      employeeId: rafael.id,
+      status: "IN_PROGRESS" as const,
+      serviceDate: new Date("2026-08-18T10:00:00"),
+      description: "Instalando unidade externa",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000015",
+      clientId: larissa.id,
+      serviceId: marcenaria.id,
+      employeeId: bruno.id,
+      status: "CONFIRMED" as const,
+      serviceDate: new Date("2026-09-05T13:30:00"),
+      description: null,
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000016",
+      clientId: marcelo.id,
+      serviceId: arCondicionado.id,
+      employeeId: rafael.id,
+      status: "COMPLETED" as const,
+      serviceDate: new Date("2026-05-30T09:00:00"),
+      description: "Manutenção realizada em 4 unidades",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000017",
+      clientId: patricia.id,
+      serviceId: jardinagem.id,
+      employeeId: camila.id,
+      status: "PENDING" as const,
+      serviceDate: new Date("2026-09-22T08:00:00"),
+      description: "Aguardando aprovação do orçamento",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000018",
+      clientId: eduardo.id,
+      serviceId: limpezaPosObra.id,
+      employeeId: undefined,
+      status: "PENDING" as const,
+      serviceDate: new Date("2026-08-30T07:00:00"),
+      description: "Sem funcionário disponível ainda",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000019",
+      clientId: julianaRocha.id,
+      serviceId: servicosGerais.id,
+      employeeId: thiago.id,
+      status: "CONFIRMED" as const,
+      serviceDate: new Date("2026-08-05T14:00:00"),
+      description: "Troca de fiação combinada por telefone",
+    },
+    {
+      id: "a1111111-0000-4000-8000-000000000020",
+      clientId: fernando.id,
+      serviceId: eletrica.id,
+      employeeId: thiago.id,
+      status: "COMPLETED" as const,
+      serviceDate: new Date("2026-03-15T11:00:00"),
+      description: "Substituição de disjuntores antigos",
     },
   ]
 
