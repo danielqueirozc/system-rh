@@ -1,6 +1,6 @@
 'use client'
 
-import { HeaderMobile } from "@/app/components/header-mobile";
+import { useClientStore } from "@/context/client-store";
 import { cn } from "@/lib/utils";
 import { Mail, Phone, Plus, Search, SquarePen, Trash2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
@@ -15,24 +15,30 @@ const clients = [
 
 export default function Clients() {
   const [search, setSearch] = useState("")
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(0)
 
-   
+  const { client, getClients } = useClientStore()
 
-  const filtered = clients.filter(c =>
+  const filtered = client.filter(c =>
     // uma string mesmo vazia continua sendo uma string, entao passa na comparacao com o obj.name
     c.name.toLowerCase().includes(search.toLowerCase())
   )
 
-   useEffect(() => {
-      function handleResize() {
-        setWindowWidth(window.innerWidth)
-      }
-      
-      window.addEventListener('resize', handleResize)
+  useEffect(() => {
+  function handleResize() {
+    setWindowWidth(window.innerWidth)
+  }
+
+  handleResize()
   
-      return () => window.removeEventListener('resize', handleResize)
-    }, [])
+  window.addEventListener('resize', handleResize)
+
+  return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    getClients()
+  }, [])
 
   return (
      <Fragment>
@@ -79,9 +85,7 @@ export default function Clients() {
                     {filtered.map((client, i) => (
                       <tr
                         key={client.id}
-                        className={cn(
-                          "border-b border-violet-100 rounded-lg bg-white transition-colors hover:bg-violet-50",
-                        )}
+                        className="border-b border-violet-100 rounded-lg bg-white transition-colors hover:bg-violet-50"
                       >
                         <td className="py-4 px-2 pr-4 font-medium text-gray-800">{client.name}</td>
                         <td className="py-4 pr-4">
@@ -93,13 +97,14 @@ export default function Clients() {
                         <td className="py-4 pr-4 text-gray-500">{client.address}</td>
                         <td className="py-4 text-center">
                           <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-100 text-[#1a1a8c] text-xs font-semibold">
-                            {client.services}
+                            {/* {client.services} */}
+                            5
                           </span>
                         </td>
                         <td className="py-4 text-center">
                           <span className={cn(
                             "inline-block px-2 py-1 rounded-full text-xs font-semibold",
-                            client.status === "Ativo"
+                            client.status === "ACTIVE"
                               ? "bg-[#1a1a8c] text-white"
                               : "border border-gray-400 text-gray-600"
                           )}>
@@ -175,13 +180,14 @@ export default function Clients() {
                     <td className="py-4 pr-4 text-gray-500">{client.address}</td>
                     <td className="py-4 text-center">
                       <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-100 text-[#1a1a8c] text-xs font-semibold">
-                        {client.services}
+                        {/* {client.services} */}
+                        5
                       </span>
                     </td>
                     <td className="py-4 text-center">
                       <span className={cn(
                         "inline-block px-2 py-1 rounded-full text-xs font-semibold",
-                        client.status === "Ativo"
+                        client.status === "ACTIVE"
                           ? "bg-[#1a1a8c] text-white"
                           : "border border-gray-400 text-gray-600"
                       )}>

@@ -48,3 +48,11 @@ export const employeeService = {
     return response.data
   }
 }
+
+export const clientService = {
+  get: async () => {
+    const response = await api.get('/client')
+    console.log(response)
+    return response.data
+  }
+}
