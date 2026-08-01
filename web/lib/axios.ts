@@ -28,12 +28,12 @@ export const api = axios.create({
 // )
 
 export const appointmentService = {
+  get: async () => {
+    const response = await api.get('/appointments')
+    return response.data
+  },
   create: async (data: AppointmentProps) => {
-
-    console.log(data, 'indo a partir do axios')
     const response = await api.post('/appointment', data)
-
-    console.log('vindo a partir do axios')
     return response
   }
 }

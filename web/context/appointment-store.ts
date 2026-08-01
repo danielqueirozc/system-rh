@@ -35,22 +35,22 @@ interface AppointmentStoreType {
 export const useAppointmentStore = create<AppointmentStoreType>()(
   // persist(
     (set, get) => ({
-    service: '',
-    date: null,
-    data: {
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      description: ''
-    },
-    step: 1,
+      service: '',
+      date: null,
+      data: {
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        description: ''
+      },
+      step: 1,
 
-    setStep: (step) => set ({ step }),
-    setService: (service) => set({ service }),
-    setDateAppointment: (date) => set({ date }),
-    setData: (data) => { set({ data }), console.log(data) },
-    createAppointment: async (data) => {
+      setStep: (step) => set ({ step }),
+      setService: (service) => set({ service }),
+      setDateAppointment: (date) => set({ date }),
+      setData: (data) => { set({ data }), console.log(data) },
+      createAppointment: async (data) => {
       const { service, date } = get()
       try {
         const response = await appointmentService.create({

@@ -1,7 +1,5 @@
 'use client'
 
-import { HeaderMobile } from "@/app/components/header-mobile";
-import { NavbarMenuMobile } from "@/app/components/navbar-menu-mobile";
 import { Card } from "@/app/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Calendar, Plus, User } from "lucide-react";
@@ -10,7 +8,6 @@ import { Fragment, useEffect, useState } from "react";
 export default function Appointments() {
   const [activeStatus, setActiveStatus] = useState("Todos")
   const [windowWidth, setWindowWidth] = useState(0)
-
 
   const status = ["Todos", "Pendentes", "Confirmados", "Em Andamento", "Concluídos"]
 
