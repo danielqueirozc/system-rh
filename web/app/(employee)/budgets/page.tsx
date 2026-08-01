@@ -1,10 +1,12 @@
 'use client'
 
-import { HeaderMobile } from "@/app/components/header-mobile";
-import { Card } from "@/app/components/ui/card";
-import { cn } from "@/lib/utils";
-import { Plus } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
+import { Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Card } from "@/app/components/ui/card";
+import { useBudgetStore } from "@/context/budget-store";
+import { dateFormatter } from "@/utils/date-formartter";
+import { currencyFormatter } from '@/utils/currency-formatter';
 
 const budgets = [
   { id: 1, client: "Pedro Alves",    service: "Reforma Completa",   description: "Reforma de 3 cômodos",     value: "8.500,00", date: "07/10/2025", status: "Pendente" },
@@ -16,7 +18,20 @@ const budgets = [
 
 export default function Budgets() {
   const [windowWidth, setWindowWidth] = useState(0)
+
+  const { 
+    budgets, 
+    getBudgets,
+    total,
+    getTotal,
+    approved,
+    getApproved,
+    pending,
+    getPending
+  } = useBudgetStore()
   
+  // const formated
+
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth)
@@ -27,6 +42,13 @@ export default function Budgets() {
     window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    getBudgets()
+    getTotal()
+    getApproved()
+    getPending()
   }, [])
 
   return (
@@ -43,17 +65,17 @@ export default function Budgets() {
                 <div className="flex gap-4">
                   <Card className="flex flex-col gap-7 p-4">
                     <p className="text-gray-500">Total Orçado</p>
-                    <span className="text-gray-900 font-medium text-lg">R$ 24.200</span>
+                    <span className="text-gray-900 font-medium text-lg">{currencyFormatter(total)}</span>
                   </Card>
 
                   <Card className="flex flex-col gap-7 p-4">
                     <p className="text-gray-500">Aprovados</p>
-                    <span className="text-green-600 font-medium text-lg">R$ 8.000</span>
+                    <span className="text-green-600 font-medium text-lg">{currencyFormatter(approved)}</span>
                   </Card>
 
                   <Card className="flex flex-col gap-7 p-4">
                     <p className="text-gray-500">Pendentes</p>
-                    <span className="text-red-500 font-medium text-lg">R$ 11.700</span>
+                    <span className="text-red-500 font-medium text-lg">{currencyFormatter(pending)}</span>
                   </Card>
                 </div>
 
@@ -82,25 +104,22 @@ export default function Budgets() {
                       {budgets.map((budget, i) => (
                         <tr
                           key={budget.id}
-                          className={cn(
-                            "border-t border-gray-100 rounded-lg",
-                            i % 2 === 0 ? "bg-[#f0f0fa]" : "bg-white"
-                          )}
+                          className="border-b border-violet-100 rounded-lg bg-white transition-colors hover:bg-violet-50"
                         >
                           <td className="py-4 px-2 pr-4 font-medium text-gray-800">#{budget.id}</td>
-                          <td className="py-4 pr-4 font-medium text-gray-800">{budget.client}</td>
-                          <td className="py-4 pr-4 text-gray-500">{budget.service}</td>
+                          <td className="py-4 pr-4 font-medium text-gray-800">{budget.client.name}</td>
+                          <td className="py-4 pr-4 text-gray-500">{budget.service.name}</td>
                           <td className="py-4 pr-4 text-gray-500">{budget.description}</td>
-                          <td className="py-4 pr-4 text-green-600 font-medium">R$ {budget.value}</td>
-                          <td className="py-4 pr-4 text-gray-500">{budget.date}</td>
+                          <td className="py-4 pr-4 text-green-600 font-medium">R$ {currencyFormatter(budget.value)}</td>
+                          <td className="py-4 pr-4 text-gray-500">{dateFormatter(budget.date)}</td>
                           <td className="py-4 text-center">
                             <span className={cn(
                               "inline-block px-2 py-1 rounded-full text-xs font-semibold",
-                              budget.status === "Aprovado" && "bg-[#1a1a8c] text-white",
-                              budget.status === "Pendente" && "border border-gray-400 text-gray-600",
-                              budget.status === "Rejeitado" && "bg-red-500 text-white"
+                              budget.status === "APPROVED" && "bg-[#1a1a8c] text-white",
+                              budget.status === "PENDING" && "border border-gray-400 text-gray-600",
+                              budget.status === "REJECTED" && "bg-red-500 text-white"
                             )}>
-                              {budget.status}
+                              {budget.status === 'PENDING' ? 'Pendente' : budget.status === 'REJECTED' ? 'Rejeitado' : 'Aprovado'}
                             </span>
                           </td>
                           <td className="py-4 text-center">
@@ -108,7 +127,7 @@ export default function Budgets() {
                               <button className="border border-gray-300 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-lg">
                                 Ver
                               </button>
-                              {budget.status === "Pendente" && (
+                              {budget.status === "PENDING" && (
                                 <>
                                   <button className="bg-[#1a1a8c] text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
                                     Aprovar
@@ -177,11 +196,11 @@ export default function Budgets() {
                         )}
                       >
                         <td className="py-4 px-2 pr-4 font-medium text-gray-800">#{budget.id}</td>
-                        <td className="py-4 pr-4 font-medium text-gray-800">{budget.client}</td>
-                        <td className="py-4 pr-4 text-gray-500">{budget.service}</td>
+                        <td className="py-4 pr-4 font-medium text-gray-800">{budget.client.name}</td>
+                        <td className="py-4 pr-4 text-gray-500">{budget.service.name}</td>
                         <td className="py-4 pr-4 text-gray-500">{budget.description}</td>
                         <td className="py-4 pr-4 text-green-600 font-medium">R$ {budget.value}</td>
-                        <td className="py-4 pr-4 text-gray-500">{budget.date}</td>
+                        <td className="py-4 pr-4 text-gray-500">{dateFormatter(budget.date)}</td>
                         <td className="py-4 text-center">
                           <span className={cn(
                             "inline-block px-2 py-1 rounded-full text-xs font-semibold",

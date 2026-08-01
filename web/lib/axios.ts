@@ -52,7 +52,25 @@ export const employeeService = {
 export const clientService = {
   get: async () => {
     const response = await api.get('/client')
-    console.log(response)
     return response.data
   }
+}
+
+export const budgetService = {
+  get: async () => {
+    const response = await api.get('/budget')
+    return response.data
+  },
+  // getTotal: async () => {
+  //   const response = await api.get('/budget')
+  //   return response.data
+  // },
+  // getApproved: async () => {
+  //   const response = await api.get('/budget')
+  //   return response.data
+  // },
+  // getPending: async () => {
+  //   const response = await api.get('/budget')
+  //   return response.data
+  // },
 }
