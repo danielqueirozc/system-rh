@@ -7,7 +7,7 @@ import { CreateBudget } from "./controllers/create-budget.controller";
 import { GetBudget } from "./controllers/get-budget.controller";
 import { GetClients } from "./controllers/get-clients.controller";
 import { GetEmployee } from "./controllers/get-employee.controller";
-import { GetAppointment } from "./controllers/get-appointments.controller";
+import { GetAppointmentByStatus } from "./controllers/get-appointments-by-status.controller";
 
 @Module({
   imports: [DatabaseModule],
@@ -19,7 +19,7 @@ import { GetAppointment } from "./controllers/get-appointments.controller";
     GetBudget,
     GetClients,
     GetEmployee,
-    GetAppointment
+    GetAppointmentByStatus
   ]
 })
 export class HttpModule {}
