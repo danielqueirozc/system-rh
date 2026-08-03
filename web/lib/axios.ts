@@ -1,5 +1,15 @@
-import type { AppointmentProps } from "@/context/appointment-store"
+import type { AppointmentStatus } from "@/context/appointment-store"
 import axios from "axios"
+
+interface AppointmentProps {
+  serviceName: string
+  serviceDate: Date
+  clientName: string
+  clientEmail: string
+  clientAddress: string
+  clientPhone: string
+  clientDescription: string
+}
 
 export const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL
@@ -28,8 +38,8 @@ export const api = axios.create({
 // )
 
 export const appointmentService = {
-  get: async () => {
-    const response = await api.get('/appointments')
+  get: async (status?: AppointmentStatus) => {
+    const response = await api.get('/appointment', { params: { status } })
     return response.data
   },
   create: async (data: AppointmentProps) => {
