@@ -4,9 +4,9 @@ import { AuthenticateController } from "./controllers/authenticate.controller";
 import { CreateAccount } from "./controllers/create-acccount.controller";
 import { CreateAppointment } from "./controllers/create-appointment.controller";
 import { CreateBudget } from "./controllers/create-budget.controller";
-import { GetBudget } from "./controllers/get-budget.controller";
+import { GetBudgets } from "./controllers/get-budgets.controller";
 import { GetClients } from "./controllers/get-clients.controller";
-import { GetEmployee } from "./controllers/get-employee.controller";
+import { GetEmployees } from "./controllers/get-employees.controller";
 import { GetAppointmentByStatus } from "./controllers/get-appointments-by-status.controller";
 
 @Module({
@@ -16,9 +16,9 @@ import { GetAppointmentByStatus } from "./controllers/get-appointments-by-status
     AuthenticateController,
     CreateAppointment,
     CreateBudget,
-    GetBudget,
+    GetBudgets,
     GetClients,
-    GetEmployee,
+    GetEmployees,
     GetAppointmentByStatus
   ]
 })

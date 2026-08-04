@@ -2,7 +2,7 @@ import { PrismaService } from "@/database/prisma/prisma.service";
 import { Controller, Get, HttpCode } from "@nestjs/common";
 
 @Controller()
-export class GetEmployee {
+export class GetEmployees {
   constructor(private prisma: PrismaService) {}
 
   @Get('/employee')

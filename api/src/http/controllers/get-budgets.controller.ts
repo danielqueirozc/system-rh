@@ -2,7 +2,7 @@ import { PrismaService } from "@/database/prisma/prisma.service";
 import { Controller, Get, HttpCode } from "@nestjs/common";
 
 @Controller()
-export class GetBudget {
+export class GetBudgets {
   constructor(private prisma: PrismaService) {}
 
   @Get('/budget')
