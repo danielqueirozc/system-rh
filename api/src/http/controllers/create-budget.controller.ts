@@ -9,6 +9,7 @@ const bodySchema = z.object({
   date: z.coerce.date(),
   clientId: z.string().uuid(),
   serviceId: z.number().int(),
+  employeeId: z.string().uuid(),
 })
 
 type CreateBudgetType = z.infer<typeof bodySchema>
@@ -21,7 +22,7 @@ export class CreateBudget {
   @UsePipes(new ZodValidationPipe(bodySchema))
   @HttpCode(201)
   async handle(@Body() body: CreateBudgetType) {
-    const { description, value, date, clientId, serviceId } = body
+    const { description, value, date, clientId, serviceId, employeeId } = body
 
     const client = await this.prisma.client.findUnique({
       where: { id: clientId }
@@ -39,6 +40,14 @@ export class CreateBudget {
       throw new NotFoundException(`Nenhum serviço encontrado "${service}"`)
     }
 
+    const employee = await this.prisma.employee.findUnique({
+      where: { id: employeeId }
+    })
+
+    if (!employee) {
+      throw new NotFoundException(`Nenhum funcionário encontrado "${employeeId}"`)
+    }
+
     const budget = await this.prisma.budget.create({
       data: {
         description,
@@ -47,6 +56,7 @@ export class CreateBudget {
         status: 'PENDING',
         client: { connect: { id: client.id } },
         service: { connect: { id: service.id } },
+        employee: { connect: { id: employee.id } },
       }
     })
 

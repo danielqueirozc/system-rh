@@ -107,6 +107,7 @@ model Employee {
 
   employeeServices EmployeeService[]
   appointment      Appointment[]     @relation("employeeAppointment")
+  budgets          Budget[]          @relation("budgetEmployee")
 
   @@map("employees")
 }
@@ -142,6 +143,9 @@ model Budget {
 
   service   Service @relation("budgetService", fields: [serviceId], references: [id])
   serviceId Int
+
+  employee   Employee @relation("budgetEmployee", fields: [employeeId], references: [id])
+  employeeId String
 
   @@map("budgets")
 }
