@@ -9,6 +9,7 @@ import { ServicesQuantityChart } from "@/app/components/ui/services-quantity-cha
 import { EmployeePerformanceChart } from "@/app/components/ui/employee-performance-chart";
 import { cn } from "@/lib/utils";
 import { Fragment, useEffect, useState } from "react";
+import { useReportStore } from "@/context/report-store";
 
 const employeePerformance = [
   { id: 1, funcionario: "Carlos Tech", servicosConcluidos: 45, receitaGerada: 12500.00, mediaPorServico: 277.78 },
@@ -25,6 +26,8 @@ const currencyFormatter = new Intl.NumberFormat("pt-BR", {
 
 export default function Reports() {
   const [windowWidth, setWindowWidth] = useState(0)
+
+  const { reports, getReports } = useReportStore()
   
   useEffect(() => {
     function handleResize() {
@@ -49,7 +52,7 @@ export default function Reports() {
         <div className="flex justify-between items-center px-4 py-6 text-gray-900 text-sm">
           <p>Relatórios e Análises</p>
           <div className="flex justify-baseline gap-4">
-            <SelectYear />
+            <SelectYear getReports={getReports} />
 
             <button className="flex items-center gap-3 border border-purple rounded-lg px-3">
               <Download size={14} />
