@@ -10,7 +10,7 @@ const MONTHS = [
 export class GetReports {
   constructor(private prisma: PrismaService) {}
 
-  @Get('/reports')
+  @Get('/report')
   @HttpCode(200)
   async handle(@Query('year') year?: string) {
     // query param sempre chega como string (ou undefined) na URL, por isso convertemos pra number aqui
@@ -23,7 +23,11 @@ export class GetReports {
     // roda as 3 queries em paralelo, igual no get-budgets.controller.ts
     const [approvedBudgets, completedAppointments, totalBudgetsInYear] = await Promise.all([
       // orçamentos aprovados no ano -> base de toda a receita do relatório
+      // lt = less than (menor que, estritamente)
+      // WHERE date >= yearStart AND date < yearEnd
+
       this.prisma.budget.findMany({
+        // gte = greater than or equal (maior ou igual)
         where: { status: 'APPROVED', date: { gte: yearStart, lt: yearEnd } },
         select: {
           value: true,
@@ -56,7 +60,7 @@ export class GetReports {
     const monthlyRevenue = MONTHS.map((month, index) => ({
       month,
       total: approvedBudgets
-        .filter((budget) => budget.date.getUTCMonth() === index)
+        .filter((budget) => budget.date.getUTCMonth() === index) // getUTCMonth retorna o mes da data
         .reduce((acc, budget) => acc + Number(budget.value), 0),
     }))
 

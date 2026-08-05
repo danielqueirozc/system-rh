@@ -71,16 +71,11 @@ export const budgetService = {
     const response = await api.get('/budget')
     return response.data
   },
-  // getTotal: async () => {
-  //   const response = await api.get('/budget')
-  //   return response.data
-  // },
-  // getApproved: async () => {
-  //   const response = await api.get('/budget')
-  //   return response.data
-  // },
-  // getPending: async () => {
-  //   const response = await api.get('/budget')
-  //   return response.data
-  // },
+}
+
+export const reportService = {
+  get: async () => {
+    const response = await api.get('/report')
+    return response.data
+  }
 }
