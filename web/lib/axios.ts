@@ -74,8 +74,8 @@ export const budgetService = {
 }
 
 export const reportService = {
-  get: async () => {
-    const response = await api.get('/report')
+  get: async (year: number) => {
+    const response = await api.get('/report', { params: { year } })
     return response.data
   }
 }
