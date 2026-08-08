@@ -6,15 +6,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select"
-import { useState } from "react"
+import { useReportStore } from "@/context/report-store"
+import { useEffect, useState } from "react"
 
-interface SelectYearProps {
-  getReports: () => void
-}
 
-export function SelectYear({ getReports }: SelectYearProps) {
+export function SelectYear() {
   const [year, setYear] = useState('2026')
 
+  const { getReports } = useReportStore()
+
+  useEffect(() => {
+    getReports()
+  }, [])
+  
   function handleChange(value: string) {
     setYear(value)
     getReports(Number(value))

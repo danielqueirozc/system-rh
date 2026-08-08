@@ -27,12 +27,14 @@ const currencyFormatter = new Intl.NumberFormat("pt-BR", {
 export default function Reports() {
   const [windowWidth, setWindowWidth] = useState(0)
 
-  const { reports, getReports } = useReportStore()
+  const { reports } = useReportStore()
   
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth)
     }
+
+    console.log('estou na page', reports)
 
     handleResize()
     
@@ -52,7 +54,7 @@ export default function Reports() {
         <div className="flex justify-between items-center px-4 py-6 text-gray-900 text-sm">
           <p>Relatórios e Análises</p>
           <div className="flex justify-baseline gap-4">
-            <SelectYear getReports={getReports} />
+            <SelectYear />
 
             <button className="flex items-center gap-3 border border-purple rounded-lg px-3">
               <Download size={14} />
@@ -61,103 +63,105 @@ export default function Reports() {
           </div>
         </div>
 
-        <main className="flex-1 flex flex-col px-4 pt-1 pb-8 overflow-y-auto">
-          <div className="flex flex-col gap-6 text-gray-900 text-sm">
-            <div className="grid grid-cols-4 gap-4">
-              <Card className="flex flex-col gap-8 p-6">
-                <div className="flex items-center justify-between">
-                  <p className="text-gray-500">Receita Total</p>
-                  <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
-                </div>
+        {/* { reports.map(report => ( */}
+          <main className="flex-1 flex flex-col px-4 pt-1 pb-8 overflow-y-auto">
+            <div className="flex flex-col gap-6 text-gray-900 text-sm">
+              <div className="grid grid-cols-4 gap-4">
+                <Card className="flex flex-col gap-8 p-6">
+                  <div className="flex items-center justify-between">
+                    <p className="text-gray-500">Receita Total</p>
+                    <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
+                  </div>
 
-                <span>R$ 330.820</span>
+                  <span>R$ 330.820</span>
 
-                <p className="text-[#00A63E]">+18.2% vs ano anterior</p>
-              </Card>
+                  <p className="text-[#00A63E]">+18.2% vs ano anterior</p>
+                </Card>
 
-              <Card className="flex flex-col gap-8 p-6">
-                <div className="flex items-center justify-between">
-                  <p className="text-gray-500">Serviços Realizados</p>
-                  <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
-                </div>
+                <Card className="flex flex-col gap-8 p-6">
+                  <div className="flex items-center justify-between">
+                    <p className="text-gray-500">Serviços Realizados</p>
+                    <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
+                  </div>
 
-                <span>543</span>
+                  <span>543</span>
 
-                <p className="text-[#00A63E]">+12.5% vs ano anterior</p>
-              </Card>
-              
-              <Card className="flex flex-col gap-8 p-6">
-                <div className="flex items-center justify-between">
-                  <p className="text-gray-500">Ticket Médio</p>
-                  <TrendingUp 
-                    className="text-blue-500" 
-                    size={18} 
-                    strokeWidth={2.25} 
-                  />
-                </div>
+                  <p className="text-[#00A63E]">+12.5% vs ano anterior</p>
+                </Card>
+                
+                <Card className="flex flex-col gap-8 p-6">
+                  <div className="flex items-center justify-between">
+                    <p className="text-gray-500">Ticket Médio</p>
+                    <TrendingUp 
+                      className="text-blue-500" 
+                      size={18} 
+                      strokeWidth={2.25} 
+                    />
+                  </div>
 
-                <span>R$ 609</span>
+                  <span>R$ 609</span>
 
-                <p className="text-blue-500">+12.5% vs ano anterior</p>
-              </Card>
+                  <p className="text-blue-500">+12.5% vs ano anterior</p>
+                </Card>
 
-              <Card className="flex flex-col gap-8 p-6">
-                <div className="flex items-center justify-between">
-                  <p className="text-gray-500">Taxa de Conversão</p>
-                  <TrendingDown 
-                    className="text-red-500" 
-                    size={18} 
-                    strokeWidth={2.25} 
-                  />
-                </div>
+                <Card className="flex flex-col gap-8 p-6">
+                  <div className="flex items-center justify-between">
+                    <p className="text-gray-500">Taxa de Conversão</p>
+                    <TrendingDown 
+                      className="text-red-500" 
+                      size={18} 
+                      strokeWidth={2.25} 
+                    />
+                  </div>
 
-                <span>68%</span>
+                  <span>68%</span>
 
-                <p className="text-red-500">-2.3% vs mês anterior</p>
-              </Card>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              <MonthlyRevenueChart />
-              <ServiceTypeChart />
-              <ServicesQuantityChart />
-              <EmployeePerformanceChart />
-            </div>
-
-            <Card className="flex flex-col gap-16 px-8 py-6">
-              <span className="text-base font-medium">Desempenho Detalhado dos Funcionários</span>
-              <div className="overflow-x-auto">
-                <table className="text-sm w-full">
-                  <thead>
-                    <tr className="text-center">
-                      <th className="pb-3 pr-6 font-bold whitespace-nowrap">Funcionário</th>
-                      <th className="pb-3 pr-6 font-bold whitespace-nowrap">Serviços Concluídos</th>
-                      <th className="pb-3 pr-6 font-bold whitespace-nowrap">Receita Gerada</th>
-                      <th className="pb-3 font-bold whitespace-nowrap">Média por Serviço</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {employeePerformance.map((employee, i) => (
-                      <tr
-                        key={employee.id}
-                        className={cn(
-                          'border-t border-gray-100 rounded-lg text-center',
-                          i % 2 === 0 ? 'bg-[#f0f0fa]' : 'bg-white'
-                        )}
-                      >
-                        <td className="py-4 pr-6 whitespace-nowrap">{employee.funcionario}</td>
-                        <td className="py-4 pr-6 whitespace-nowrap">{employee.servicosConcluidos}</td>
-                        <td className="py-4 pr-6 whitespace-nowrap text-green-600">{currencyFormatter.format(employee.receitaGerada)}</td>
-                        <td className="py-4 whitespace-nowrap text-blue-500">{currencyFormatter.format(employee.mediaPorServico)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                  <p className="text-red-500">-2.3% vs mês anterior</p>
+                </Card>
               </div>
-            </Card>
-          </div>
-        </main>
+
+              <div className="grid grid-cols-2 gap-6">
+                <MonthlyRevenueChart />
+                <ServiceTypeChart />
+                <ServicesQuantityChart />
+                <EmployeePerformanceChart />
+              </div>
+
+              <Card className="flex flex-col gap-16 px-8 py-6">
+                <span className="text-base font-medium">Desempenho Detalhado dos Funcionários</span>
+                <div className="overflow-x-auto">
+                  <table className="text-sm w-full">
+                    <thead>
+                      <tr className="text-center">
+                        <th className="pb-3 pr-6 font-bold whitespace-nowrap">Funcionário</th>
+                        <th className="pb-3 pr-6 font-bold whitespace-nowrap">Serviços Concluídos</th>
+                        <th className="pb-3 pr-6 font-bold whitespace-nowrap">Receita Gerada</th>
+                        <th className="pb-3 font-bold whitespace-nowrap">Média por Serviço</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {employeePerformance.map((employee, i) => (
+                        <tr
+                          key={employee.id}
+                          className={cn(
+                            'border-t border-gray-100 rounded-lg text-center',
+                            i % 2 === 0 ? 'bg-[#f0f0fa]' : 'bg-white'
+                          )}
+                        >
+                          <td className="py-4 pr-6 whitespace-nowrap">{employee.funcionario}</td>
+                          <td className="py-4 pr-6 whitespace-nowrap">{employee.servicosConcluidos}</td>
+                          <td className="py-4 pr-6 whitespace-nowrap text-green-600">{currencyFormatter.format(employee.receitaGerada)}</td>
+                          <td className="py-4 whitespace-nowrap text-blue-500">{currencyFormatter.format(employee.mediaPorServico)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+            </div>
+          </main>
+        {/* )) } */}
       </div>
       ) : (
       <div className="flex flex-col">
