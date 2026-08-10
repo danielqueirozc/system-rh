@@ -2,8 +2,6 @@ import { reportService } from '@/lib/axios'
 import { create } from 'zustand'
 
 interface ReportStoreType {
-  reports: {
-    year: number
     revenueTotal: number
     servicesRealized: number
     ticketMedio: number
@@ -18,25 +16,38 @@ interface ReportStoreType {
       { month: string, total: number }
     ],
     employeePerformance: [
-      { employeeId: string, funcionarios: string, servicosConcluidos: number, receitaGerada: number, mediaPorServico: number }
+      { employeeId: string, funcionario: string, servicosConcluidos: number, receitaGerada: number, mediaPorServico: number }
     ]
-  }[]
 
-  getReports: (year?: number) => Promise<[]>
+  getReports: (year?: number) => Promise<{}>
 }
 
 export const useReportStore = create<ReportStoreType>()(
   (set) => ({
-    reports: [],
-
-    // criar todas as veriaveis que estao no ReportStoreType
+    revenueTotal: 0,
+    servicesRealized: 0,
+    ticketMedio: 0,
+    taxaConversao: 0,
+    servicesQuantity: [{ month: '', count: 0 }],
+    serviceDistribution: [{ service: '', count: 0, percentage: 0 }],
+    monthlyRevenue: [{  month: '', total: 0}],
+    employeePerformance: [{ employeeId: '', funcionario: '', servicosConcluidos: 0, receitaGerada: 0, mediaPorServico: 0 }],
 
     getReports: async (year?: number) => {
       try {
         const response = await reportService.get(year)
         console.log(response)
-
-        set({ reports: response })
+        
+          set({
+            revenueTotal: response.revenueTotal,
+            servicesRealized: response.servicesRealized,
+            ticketMedio: response.ticketMedio,
+            taxaConversao: response.taxaConversao,
+            servicesQuantity: response.servicesQuantity,
+            serviceDistribution: response.serviceDistribution,
+            monthlyRevenue: response.monthlyRevenue,
+            employeePerformance: response.employeePerformance,
+          })
 
         return response
 
