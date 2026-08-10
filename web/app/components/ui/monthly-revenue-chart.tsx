@@ -11,6 +11,7 @@ import {
   type ChartConfig,
 } from "@/app/components/ui/chart"
 import { Card, CardHeader, CardTitle, CardContent } from "@/app/components/ui/card"
+import { useReportStore } from "@/context/report-store"
 
 const data = [
   { month: "Jan", receita: 28200 },
@@ -25,10 +26,12 @@ const data = [
 ]
 
 const chartConfig = {
-  receita: { label: "Receita (R$)", color: "#3B82F6" },
+  total: { label: "Receita (R$)", color: "#3B82F6" },
 } satisfies ChartConfig
 
 export function MonthlyRevenueChart() {
+  const { monthlyRevenue } = useReportStore()
+
   return (
     <Card className="flex flex-col gap-4 p-6">
       <CardHeader className="px-0">
@@ -38,7 +41,7 @@ export function MonthlyRevenueChart() {
       </CardHeader>
       <CardContent className="px-0">
         <ChartContainer config={chartConfig} className="max-h-72 w-full">
-          <LineChart data={data}>
+          <LineChart data={monthlyRevenue}>
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
               dataKey="month"
@@ -49,11 +52,12 @@ export function MonthlyRevenueChart() {
             <YAxis tickLine={false} axisLine={false} tickMargin={8} width={44} />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <Line
-              dataKey="receita"
+              dataKey="total"
+              name="receita"
               type="monotone"
-              stroke="var(--color-receita)"
+              stroke="var(--color-total)"
               strokeWidth={2}
-              dot={{ fill: "var(--color-receita)", r: 4 }}
+              dot={{ fill: "var(--color-total)", r: 4 }}
               activeDot={{ r: 5 }}
             />
             <ChartLegend content={<ChartLegendContent />} />
