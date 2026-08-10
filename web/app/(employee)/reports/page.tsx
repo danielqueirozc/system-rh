@@ -10,6 +10,8 @@ import { EmployeePerformanceChart } from "@/app/components/ui/employee-performan
 import { cn } from "@/lib/utils";
 import { Fragment, useEffect, useState } from "react";
 import { useReportStore } from "@/context/report-store";
+import { currencyFormatter, percentFormatter } from "@/utils/currency-formatter";
+import { DetailedEmployeePerformance } from "@/app/components/detailed-employee-performance";
 
 const employeePerformance = [
   { id: 1, funcionario: "Carlos Tech", servicosConcluidos: 45, receitaGerada: 12500.00, mediaPorServico: 277.78 },
@@ -19,22 +21,23 @@ const employeePerformance = [
   { id: 5, funcionario: "Maria Geral", servicosConcluidos: 28, receitaGerada: 7920.00, mediaPorServico: 282.86 },
 ]
 
-const currencyFormatter = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-})
-
 export default function Reports() {
   const [windowWidth, setWindowWidth] = useState(0)
 
-  const { reports } = useReportStore()
+  const { 
+    revenueTotal, 
+    servicesRealized, 
+    ticketMedio, 
+    taxaConversao 
+  } = useReportStore()
   
+  console.log('estou na page', revenueTotal)
+
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth)
     }
 
-    console.log('estou na page', reports)
 
     handleResize()
     
@@ -73,7 +76,7 @@ export default function Reports() {
                     <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
                   </div>
 
-                  <span>R$ 330.820</span>
+                  <span>{currencyFormatter(revenueTotal)}</span>
 
                   <p className="text-[#00A63E]">+18.2% vs ano anterior</p>
                 </Card>
@@ -84,7 +87,7 @@ export default function Reports() {
                     <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
                   </div>
 
-                  <span>543</span>
+                  <span>{servicesRealized}</span>
 
                   <p className="text-[#00A63E]">+12.5% vs ano anterior</p>
                 </Card>
@@ -99,9 +102,9 @@ export default function Reports() {
                     />
                   </div>
 
-                  <span>R$ 609</span>
+                  <span>{currencyFormatter(ticketMedio)}</span>
 
-                  <p className="text-blue-500">+12.5% vs ano anterior</p>
+                  <p className="text-blue-500">+12.5% vs mes anterior</p>
                 </Card>
 
                 <Card className="flex flex-col gap-8 p-6">
@@ -114,7 +117,7 @@ export default function Reports() {
                     />
                   </div>
 
-                  <span>68%</span>
+                  <span>{percentFormatter(taxaConversao)}</span>
 
                   <p className="text-red-500">-2.3% vs mês anterior</p>
                 </Card>
@@ -127,38 +130,7 @@ export default function Reports() {
                 <EmployeePerformanceChart />
               </div>
 
-              <Card className="flex flex-col gap-16 px-8 py-6">
-                <span className="text-base font-medium">Desempenho Detalhado dos Funcionários</span>
-                <div className="overflow-x-auto">
-                  <table className="text-sm w-full">
-                    <thead>
-                      <tr className="text-center">
-                        <th className="pb-3 pr-6 font-bold whitespace-nowrap">Funcionário</th>
-                        <th className="pb-3 pr-6 font-bold whitespace-nowrap">Serviços Concluídos</th>
-                        <th className="pb-3 pr-6 font-bold whitespace-nowrap">Receita Gerada</th>
-                        <th className="pb-3 font-bold whitespace-nowrap">Média por Serviço</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {employeePerformance.map((employee, i) => (
-                        <tr
-                          key={employee.id}
-                          className={cn(
-                            'border-t border-gray-100 rounded-lg text-center',
-                            i % 2 === 0 ? 'bg-[#f0f0fa]' : 'bg-white'
-                          )}
-                        >
-                          <td className="py-4 pr-6 whitespace-nowrap">{employee.funcionario}</td>
-                          <td className="py-4 pr-6 whitespace-nowrap">{employee.servicosConcluidos}</td>
-                          <td className="py-4 pr-6 whitespace-nowrap text-green-600">{currencyFormatter.format(employee.receitaGerada)}</td>
-                          <td className="py-4 whitespace-nowrap text-blue-500">{currencyFormatter.format(employee.mediaPorServico)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </Card>
+             <DetailedEmployeePerformance />
             </div>
           </main>
         {/* )) } */}
@@ -247,8 +219,8 @@ export default function Reports() {
                         >
                           <td className="py-2 pr-6 whitespace-nowrap">{employee.funcionario}</td>
                           <td className="py-2 pr-6 whitespace-nowrap">{employee.servicosConcluidos}</td>
-                          <td className="py-2 pr-6 whitespace-nowrap">{currencyFormatter.format(employee.receitaGerada)}</td>
-                          <td className="py-2 whitespace-nowrap">{currencyFormatter.format(employee.mediaPorServico)}</td>
+                          <td className="py-2 pr-6 whitespace-nowrap">{currencyFormatter(employee.receitaGerada)}</td>
+                          <td className="py-2 whitespace-nowrap">{currencyFormatter(employee.mediaPorServico)}</td>
                         </tr>
                       ))}
                     </tbody>
