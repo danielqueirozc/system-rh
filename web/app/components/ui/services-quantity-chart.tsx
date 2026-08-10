@@ -11,6 +11,7 @@ import {
   type ChartConfig,
 } from "@/app/components/ui/chart"
 import { Card, CardHeader, CardTitle, CardContent } from "@/app/components/ui/card"
+import { useReportStore } from "@/context/report-store"
 
 const data = [
   { month: "Jan", quantidade: 45 },
@@ -25,10 +26,12 @@ const data = [
 ]
 
 const chartConfig = {
-  quantidade: { label: "Serviços", color: "#059669" },
+  count: { label: "Serviços", color: "#059669" },
 } satisfies ChartConfig
 
 export function ServicesQuantityChart() {
+  const { servicesQuantity } = useReportStore()
+
   return (
     <Card className="flex flex-col gap-4 p-6">
       <CardHeader className="px-0">
@@ -38,7 +41,7 @@ export function ServicesQuantityChart() {
       </CardHeader>
       <CardContent className="px-0">
         <ChartContainer config={chartConfig} className="max-h-72 w-full">
-          <BarChart data={data} barCategoryGap="30%">
+          <BarChart data={servicesQuantity} barCategoryGap="30%">
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
               dataKey="month"
@@ -49,8 +52,8 @@ export function ServicesQuantityChart() {
             <YAxis tickLine={false} axisLine={false} tickMargin={8} width={28} />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <Bar
-              dataKey="quantidade"
-              fill="var(--color-quantidade)"
+              dataKey="count"
+              fill="var(--color-count)"
               radius={[4, 4, 0, 0]}
               maxBarSize={32}
             />
