@@ -7,3 +7,12 @@ export function currencyFormatter(value: string | number) {
     currency: 'BRL'
   }).format(parsedNumber)
 }
+
+export function percentFormatter(percent: number) {
+  const parsedNumber = typeof percent === 'number' ? percent : Number(percent)
+
+  return new Intl.NumberFormat("pt-BR", {
+   style: "percent",
+   maximumFractionDigits: 1,
+  }).format(parsedNumber / 100)
+}
