@@ -11,22 +11,22 @@ import {
   type ChartConfig,
 } from "@/app/components/ui/chart"
 import { Card, CardHeader, CardTitle, CardContent } from "@/app/components/ui/card"
+import { useReportStore } from "@/context/report-store"
 
-const data = [
-  { type: "eletrica", label: "Elétrica", value: 35, fill: "#3B82F6" },
-  { type: "hidraulica", label: "Hidráulica", value: 28, fill: "#059669" },
-  { type: "pintura", label: "Pintura", value: 20, fill: "#D97706" },
-  { type: "reforma", label: "Reforma", value: 12, fill: "#9333EA" },
-  { type: "outro", label: "Outro", value: 5, fill: "#9CA3AF" },
-]
+type PieDatum = {
+  type: string
+  label: string
+  value: number
+  fill: string
+}
 
 const chartConfig = {
-  value: { label: "Serviços" },
-  eletrica: { label: "Elétrica", color: "#3B82F6" },
-  hidraulica: { label: "Hidráulica", color: "#059669" },
-  pintura: { label: "Pintura", color: "#D97706" },
-  reforma: { label: "Reforma", color: "#9333EA" },
-  outro: { label: "Outro", color: "#9CA3AF" },
+  "Encanamento": { label: "Encanamento", color: "#2a78d6" },
+  "Elétrica": { label: "Elétrica", color: "#eb6834" },
+  "Pintura": { label: "Pintura", color: "#1baf7a" },
+  "Jardinagem": { label: "Jardinagem", color: "#eda100" },
+  "Ar-condicionado": { label: "Ar-condicionado", color: "#e87ba4" },
+  "Serviços Gerais": { label: "Serviços Gerais", color: "#008300" },
 } satisfies ChartConfig
 
 function renderLabel({ cx, cy, midAngle, outerRadius, percent, fill, payload }: PieSectorDataItem) {
@@ -34,7 +34,7 @@ function renderLabel({ cx, cy, midAngle, outerRadius, percent, fill, payload }: 
   const radius = (outerRadius as number) + 20
   const x = (cx as number) + radius * Math.cos(-midAngle! * RADIAN)
   const y = (cy as number) + radius * Math.sin(-midAngle! * RADIAN)
-  const name = (payload as typeof data[number])?.label
+  const name = (payload as PieDatum)?.label
 
   return (
     <text
@@ -51,6 +51,15 @@ function renderLabel({ cx, cy, midAngle, outerRadius, percent, fill, payload }: 
 }
 
 export function ServiceTypeChart() {
+  const { serviceDistribution } = useReportStore()
+
+  const data = serviceDistribution.map((item) => ({
+    type: item.service,
+    label: item.service,
+    value: item.count,
+    fill: chartConfig[item.service as keyof typeof chartConfig]?.color ?? "#9CA3AF",
+  }))
+
   return (
     <Card className="flex flex-col gap-4 p-6">
       <CardHeader className="px-0">
