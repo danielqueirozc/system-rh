@@ -11,6 +11,7 @@ import {
   type ChartConfig,
 } from "@/app/components/ui/chart"
 import { Card, CardHeader, CardTitle, CardContent } from "@/app/components/ui/card"
+import { useReportStore } from "@/context/report-store"
 
 const data = [
   { employee: "Carlos Tech", servicos: 43 },
@@ -21,10 +22,12 @@ const data = [
 ]
 
 const chartConfig = {
-  servicos: { label: "Serviços", color: "#9333EA" },
+  servicosConcluidos: { label: "Serviços", color: "#9333EA" },
 } satisfies ChartConfig
 
 export function EmployeePerformanceChart() {
+  const { employeePerformance } = useReportStore()
+
   return (
     <Card className="flex flex-col gap-4 p-6">
       <CardHeader className="px-0">
@@ -34,12 +37,12 @@ export function EmployeePerformanceChart() {
       </CardHeader>
       <CardContent className="px-0">
         <ChartContainer config={chartConfig} className="max-h-72 w-full">
-          <BarChart data={data} layout="vertical" barCategoryGap="25%">
+          <BarChart data={employeePerformance} layout="vertical" barCategoryGap="25%">
             <CartesianGrid horizontal={false} strokeDasharray="3 3" />
             <XAxis type="number" tickLine={false} axisLine={false} tickMargin={8} />
             <YAxis
               type="category"
-              dataKey="employee"
+              dataKey="funcionario"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -47,8 +50,8 @@ export function EmployeePerformanceChart() {
             />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <Bar
-              dataKey="servicos"
-              fill="var(--color-servicos)"
+              dataKey="servicosConcluidos"
+              fill="var(--color-servicosConcluidos)"
               radius={[0, 4, 4, 0]}
               maxBarSize={22}
             />
