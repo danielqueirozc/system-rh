@@ -25,10 +25,14 @@ export default function Reports() {
   const [windowWidth, setWindowWidth] = useState(0)
 
   const { 
-    revenueTotal, 
-    servicesRealized, 
-    ticketMedio, 
-    taxaConversao 
+    revenueTotal,
+    totalRevenueVariation,
+    servicesRealized,
+    realizedServicesVariation,
+    ticketMedio,
+    TicketMedioVariation,
+    taxaConversao,
+    taxaConversaoVariation, 
   } = useReportStore()
   
   console.log('estou na page', revenueTotal)
@@ -78,7 +82,7 @@ export default function Reports() {
 
                   <span>{currencyFormatter(revenueTotal)}</span>
 
-                  <p className="text-[#00A63E]">+18.2% vs ano anterior</p>
+                  <p className="text-[#00A63E]">+{percentFormatter(totalRevenueVariation)} vs ano anterior</p>
                 </Card>
 
                 <Card className="flex flex-col gap-8 p-6">
@@ -89,7 +93,7 @@ export default function Reports() {
 
                   <span>{servicesRealized}</span>
 
-                  <p className="text-[#00A63E]">+12.5% vs ano anterior</p>
+                  <p className="text-[#00A63E]">+{percentFormatter(realizedServicesVariation)} vs ano anterior</p>
                 </Card>
                 
                 <Card className="flex flex-col gap-8 p-6">
@@ -104,7 +108,7 @@ export default function Reports() {
 
                   <span>{currencyFormatter(ticketMedio)}</span>
 
-                  <p className="text-blue-500">+12.5% vs mes anterior</p>
+                  <p className="text-blue-500">+{percentFormatter(TicketMedioVariation)} vs mes anterior</p>
                 </Card>
 
                 <Card className="flex flex-col gap-8 p-6">
@@ -119,7 +123,7 @@ export default function Reports() {
 
                   <span>{percentFormatter(taxaConversao)}</span>
 
-                  <p className="text-red-500">-2.3% vs mês anterior</p>
+                  <p className="text-red-500">-{percentFormatter(taxaConversaoVariation)} vs mês anterior</p>
                 </Card>
               </div>
 
