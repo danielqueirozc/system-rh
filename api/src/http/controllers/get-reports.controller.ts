@@ -19,9 +19,12 @@ export class GetReports {
     // intervalo [1º de janeiro, 1º de janeiro do ano seguinte) do ano selecionado
     const yearStart = new Date(`${selectedYear}-01-01T00:00:00.000Z`)
     const yearEnd = new Date(`${selectedYear + 1}-01-01T00:00:00.000Z`)
+    const previousYearStart = new Date(`${selectedYear - 1}-01-01T00:00:00.000Z`)
+    const previousYearEnd = new Date(`${selectedYear}-01-01T00:00:00.000Z`)
+
 
     // roda as 3 queries em paralelo, igual no get-budgets.controller.ts
-    const [approvedBudgets, completedAppointments, totalBudgetsInYear] = await Promise.all([
+    const [approvedBudgets, previousApprovedBudgets , completedAppointments, totalBudgetsInYear] = await Promise.all([
       // orçamentos aprovados no ano -> base de toda a receita do relatório
       // lt = less than (menor que, estritamente)
       // WHERE date >= yearStart AND date < yearEnd
@@ -34,6 +37,15 @@ export class GetReports {
           date: true,
           employee: { select: { id: true, name: true } },
         },
+      }),
+
+      this.prisma.budget.findMany({
+        where: { status: 'APPROVED', date: {gte: previousYearStart, lt: previousYearEnd} },
+        select: {
+          value: true,
+          date: true,
+          employee: { select: { id: true, name: true } }
+        }
       }),
       // agendamentos concluídos no ano -> base de "serviços realizados", distribuição e quantidade mensal
       this.prisma.appointment.findMany({
@@ -51,6 +63,9 @@ export class GetReports {
 
     // budget.value vem como Decimal do banco, então precisa de Number() antes de somar
     const revenueTotal = approvedBudgets.reduce((acc, budget) => acc + Number(budget.value), 0)
+    const previousRevenueTotal = previousApprovedBudgets.reduce((acc, budget) => acc + Number(budget.value), 0)
+    const totalRevenueVariation = previousRevenueTotal > 0 ?((revenueTotal - previousRevenueTotal) / previousRevenueTotal) * 100 : 0
+
     const servicesRealized = completedAppointments.length
     const ticketMedio = approvedBudgets.length > 0 ? revenueTotal / approvedBudgets.length : 0
     const taxaConversao = totalBudgetsInYear > 0 ? (approvedBudgets.length / totalBudgetsInYear) * 100 : 0
@@ -113,6 +128,7 @@ export class GetReports {
     return {
       year: selectedYear,
       revenueTotal,
+      totalRevenueVariation,
       servicesRealized,
       ticketMedio,
       taxaConversao,
