@@ -24,7 +24,14 @@ export class GetReports {
 
 
     // roda as 3 queries em paralelo, igual no get-budgets.controller.ts
-    const [approvedBudgets, previousApprovedBudgets , completedAppointments, totalBudgetsInYear] = await Promise.all([
+    const [
+        approvedBudgets, 
+        previousApprovedBudgets , 
+        completedAppointments,
+        previousCompletedAppointments,
+        totalBudgetsInYear,
+        previousTotalBudgetsInYear,
+      ] = await Promise.all([
       // orçamentos aprovados no ano -> base de toda a receita do relatório
       // lt = less than (menor que, estritamente)
       // WHERE date >= yearStart AND date < yearEnd
@@ -55,9 +62,21 @@ export class GetReports {
           service: { select: { name: true } },
         },
       }),
+
+      this.prisma.appointment.findMany({
+        where: { status: 'COMPLETED', serviceDate: { gte: previousYearStart, lt: previousYearEnd } },
+        select: {
+          serviceDate: true,
+          service: { select: { name: true } },
+        },
+      }),
       // todos os orçamentos criados no ano (independente do status) -> denominador da taxa de conversão
       this.prisma.budget.count({
         where: { date: { gte: yearStart, lt: yearEnd } },
+      }),
+
+       this.prisma.budget.count({
+        where: { date: { gte: previousYearStart, lt: previousYearEnd } },
       }),
     ])
 
@@ -67,8 +86,11 @@ export class GetReports {
     const totalRevenueVariation = previousRevenueTotal > 0 ?((revenueTotal - previousRevenueTotal) / previousRevenueTotal) * 100 : 0
 
     const servicesRealized = completedAppointments.length
+    const realizedServicesVariation = previousCompletedAppointments.length
     const ticketMedio = approvedBudgets.length > 0 ? revenueTotal / approvedBudgets.length : 0
+    const TicketMedioVariation = previousRevenueTotal > 0 ? previousRevenueTotal / previousApprovedBudgets.length : 0
     const taxaConversao = totalBudgetsInYear > 0 ? (approvedBudgets.length / totalBudgetsInYear) * 100 : 0
+    const taxaConversaoVariation = previousTotalBudgetsInYear > 0 ? (previousApprovedBudgets.length / previousTotalBudgetsInYear) * 100 : 0
 
     // soma a receita aprovada mês a mês -> array de 12 posições (Jan a Dez)
     // getUTCMonth() pra não depender do fuso horário de onde o Node está rodando
@@ -130,8 +152,11 @@ export class GetReports {
       revenueTotal,
       totalRevenueVariation,
       servicesRealized,
+      realizedServicesVariation,
       ticketMedio,
+      TicketMedioVariation,
       taxaConversao,
+      taxaConversaoVariation,
       monthlyRevenue,
       servicesQuantity,
       serviceDistribution,
