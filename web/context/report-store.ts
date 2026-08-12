@@ -6,10 +6,10 @@ interface ReportStoreType {
     totalRevenueVariation: number
     servicesRealized: number
     realizedServicesVariation: number
-    ticketMedio: number
-    TicketMedioVariation: number
-    taxaConversao: number
-    taxaConversaoVariation: number,
+    averageTicket: number
+    averageTicketVariation: number
+    conversionRate: number
+    conversionRateVariation: number,
     servicesQuantity: [
       { month: string, count: number }
     ],
@@ -20,7 +20,7 @@ interface ReportStoreType {
       { month: string, total: number }
     ],
     employeePerformance: [
-      { employeeId: string, funcionario: string, servicosConcluidos: number, receitaGerada: number, mediaPorServico: number }
+      { employeeId: string, employeeName: string, completedServices: number, generatedRevenue: number, averagePerService: number }
     ]
 
   getReports: (year?: number) => Promise<{}>
@@ -32,32 +32,32 @@ export const useReportStore = create<ReportStoreType>()(
     totalRevenueVariation: 0,
     servicesRealized: 0,
     realizedServicesVariation: 0,
-    ticketMedio: 0,
-    TicketMedioVariation: 0,
-    taxaConversao: 0,
-    taxaConversaoVariation: 0,
+    averageTicket: 0,
+    averageTicketVariation: 0,
+    conversionRate: 0,
+    conversionRateVariation: 0,
     servicesQuantity: [{ month: '', count: 0 }],
     serviceDistribution: [{ service: '', count: 0, percentage: 0 }],
     monthlyRevenue: [{  month: '', total: 0}],
-    employeePerformance: [{ employeeId: '', funcionario: '', servicosConcluidos: 0, receitaGerada: 0, mediaPorServico: 0 }],
+    employeePerformance: [{ employeeId: '', employeeName: '', completedServices: 0, generatedRevenue: 0, averagePerService: 0 }],
 
     getReports: async (year?: number) => {
       try {
         const response = await reportService.get(year)
         console.log(response.totalRevenueVariation)
         console.log(response.realizedServicesVariation)
-        console.log(response.TicketMedioVariation)
-        console.log(response.taxaConversaoVariation)
+        console.log(response.averageTicketVariation)
+        console.log(response.conversionRateVariation)
 
           set({
             revenueTotal: response.revenueTotal,
             totalRevenueVariation: response.totalRevenueVariation,
             servicesRealized: response.servicesRealized,
             realizedServicesVariation: response.realizedServicesVariation,
-            ticketMedio: response.ticketMedio,
-            TicketMedioVariation: response.TicketMedioVariation,
-            taxaConversao: response.taxaConversao,
-            taxaConversaoVariation: response.taxaConversaoVariation,
+            averageTicket: response.averageTicket,
+            averageTicketVariation: response.averageTicketVariation,
+            conversionRate: response.conversionRate,
+            conversionRateVariation: response.conversionRateVariation,
             servicesQuantity: response.servicesQuantity,
             serviceDistribution: response.serviceDistribution,
             monthlyRevenue: response.monthlyRevenue,
