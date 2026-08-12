@@ -10,15 +10,16 @@ import { EmployeePerformanceChart } from "@/app/components/ui/employee-performan
 import { cn } from "@/lib/utils";
 import { Fragment, useEffect, useState } from "react";
 import { useReportStore } from "@/context/report-store";
-import { currencyFormatter, percentFormatter } from "@/utils/currency-formatter";
+import { currencyFormatter } from "@/utils/currency-formatter";
 import { DetailedEmployeePerformance } from "@/app/components/detailed-employee-performance";
+import { percentFormatter } from "@/utils/percent-formatter";
 
 const employeePerformance = [
-  { id: 1, funcionario: "Carlos Tech", servicosConcluidos: 45, receitaGerada: 12500.00, mediaPorServico: 277.78 },
-  { id: 2, funcionario: "Ana Pintura", servicosConcluidos: 52, receitaGerada: 15200.00, mediaPorServico: 292.31 },
-  { id: 3, funcionario: "Pedro Hidro", servicosConcluidos: 38, receitaGerada: 10800.00, mediaPorServico: 284.21 },
-  { id: 4, funcionario: "João Reforma", servicosConcluidos: 67, receitaGerada: 18900.00, mediaPorServico: 282.09 },
-  { id: 5, funcionario: "Maria Geral", servicosConcluidos: 28, receitaGerada: 7920.00, mediaPorServico: 282.86 },
+  { id: 1, employeeName: "Carlos Tech", completedServices: 45, generatedRevenue: 12500.00, averagePerService: 277.78 },
+  { id: 2, employeeName: "Ana Pintura", completedServices: 52, generatedRevenue: 15200.00, averagePerService: 292.31 },
+  { id: 3, employeeName: "Pedro Hidro", completedServices: 38, generatedRevenue: 10800.00, averagePerService: 284.21 },
+  { id: 4, employeeName: "João Reforma", completedServices: 67, generatedRevenue: 18900.00, averagePerService: 282.09 },
+  { id: 5, employeeName: "Maria Geral", completedServices: 28, generatedRevenue: 7920.00, averagePerService: 282.86 },
 ]
 
 export default function Reports() {
@@ -29,14 +30,12 @@ export default function Reports() {
     totalRevenueVariation,
     servicesRealized,
     realizedServicesVariation,
-    ticketMedio,
-    TicketMedioVariation,
-    taxaConversao,
-    taxaConversaoVariation, 
+    averageTicket,
+    averageTicketVariation,
+    conversionRate,
+    conversionRateVariation,
   } = useReportStore()
   
-  console.log('estou na page', revenueTotal)
-
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth)
@@ -77,53 +76,87 @@ export default function Reports() {
                 <Card className="flex flex-col gap-8 p-6">
                   <div className="flex items-center justify-between">
                     <p className="text-gray-500">Receita Total</p>
-                    <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
+                      {totalRevenueVariation >= 0 ? (
+                        <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
+                      ) : (
+                        <TrendingDown
+                          className="text-red-500"
+                          size={18} 
+                          strokeWidth={2.25}
+                        />
+                      )}
                   </div>
 
                   <span>{currencyFormatter(revenueTotal)}</span>
 
-                  <p className="text-[#00A63E]">+{percentFormatter(totalRevenueVariation)} vs ano anterior</p>
+                  <p className={cn(totalRevenueVariation >= 0 ? 'text-[#00A63E]' : 'text-red-500')}>{percentFormatter(totalRevenueVariation, { signed: true })} vs ano anterior</p>
                 </Card>
 
                 <Card className="flex flex-col gap-8 p-6">
                   <div className="flex items-center justify-between">
                     <p className="text-gray-500">Serviços Realizados</p>
-                    <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
+                    {realizedServicesVariation >= 0 ? (
+                        <TrendingUp size={18} color="#00A63E" strokeWidth={2.25}/>
+                      ) : (
+                        <TrendingDown
+                          className="text-red-500"
+                          size={18} 
+                          strokeWidth={2.25}
+                        />
+                      )}
                   </div>
 
                   <span>{servicesRealized}</span>
 
-                  <p className="text-[#00A63E]">+{percentFormatter(realizedServicesVariation)} vs ano anterior</p>
+                  <p className={cn(realizedServicesVariation >= 0 ? 'text-[#00A63E]' : 'text-red-500')}>{percentFormatter(realizedServicesVariation, { signed: true })} vs ano anterior</p>
                 </Card>
                 
                 <Card className="flex flex-col gap-8 p-6">
                   <div className="flex items-center justify-between">
                     <p className="text-gray-500">Ticket Médio</p>
-                    <TrendingUp 
-                      className="text-blue-500" 
-                      size={18} 
-                      strokeWidth={2.25} 
-                    />
-                  </div>
 
-                  <span>{currencyFormatter(ticketMedio)}</span>
-
-                  <p className="text-blue-500">+{percentFormatter(TicketMedioVariation)} vs mes anterior</p>
-                </Card>
-
-                <Card className="flex flex-col gap-8 p-6">
-                  <div className="flex items-center justify-between">
-                    <p className="text-gray-500">Taxa de Conversão</p>
-                    <TrendingDown 
+                    {averageTicketVariation >= 0 ? (
+                      <TrendingUp 
+                        className="text-blue-500" 
+                        size={18} 
+                        strokeWidth={2.25} 
+                      /> 
+                    ) : (
+                      <TrendingDown 
                       className="text-red-500" 
                       size={18} 
                       strokeWidth={2.25} 
                     />
+                    )}
                   </div>
 
-                  <span>{percentFormatter(taxaConversao)}</span>
+                  <span>{currencyFormatter(averageTicket)}</span>
 
-                  <p className="text-red-500">-{percentFormatter(taxaConversaoVariation)} vs mês anterior</p>
+                  <p className={cn(averageTicketVariation >= 0 ? 'text-blue-500' : 'text-red-500' )}>{percentFormatter(averageTicketVariation, { signed: true })} vs mes anterior</p>
+                </Card>
+                {/* text-blue-500 */}
+
+                <Card className="flex flex-col gap-8 p-6">
+                  <div className="flex items-center justify-between">
+                    <p className="text-gray-500">Taxa de Conversão</p>
+                    {conversionRateVariation >= 0 ? (
+                      <TrendingUp 
+                        className="text-blue-500" 
+                        size={18} 
+                        strokeWidth={2.25} 
+                      /> 
+                    ) : (
+                      <TrendingDown 
+                      className="text-red-500" 
+                      size={18} 
+                      strokeWidth={2.25} 
+                    />
+                    )}
+                  </div>
+
+                  <span>{percentFormatter(conversionRate)}</span>
+
+                  <p className={cn(conversionRateVariation >= 0 ? 'text-blue-500' : 'text-red-500' )}>{percentFormatter(conversionRateVariation, { signed: true })} vs mês anterior</p>
                 </Card>
               </div>
 
@@ -221,10 +254,10 @@ export default function Reports() {
                             i % 2 === 0 ? 'bg-[#f0f0fa]' : 'bg-white'
                           )}
                         >
-                          <td className="py-2 pr-6 whitespace-nowrap">{employee.funcionario}</td>
-                          <td className="py-2 pr-6 whitespace-nowrap">{employee.servicosConcluidos}</td>
-                          <td className="py-2 pr-6 whitespace-nowrap">{currencyFormatter(employee.receitaGerada)}</td>
-                          <td className="py-2 whitespace-nowrap">{currencyFormatter(employee.mediaPorServico)}</td>
+                          <td className="py-2 pr-6 whitespace-nowrap">{employee.employeeName}</td>
+                          <td className="py-2 pr-6 whitespace-nowrap">{employee.completedServices}</td>
+                          <td className="py-2 pr-6 whitespace-nowrap">{currencyFormatter(employee.generatedRevenue)}</td>
+                          <td className="py-2 whitespace-nowrap">{currencyFormatter(employee.averagePerService)}</td>
                         </tr>
                       ))}
                     </tbody>
