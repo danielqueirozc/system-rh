@@ -22,16 +22,23 @@ export class GetReports {
     const previousYearStart = new Date(`${selectedYear - 1}-01-01T00:00:00.000Z`)
     const previousYearEnd = new Date(`${selectedYear}-01-01T00:00:00.000Z`)
 
+    const today = new Date()
+    const monthStart = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1))
+    const monthEnd = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1, 1))
+    const previousMonthStart = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1))
+    const previousMonthEnd = monthStart // início do mês atual = fim do mês anterior
 
     // roda as 3 queries em paralelo, igual no get-budgets.controller.ts
     const [
-        approvedBudgets, 
-        previousApprovedBudgets , 
-        completedAppointments,
-        previousCompletedAppointments,
-        totalBudgetsInYear,
-        previousTotalBudgetsInYear,
-      ] = await Promise.all([
+      approvedBudgets,
+      approvedBudgetsByMonth,
+      previousApprovedBudgets,
+      previousApprovedBudgetsByMonth,
+      completedAppointments,
+      previousCompletedAppointments,
+      totalBudgetsInMonth,
+      previousTotalBudgetsInMonth,
+    ] = await Promise.all([
       // orçamentos aprovados no ano -> base de toda a receita do relatório
       // lt = less than (menor que, estritamente)
       // WHERE date >= yearStart AND date < yearEnd
@@ -46,8 +53,27 @@ export class GetReports {
         },
       }),
 
+        this.prisma.budget.findMany({
+        // gte = greater than or equal (maior ou igual)
+        where: { status: 'APPROVED', date: { gte: monthStart, lt: monthEnd } },
+        select: {
+          value: true,
+          date: true,
+          employee: { select: { id: true, name: true } },
+        },
+      }),
+
       this.prisma.budget.findMany({
         where: { status: 'APPROVED', date: {gte: previousYearStart, lt: previousYearEnd} },
+        select: {
+          value: true,
+          date: true,
+          employee: { select: { id: true, name: true } }
+        }
+      }),
+
+      this.prisma.budget.findMany({
+        where: { status: 'APPROVED', date: {gte: previousMonthStart, lt: previousMonthEnd} },
         select: {
           value: true,
           date: true,
@@ -70,27 +96,35 @@ export class GetReports {
           service: { select: { name: true } },
         },
       }),
-      // todos os orçamentos criados no ano (independente do status) -> denominador da taxa de conversão
+      // todos os orçamentos criados no mês (independente do status) -> denominador da taxa de conversão
       this.prisma.budget.count({
-        where: { date: { gte: yearStart, lt: yearEnd } },
+        where: { date: { gte: monthStart, lt: monthEnd } },
       }),
 
-       this.prisma.budget.count({
-        where: { date: { gte: previousYearStart, lt: previousYearEnd } },
+      this.prisma.budget.count({
+        where: { date: { gte: previousMonthStart, lt: previousMonthEnd } },
       }),
     ])
+
+    
+
 
     // budget.value vem como Decimal do banco, então precisa de Number() antes de somar
     const revenueTotal = approvedBudgets.reduce((acc, budget) => acc + Number(budget.value), 0)
     const previousRevenueTotal = previousApprovedBudgets.reduce((acc, budget) => acc + Number(budget.value), 0)
+    const previousRevenueTotalByMonth = previousApprovedBudgetsByMonth.reduce((acc, budget) => acc + Number(budget.value), 0)
+    const revenueTotalByMonth = approvedBudgetsByMonth.reduce((acc, budget) => acc + Number(budget.value), 0)
     const totalRevenueVariation = previousRevenueTotal > 0 ?((revenueTotal - previousRevenueTotal) / previousRevenueTotal) * 100 : 0
 
     const servicesRealized = completedAppointments.length
-    const realizedServicesVariation = previousCompletedAppointments.length
-    const ticketMedio = approvedBudgets.length > 0 ? revenueTotal / approvedBudgets.length : 0
-    const TicketMedioVariation = previousRevenueTotal > 0 ? previousRevenueTotal / previousApprovedBudgets.length : 0
-    const taxaConversao = totalBudgetsInYear > 0 ? (approvedBudgets.length / totalBudgetsInYear) * 100 : 0
-    const taxaConversaoVariation = previousTotalBudgetsInYear > 0 ? (previousApprovedBudgets.length / previousTotalBudgetsInYear) * 100 : 0
+    const previousServicesRealized = previousCompletedAppointments.length
+    const realizedServicesVariation = previousServicesRealized > 0 ? ((servicesRealized - previousServicesRealized) / previousServicesRealized) * 100 : 0
+    const averageTicket = approvedBudgetsByMonth.length > 0 ? revenueTotalByMonth / approvedBudgetsByMonth.length : 0
+    const previousAverageTicket = previousApprovedBudgetsByMonth.length > 0 ? previousRevenueTotalByMonth / previousApprovedBudgetsByMonth.length : 0
+    const averageTicketVariation = previousAverageTicket > 0 ? ((averageTicket - previousAverageTicket) / previousAverageTicket) * 100 : 0
+    const conversionRate = totalBudgetsInMonth > 0 ? (approvedBudgetsByMonth.length / totalBudgetsInMonth) * 100 : 0
+    const previousConversionRate = previousTotalBudgetsInMonth > 0 ? (previousApprovedBudgetsByMonth.length / previousTotalBudgetsInMonth) * 100 : 0
+    const conversionRateVariation = previousConversionRate > 0 ? ((conversionRate - previousConversionRate) / previousConversionRate) * 100 : 0
 
     // soma a receita aprovada mês a mês -> array de 12 posições (Jan a Dez)
     // getUTCMonth() pra não depender do fuso horário de onde o Node está rodando
@@ -124,27 +158,27 @@ export class GetReports {
     // agrupa os orçamentos aprovados por funcionário: quantidade de serviços fechados e receita gerada
     const employeePerformanceById = new Map<string, {
       employeeId: string
-      funcionario: string
-      servicosConcluidos: number
-      receitaGerada: number
+      employeeName: string
+      completedServices: number
+      generatedRevenue: number
     }>()
     for (const budget of approvedBudgets) {
       const employeeId = budget.employee.id
       const current = employeePerformanceById.get(employeeId) ?? {
         employeeId,
-        funcionario: budget.employee.name,
-        servicosConcluidos: 0,
-        receitaGerada: 0,
+        employeeName: budget.employee.name,
+        completedServices: 0,
+        generatedRevenue: 0,
       }
 
-      current.servicosConcluidos += 1
-      current.receitaGerada += Number(budget.value)
+      current.completedServices += 1
+      current.generatedRevenue += Number(budget.value)
 
       employeePerformanceById.set(employeeId, current)
     }
     const employeePerformance = Array.from(employeePerformanceById.values()).map((employee) => ({
       ...employee,
-      mediaPorServico: employee.servicosConcluidos > 0 ? employee.receitaGerada / employee.servicosConcluidos : 0,
+      averagePerService: employee.completedServices > 0 ? employee.generatedRevenue / employee.completedServices : 0,
     }))
 
     return {
@@ -153,10 +187,10 @@ export class GetReports {
       totalRevenueVariation,
       servicesRealized,
       realizedServicesVariation,
-      ticketMedio,
-      TicketMedioVariation,
-      taxaConversao,
-      taxaConversaoVariation,
+      averageTicket,
+      averageTicketVariation,
+      conversionRate,
+      conversionRateVariation,
       monthlyRevenue,
       servicesQuantity,
       serviceDistribution,
