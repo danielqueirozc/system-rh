@@ -22,7 +22,7 @@ const data = [
 ]
 
 const chartConfig = {
-  servicosConcluidos: { label: "Serviços", color: "#9333EA" },
+  completedServices: { label: "Serviços", color: "#9333EA" },
 } satisfies ChartConfig
 
 export function EmployeePerformanceChart() {
@@ -42,7 +42,7 @@ export function EmployeePerformanceChart() {
             <XAxis type="number" tickLine={false} axisLine={false} tickMargin={8} />
             <YAxis
               type="category"
-              dataKey="funcionario"
+              dataKey="employeeName"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -50,8 +50,8 @@ export function EmployeePerformanceChart() {
             />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <Bar
-              dataKey="servicosConcluidos"
-              fill="var(--color-servicosConcluidos)"
+              dataKey="completedServices"
+              fill="var(--color-completedServices)"
               radius={[0, 4, 4, 0]}
               maxBarSize={22}
             />

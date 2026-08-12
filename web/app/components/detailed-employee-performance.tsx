@@ -29,10 +29,10 @@ export function DetailedEmployeePerformance() {
                   i % 2 === 0 ? 'bg-[#f0f0fa]' : 'bg-white'
                 )}
               >
-                <td className="py-4 pr-6 whitespace-nowrap">{employee.funcionario}</td>
-                <td className="py-4 pr-6 whitespace-nowrap">{employee.servicosConcluidos}</td>
-                <td className="py-4 pr-6 whitespace-nowrap text-green-600">{currencyFormatter(employee.receitaGerada)}</td>
-                <td className="py-4 whitespace-nowrap text-blue-500">{currencyFormatter(employee.mediaPorServico)}</td>
+                <td className="py-4 pr-6 whitespace-nowrap">{employee.employeeName}</td>
+                <td className="py-4 pr-6 whitespace-nowrap">{employee.completedServices}</td>
+                <td className="py-4 pr-6 whitespace-nowrap text-green-600">{currencyFormatter(employee.generatedRevenue)}</td>
+                <td className="py-4 whitespace-nowrap text-blue-500">{currencyFormatter(employee.averagePerService)}</td>
               </tr>
             ))}
           </tbody>
