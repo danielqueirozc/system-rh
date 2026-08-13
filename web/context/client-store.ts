@@ -15,7 +15,7 @@ interface ClientStoreType {
   client: GetClientProps[] | []
 
   getClients: () => Promise<GetClientProps[] | []>
-  createClient: (data: CreateClientProps) => Promise<void>
+  createClient: (data: CreateClientProps) => Promise<GetClientProps>
 }
 
 export const useClientStore = create<ClientStoreType>()(
@@ -37,9 +37,16 @@ export const useClientStore = create<ClientStoreType>()(
     },
     createClient: async (data: CreateClientProps) => {
       try {
-        const response = clientService.create(data)
+        // console.log('estou no contexto', data)
+        const response = await clientService.create(data)
+        // coloquei return para se um dia precisar pegar o cliet recem-criado
+        console.log('resposta no context', response.client)
+        set(state => ({ client: [... state.client, response.client] }))
+        return response.client
+        
       } catch (error) {
         console.error('Erro ao criar client', error)
+        throw error
       }
     }
   })

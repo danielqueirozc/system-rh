@@ -72,7 +72,9 @@ export const clientService = {
     return response.data
   },
   create: async (data: ClientProps) => {
-    const response = await api.post('/client')
+    // console.log('estou no axios', data)
+    const response = await api.post('/client', data)
+    console.log('axios', response.data)
     return response.data
   }
 }
