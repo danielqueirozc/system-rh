@@ -4,6 +4,7 @@ import { AuthenticateController } from "./controllers/authenticate.controller";
 import { CreateAccount } from "./controllers/create-acccount.controller";
 import { CreateAppointment } from "./controllers/create-appointment.controller";
 import { CreateBudget } from "./controllers/create-budget.controller";
+import { CreateClient } from "./controllers/create-client.controller";
 import { GetBudgets } from "./controllers/get-budgets.controller";
 import { GetClients } from "./controllers/get-clients.controller";
 import { GetEmployees } from "./controllers/get-employees.controller";
@@ -17,6 +18,7 @@ import { GetReports } from "./controllers/get-reports.controller";
     AuthenticateController,
     CreateAppointment,
     CreateBudget,
+    CreateClient,
     GetBudgets,
     GetClients,
     GetEmployees,
