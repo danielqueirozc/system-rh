@@ -1,9 +1,10 @@
 'use client'
 
+import { AppointmentFormDialog } from "@/app/components/appointment-form-dialog";
 import { Card } from "@/app/components/ui/card";
 import { useAppointmentStore } from "@/context/appointment-store";
 import { cn } from "@/lib/utils";
-import { Calendar, Clock, Plus, User } from "lucide-react";
+import { Calendar, Clock, User } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 
 export default function Appointments() {
@@ -54,10 +55,7 @@ export default function Appointments() {
                   Gestão de Agendamentos
                 </span>
 
-                <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-xs font-semibold px-4 py-2 rounded-lg w-fit">
-                  <Plus size={16} />
-                  Novo Agendamento
-                </button>
+                <AppointmentFormDialog />
               </div>
 
               <div className="overflow-x-auto w-full p-1 grid grid-cols-5 justify-between text-sm gap-2 bg-gray-100 rounded-lg">
@@ -134,10 +132,7 @@ export default function Appointments() {
               Gestão de Agendamentos
             </span>
 
-            <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-xs font-semibold px-4 py-2 rounded-lg w-fit">
-              <Plus size={16} />
-              Novo Agendamento
-            </button>
+            <AppointmentFormDialog />
 
             <div className="overflow-x-auto w-full p-1 flex text-sm gap-2 bg-gray-100 rounded-lg">
               {status.map(stt => (

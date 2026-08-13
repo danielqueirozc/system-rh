@@ -1,17 +1,10 @@
 'use client'
 
+import { ClientFormDialog } from "@/app/components/client-form-dialog";
 import { useClientStore } from "@/context/client-store";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, Plus, Search, SquarePen, Trash2 } from "lucide-react";
+import { Mail, Phone, Search, SquarePen, Trash2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
-
-const clients = [
-  { id: 1, name: "João Silva",      email: "joao@email.com",    phone: "(11) 98765-4321", address: "Rua A, 123", services: 5,  status: "Ativo" },
-  { id: 2, name: "Maria Santos",    email: "maria@email.com",   phone: "(11) 98765-4322", address: "Rua B, 456", services: 3,  status: "Ativo" },
-  { id: 3, name: "Carlos Oliveira", email: "carlos@email.com",  phone: "(11) 98765-4323", address: "Rua C, 789", services: 8,  status: "Ativo" },
-  { id: 4, name: "Ana Costa",       email: "ana@email.com",     phone: "(11) 98765-4324", address: "Rua D, 321", services: 2,  status: "Inativo" },
-  { id: 5, name: "Pedro Alves",     email: "pedro@email.com",   phone: "(11) 98765-4325", address: "Rua E, 654", services: 12, status: "Ativo" },
-]
 
 export default function Clients() {
   const [search, setSearch] = useState("")
@@ -63,10 +56,7 @@ export default function Clients() {
                   />
                 </div>
 
-                <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-sm font-semibold px-4 py-2 rounded-lg w-fit cursor-pointer">
-                  <Plus size={16} />
-                  Novo Cliente
-                </button>
+                <ClientFormDialog />
               </div>
 
               <div className="overflow-x-auto">
@@ -144,10 +134,7 @@ export default function Clients() {
               />
             </div>
 
-            <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-sm font-semibold px-4 py-2 rounded-lg w-fit">
-              <Plus size={16} />
-              Novo Cliente
-            </button>
+            <ClientFormDialog />
 
             <div className="overflow-x-auto">
             <table className="w-full text-sm mt-2 min-w-150">

@@ -1,8 +1,8 @@
 'use client'
 
 import { Fragment, useEffect, useState } from "react";
-import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BudgetFormDialog } from "@/app/components/budget-form-dialog";
 import { Card } from "@/app/components/ui/card";
 import { useBudgetStore } from "@/context/budget-store";
 import { dateFormatter } from "@/utils/date-formartter";
@@ -79,10 +79,7 @@ export default function Budgets() {
                   </Card>
                 </div>
 
-                <button className="flex items-center self-start gap-2 bg-[#1a1a8c] text-white text-xs font-semibold px-4 py-2 rounded-lg w-fit">
-                  <Plus size={16} />
-                  Novo Orçamento
-                </button>
+                <BudgetFormDialog />
               </div>
 
               <div className="flex flex-col gap-4 bg-white rounded-2xl border border-gray-200 p-4">
@@ -166,10 +163,7 @@ export default function Budgets() {
               <span className="text-red-500 font-medium text-lg">R$ 11.700</span>
             </Card>
 
-            <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-xs font-semibold px-4 py-2 rounded-lg w-fit">
-              <Plus size={16} />
-              Novo Orçamento
-            </button>
+            <BudgetFormDialog />
 
             <div className="flex flex-col gap-4 bg-white rounded-2xl border border-gray-200 p-4">
               <div className="overflow-x-auto">

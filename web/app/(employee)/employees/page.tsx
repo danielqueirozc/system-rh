@@ -1,9 +1,10 @@
 'use client'
 
+import { EmployeeFormDialog } from "@/app/components/employee-form-dialog";
 import { Card } from "@/app/components/ui/card";
 import { useEmployeeStore } from "@/context/employee-stores";
 import { cn } from "@/lib/utils";
-import { Briefcase, Mail, Phone, Plus, Search, SquarePen, Trash2 } from "lucide-react";
+import { Briefcase, Mail, Phone, Search, SquarePen, Trash2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 
 export default function Enployees() {
@@ -50,10 +51,7 @@ export default function Enployees() {
                 />
               </div>
 
-              <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-sm font-semibold px-4 py-2 rounded-lg w-fit cursor-pointer">
-                <Plus size={16} />
-                Novo Funcionário
-              </button>
+              <EmployeeFormDialog />
             </div>
 
             <div className="grid grid-cols-3 gap-4 overflow-y-auto p-1">
@@ -357,10 +355,7 @@ export default function Enployees() {
             />
             </div>
 
-            <button className="flex items-center gap-2 bg-[#1a1a8c] text-white text-xs font-semibold px-4 py-2 rounded-lg w-fit">
-              <Plus size={16} />
-              Novo Funcionário
-            </button>
+            <EmployeeFormDialog />
           </div>
 
           <div className="flex flex-col gap-4">
