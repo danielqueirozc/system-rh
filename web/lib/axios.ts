@@ -11,6 +11,13 @@ interface AppointmentProps {
   clientDescription: string
 }
 
+interface ClientProps {
+  name: string
+  email: string
+  phone: string
+  address: string
+}
+
 export const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL
 })
@@ -62,6 +69,10 @@ export const employeeService = {
 export const clientService = {
   get: async () => {
     const response = await api.get('/client')
+    return response.data
+  },
+  create: async (data: ClientProps) => {
+    const response = await api.post('/client')
     return response.data
   }
 }

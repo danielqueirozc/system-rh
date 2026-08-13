@@ -1,3 +1,4 @@
+import type { CreateClientProps, GetClientProps } from '@/@types'
 import { clientService, employeeService } from '@/lib/axios'
 import { create } from 'zustand'
 
@@ -8,23 +9,13 @@ const ClientStatus = {
 
 type ClientStatus = (typeof ClientStatus)[keyof typeof ClientStatus]
 
-interface ClientProps {
-  id: string
-  name: string
-  email: string
-  phone: string
-  address: string
-  status: ClientStatus
-  appointments: []
-  budgets: []
-  createdAt: Date
-  updatedAt: Date
-}
+
 
 interface ClientStoreType {
-  client: ClientProps[] | []
+  client: GetClientProps[] | []
 
-  getClients: () => Promise<ClientProps[] | []>
+  getClients: () => Promise<GetClientProps[] | []>
+  createClient: (data: CreateClientProps) => Promise<void>
 }
 
 export const useClientStore = create<ClientStoreType>()(
@@ -42,6 +33,13 @@ export const useClientStore = create<ClientStoreType>()(
       } catch (error) {
         console.error('Erro ao listar clients', error)
         throw error
+      }
+    },
+    createClient: async (data: CreateClientProps) => {
+      try {
+        const response = clientService.create(data)
+      } catch (error) {
+        console.error('Erro ao criar client', error)
       }
     }
   })
