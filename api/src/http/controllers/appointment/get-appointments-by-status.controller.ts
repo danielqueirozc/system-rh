@@ -1,5 +1,5 @@
 import { PrismaService } from "@/database/prisma/prisma.service";
-import { AppointmentStatus } from "../../../generated/prisma/client";
+import { AppointmentStatus } from "../../../../generated/prisma/client";
 import { Controller, Get, HttpCode, Query } from "@nestjs/common";
 
 @Controller()

@@ -1,7 +1,7 @@
 import { PrismaService } from "@/database/prisma/prisma.service";
 import { Body, Controller, HttpCode, NotFoundException, Post, UsePipes } from "@nestjs/common";
 import z from "zod";
-import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
+import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
 
 const bodySchema = z.object({
   serviceName: z.string(),

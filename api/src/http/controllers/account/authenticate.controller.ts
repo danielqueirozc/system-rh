@@ -2,7 +2,7 @@ import { PrismaService } from "@/database/prisma/prisma.service";
 import { Body, Controller, Post, UnauthorizedException, UsePipes } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import z from "zod";
-import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
+import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
 import { compare } from "bcryptjs";
 
 const bodySchema = z.object({

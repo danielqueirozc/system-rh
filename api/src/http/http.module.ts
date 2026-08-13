@@ -1,29 +1,19 @@
-import { DatabaseModule } from "@/database/database.module";
 import { Module } from "@nestjs/common";
-import { AuthenticateController } from "./controllers/authenticate.controller";
-import { CreateAccount } from "./controllers/create-acccount.controller";
-import { CreateAppointment } from "./controllers/create-appointment.controller";
-import { CreateBudget } from "./controllers/create-budget.controller";
-import { CreateClient } from "./controllers/create-client.controller";
-import { GetBudgets } from "./controllers/get-budgets.controller";
-import { GetClients } from "./controllers/get-clients.controller";
-import { GetEmployees } from "./controllers/get-employees.controller";
-import { GetAppointmentByStatus } from "./controllers/get-appointments-by-status.controller";
-import { GetReports } from "./controllers/get-reports.controller";
+import { AccountModule } from "./controllers/account/account.module";
+import { AppointmentModule } from "./controllers/appointment/appointment.module";
+import { BudgetModule } from "./controllers/budget/budget.module";
+import { ClientModule } from "./controllers/client/client.module";
+import { EmployeeModule } from "./controllers/employee/employee.module";
+import { ReportModule } from "./controllers/report/report.module";
 
 @Module({
-  imports: [DatabaseModule],
-  controllers: [
-    CreateAccount,
-    AuthenticateController,
-    CreateAppointment,
-    CreateBudget,
-    CreateClient,
-    GetBudgets,
-    GetClients,
-    GetEmployees,
-    GetAppointmentByStatus,
-    GetReports
+  imports: [
+    AccountModule,
+    AppointmentModule,
+    BudgetModule,
+    ClientModule,
+    EmployeeModule,
+    ReportModule,
   ]
 })
 export class HttpModule {}
