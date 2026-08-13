@@ -35,12 +35,23 @@ describe("Create Budget", () => {
       data: { name: 'Pintura', description: 'Pintura interna e externa' },
     })
 
+    const employee = await prisma.employee.create({
+      data: {
+        name: 'Fernanda Oliveira',
+        function: 'Pintora',
+        status: 'ACTIVE',
+        email: 'fernanda.oliveira@avila.com',
+        phone: '(11) 91111-0005',
+      },
+    })
+
     const budget = await request(app.getHttpServer()).post('/budget').send({
       description: 'pintar todos os comodos da casa',
       value: 8000,
       date: new Date(),
       clientId: client.id,
       serviceId: service.id,
+      employeeId: employee.id,
     })
 
     expect(budget.statusCode).toBe(201)
