@@ -5,7 +5,7 @@ import { Test } from "@nestjs/testing"
 import request from 'supertest'
 
 
-describe('Create Client (e2e)', () => {
+describe('Client (e2e)', () => {
   let app: INestApplication
     let prisma: PrismaService
   
@@ -31,4 +31,25 @@ describe('Create Client (e2e)', () => {
 
       expect(response.statusCode).toBe(201)
     })
+
+    test('[GET] /client', async () => {
+      const response = await request(app.getHttpServer()).get('/client')
+      expect(response.statusCode).toBe(200)
+    })
+
+   test('[DELETE] /client', async () => {
+    const client = await prisma.client.create({
+      data: {
+        name: 'boris',
+        email: 'boriss@gmail.com',
+        phone: '45335831',
+        address: 'Rua dos alfinetes 124'
+      }
+    })
+
+    const response = await request(app.getHttpServer()).delete(`/client/${client.id}`)
+
+    expect(response.statusCode).toBe(204)
+  })
+
 })
