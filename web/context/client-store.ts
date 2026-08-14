@@ -16,6 +16,7 @@ interface ClientStoreType {
 
   getClients: () => Promise<GetClientProps[] | []>
   createClient: (data: CreateClientProps) => Promise<GetClientProps>
+  deleteClient: (id: string) => Promise<void>
 }
 
 export const useClientStore = create<ClientStoreType>()(
@@ -46,6 +47,18 @@ export const useClientStore = create<ClientStoreType>()(
         
       } catch (error) {
         console.error('Erro ao criar client', error)
+        throw error
+      }
+    },
+    deleteClient: async (id: string) => {
+      try {
+      const response = await clientService.delete(id)
+      
+      set(state => ({
+        client: state.client.filter(item => item.id != id)
+      }))
+      } catch (error) {
+        console.error('Erro ao deletar client:', error)
         throw error
       }
     }

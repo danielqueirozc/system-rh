@@ -76,6 +76,9 @@ export const clientService = {
     const response = await api.post('/client', data)
     console.log('axios', response.data)
     return response.data
+  },
+  delete: async (id: string) => {
+    const response = await api.delete(`/client/${id}`)
   }
 }
 
