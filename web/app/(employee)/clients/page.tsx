@@ -1,21 +1,26 @@
 'use client'
 
 import { ClientFormDialog } from "@/app/components/client-form-dialog";
+import { EditClientDialog } from "@/app/components/edit-client-dialog";
 import { useClientStore } from "@/context/client-store";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, Search, SquarePen, Trash2 } from "lucide-react";
+import { Mail, Phone, Search, Trash2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 
 export default function Clients() {
   const [search, setSearch] = useState("")
   const [windowWidth, setWindowWidth] = useState(0)
 
-  const { client, getClients } = useClientStore()
+  const { client, getClients, deleteClient } = useClientStore()
 
   const filtered = client.filter(c =>
     // uma string mesmo vazia continua sendo uma string, entao passa na comparacao com o obj.name
     c.name.toLowerCase().includes(search.toLowerCase())
   )
+
+  function handleDelete(id: string) {
+    deleteClient(id)
+  }
 
   useEffect(() => {
   function handleResize() {
@@ -103,10 +108,11 @@ export default function Clients() {
                         </td>
                         <td className="py-4 text-center">
                           <div className="flex items-center justify-center gap-5 px-2">
-                            <button className="w-10 h-10 flex items-center justify-center rounded-lg text-gray-500 transition-colors hover:text-blue hover:bg-violet-100">
-                              <SquarePen size={16} />
-                            </button>
-                            <button className="w-10 h-10 flex items-center justify-center rounded-lg text-red-400 transition-colors hover:text-red-600 hover:bg-violet-100">
+                            <EditClientDialog client={client} />
+                            <button
+                              onClick={() => handleDelete(client.id)}
+                              className="w-10 h-10 flex items-center justify-center rounded-lg text-red-400 transition-colors hover:text-red-600 hover:bg-violet-100"
+                            >
                               <Trash2 size={16} />
                             </button>
                           </div>
@@ -183,10 +189,11 @@ export default function Clients() {
                     </td>
                     <td className="py-4 text-center">
                       <div className="flex items-center justify-center gap-5 px-2">
-                        <button className="text-gray-500 hover:text-gray-800">
-                          <SquarePen size={16} />
-                        </button>
-                        <button className="text-red-400 hover:text-red-600">
+                        <EditClientDialog client={client} />
+                        <button
+                          onClick={() => handleDelete(client.id)}
+                          className="text-red-400 hover:text-red-600"
+                        >
                           <Trash2 size={16} />
                         </button>
                       </div>
