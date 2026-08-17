@@ -52,4 +52,26 @@ describe('Client (e2e)', () => {
     expect(response.statusCode).toBe(204)
   })
 
+  test('[PUT] /client', async () => {
+    const client = await prisma.client.create({
+      data: {
+        name: 'boris',
+        email: 'borisss@gmail.com',
+        phone: '45335832',
+        address: 'Rua dos alfinetes 124'
+      }
+    })
+
+    const response = await request(app.getHttpServer()).put('/client').send({
+      id: client.id,
+      name: 'Mario',
+      email: 'mario@nintendo.com',
+      phone: '40021234',
+      address: 'Rua da Nintendo, 01',
+      status: 'INACTIVE'
+    })
+
+    expect(response.statusCode).toBe(200)
+  })
+
 })

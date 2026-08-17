@@ -20,7 +20,6 @@ export class CreateClient {
   @UsePipes(new ZodValidationPipe(zodSchema))
   @HttpCode(201)
   async handle(@Body() body: CreateClientType) {
-    console.log(body)
     const { name, email, phone, address } = body
 
     const clientAlreadyExists = await this.prisma.client.findUnique({
