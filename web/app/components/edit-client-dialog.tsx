@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react"
 import { SquarePen } from "lucide-react"
 
-import type { GetClientProps } from "@/@types"
+import type { ClientProps } from "@/@types"
 import { Button } from "@/app/components/ui/button"
 import {
   Dialog,
@@ -23,14 +23,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select"
+import { useClientStore } from "@/context/client-store"
 
 interface EditClientDialogProps {
-  client: GetClientProps
+  client: ClientProps
 }
 
 export function EditClientDialog({ client }: EditClientDialogProps) {
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState({
+    id: client.id,
     name: client.name,
     email: client.email,
     phone: client.phone,
@@ -38,9 +40,12 @@ export function EditClientDialog({ client }: EditClientDialogProps) {
     status: client.status,
   })
 
+  const { editClient } = useClientStore()
+
   function handleOpenChange(next: boolean) {
     if (next) {
       setForm({
+        id: client.id,
         name: client.name,
         email: client.email,
         phone: client.phone,
@@ -58,7 +63,7 @@ export function EditClientDialog({ client }: EditClientDialogProps) {
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
-
+    editClient(form)
     setOpen(false)
   }
 

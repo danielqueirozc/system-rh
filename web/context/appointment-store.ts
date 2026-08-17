@@ -1,3 +1,4 @@
+import type { AppointmentProps, EditAppointmentProps } from '@/@types'
 import { appointmentService } from '@/lib/axios'
 import { create } from 'zustand'
 interface CreateAppointmentDataProps {
@@ -16,7 +17,7 @@ interface CreateAppointmentDataProps {
   } as const
   
   export type AppointmentStatus = (typeof AppointmentStatus) [keyof typeof AppointmentStatus]
-interface AppointmentsProps {
+export interface AppointmentsProps {
   id: string
   client: { name: string }
   service: { name: string }
@@ -41,6 +42,7 @@ interface AppointmentStoreType {
   setData: (data: CreateAppointmentDataProps) => void
   createAppointment: (data: CreateAppointmentDataProps) => Promise<void>
   getAppointments: (status?: AppointmentStatus) => Promise<AppointmentsProps[] | []>
+  editAppointment: (data: EditAppointmentProps) => Promise<AppointmentProps>
 }
 
 export const useAppointmentStore = create<AppointmentStoreType>()(
@@ -62,6 +64,11 @@ export const useAppointmentStore = create<AppointmentStoreType>()(
     setService: (service) => set({ service }),
     setDateAppointment: (date) => set({ date }),
     setData: (data) => { set({ data }), console.log(data) },
+    getAppointments: async (status) => {
+      const response = await appointmentService.get(status)
+      set({ appointments: response.appointments })
+      return response.appointments
+    },
     createAppointment: async (data) => {
     const { service, date } = get()
     try {
@@ -81,11 +88,21 @@ export const useAppointmentStore = create<AppointmentStoreType>()(
       throw error
     }
     },
-    getAppointments: async (status) => {
-      const response = await appointmentService.get(status)
-      set({ appointments: response.appointments })
-      return response.appointments
-    },
+    editAppointment: async (data: EditAppointmentProps) => {
+      try {
+        const response = await appointmentService.edit(data)
+        set(state => ({
+          appointments: state.appointments.map(item => 
+            item.id === data.id ? { ...item, ...response.appointment } : item
+          )
+        }))
+        return response.appointment
+        
+      } catch (error) {
+        console.error('Erro ao editar Appointment', error)
+        throw error
+      }
+    }
   }),
   // {
   //     name: 'appointment-storage',

@@ -1,5 +1,5 @@
-import type { CreateClientProps, GetClientProps } from '@/@types'
-import { clientService, employeeService } from '@/lib/axios'
+import type { ClientProps, CreateClientProps, EditClientProps,  } from '@/@types'
+import { clientService } from '@/lib/axios'
 import { create } from 'zustand'
 
 const ClientStatus = {
@@ -12,11 +12,12 @@ type ClientStatus = (typeof ClientStatus)[keyof typeof ClientStatus]
 
 
 interface ClientStoreType {
-  client: GetClientProps[] | []
+  client: ClientProps[] | []
 
-  getClients: () => Promise<GetClientProps[] | []>
-  createClient: (data: CreateClientProps) => Promise<GetClientProps>
+  getClients: () => Promise<ClientProps[] | []>
+  createClient: (data: CreateClientProps) => Promise<ClientProps>
   deleteClient: (id: string) => Promise<void>
+  editClient: (data: EditClientProps) => Promise<ClientProps>
 }
 
 export const useClientStore = create<ClientStoreType>()(
@@ -59,6 +60,20 @@ export const useClientStore = create<ClientStoreType>()(
       }))
       } catch (error) {
         console.error('Erro ao deletar client:', error)
+        throw error
+      }
+    },
+    editClient: async (data: EditClientProps) => {
+      try {
+        const response = await clientService.edit(data)
+        set(state => ({
+          client: state.client.map(item => 
+            item.id === data.id ? { ...item, ...response.client } : item
+          )
+        }))
+        return response.client
+      } catch (error) {
+        console.error('Erro ao edita client:', error)
         throw error
       }
     }

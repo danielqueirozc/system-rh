@@ -1,22 +1,6 @@
+import type { AppointmentProps, CreateClientProps, EditAppointmentProps, EditClientProps } from "@/@types"
 import type { AppointmentStatus } from "@/context/appointment-store"
 import axios from "axios"
-
-interface AppointmentProps {
-  serviceName: string
-  serviceDate: Date
-  clientName: string
-  clientEmail: string
-  clientAddress: string
-  clientPhone: string
-  clientDescription: string
-}
-
-interface ClientProps {
-  name: string
-  email: string
-  phone: string
-  address: string
-}
 
 export const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL
@@ -52,6 +36,10 @@ export const appointmentService = {
   create: async (data: AppointmentProps) => {
     const response = await api.post('/appointment', data)
     return response
+  },
+  edit: async ({ id, status, date, description }: EditAppointmentProps) => {
+    const response = await api.put('/appointment', { id, status, date, description })
+    return response.data
   }
 }
 
@@ -71,7 +59,7 @@ export const clientService = {
     const response = await api.get('/client')
     return response.data
   },
-  create: async (data: ClientProps) => {
+  create: async (data: CreateClientProps) => {
     // console.log('estou no axios', data)
     const response = await api.post('/client', data)
     console.log('axios', response.data)
@@ -79,6 +67,10 @@ export const clientService = {
   },
   delete: async (id: string) => {
     const response = await api.delete(`/client/${id}`)
+  },
+  edit: async (data: EditClientProps) => {
+    const response = await api.put('/client', data)
+    return response.data
   }
 }
 

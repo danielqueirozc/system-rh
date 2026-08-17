@@ -77,7 +77,7 @@ export default function Clients() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filtered.map((client, i) => (
+                    {filtered.map((client) => (
                       <tr
                         key={client.id}
                         className="border-b border-violet-100 rounded-lg bg-white transition-colors hover:bg-violet-50"
