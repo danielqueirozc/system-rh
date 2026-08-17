@@ -4,9 +4,11 @@ import type { INestApplication } from "@nestjs/common"
 import { Test } from "@nestjs/testing"
 import request from 'supertest'
 
-describe("Create Appointment", () => {
+describe("Appointment", () => {
   let app: INestApplication
   let prisma: PrismaService
+  let service: Awaited<ReturnType<PrismaService['service']['create']>>
+  let employee: Awaited<ReturnType<PrismaService['employee']['create']>>
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -18,11 +20,11 @@ describe("Create Appointment", () => {
 
     await app.init()
 
-    const service = await prisma.service.create({
+    service = await prisma.service.create({
       data: { name: 'Pintura', description: 'Pintura interna e externa' },
     })
 
-    const employee = await prisma.employee.create({
+    employee = await prisma.employee.create({
       data: {
         name: 'Fernanda Oliveira',
         function: 'Pintora',
@@ -48,5 +50,36 @@ describe("Create Appointment", () => {
     })
 
     expect(response.statusCode).toBe(201)
+  })
+
+    test('[PUT] /appointment', async () => {
+    const client = await prisma.client.create({
+      data: {
+        name: 'Roberto',
+        email: 'roberto@test.com',
+        phone: '40099999',
+        address: 'Rua 2',
+        status: 'ACTIVE',
+      },
+    })
+
+    const appointment = await prisma.appointment.create({
+      data: {
+        clientId: client.id,
+        serviceId: service.id,
+        employeeId: employee.id,
+        status: 'PENDING',
+        serviceDate: new Date(),
+      },
+    })
+
+    const response = await request(app.getHttpServer()).put('/appointment').send({
+      id: appointment.id,
+      status: 'CONFIRMED',
+      date: new Date(),
+      description: 'Confirmado por telefone',
+    })
+
+    expect(response.statusCode).toBe(200)
   })
 })
