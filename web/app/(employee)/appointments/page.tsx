@@ -1,9 +1,13 @@
 'use client'
 
+import { AppointmentDetailsDialog } from "@/app/components/appointment-details-dialog";
 import { AppointmentFormDialog } from "@/app/components/appointment-form-dialog";
+import { EditAppointmentDialog } from "@/app/components/edit-appointment-dialog";
 import { Card } from "@/app/components/ui/card";
 import { useAppointmentStore } from "@/context/appointment-store";
 import { cn } from "@/lib/utils";
+import { dateFormatter } from "@/utils/date-formartter";
+import { timeFormatter } from "@/utils/time-formatter";
 import { Calendar, Clock, User } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 
@@ -95,17 +99,16 @@ export default function Appointments() {
                       }
                     </span>
                   </div>
-                        {/* , */}
 
                   <div className="flex flex-col gap-4 text-gray-500 font-medium">
                     <div className="flex justify-between">
                       <div className="w-full flex items-center gap-2">
                         <Calendar size={16} />
-                        08/10/2025
+                        {dateFormatter(app.serviceDate)}
                       </div>
                       <div className="flex items-center gap-2 text-left w-full">
                         <Clock size={16} />
-                        <div className="text-left">09:00</div>
+                        <div className="text-left">{timeFormatter(app.serviceDate)}</div>
                       </div>
                     </div>
 
@@ -116,8 +119,8 @@ export default function Appointments() {
                   </div>
 
                   <div className="flex gap-2">
-                    <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Editar</button>
-                    <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">Detalhes</button>
+                    <EditAppointmentDialog appointment={app} />
+                    <AppointmentDetailsDialog appointment={app} />
                   </div>
                 </Card>
               ))}
