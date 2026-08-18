@@ -1,13 +1,7 @@
-import type { AppointmentProps, EditAppointmentProps } from '@/@types'
+import type { AppointmentProps, CreateAppointmentAdminProps, CreateAppointmentClientProps, EditAppointmentProps } from '@/@types'
 import { appointmentService } from '@/lib/axios'
 import { create } from 'zustand'
-interface CreateAppointmentDataProps {
-    name: string
-    email: string
-    phone: string
-    address: string
-    description?: string
-  }
+
 
   const AppointmentStatus = {
     CONFIRMED: 'CONFIRMED',
@@ -32,15 +26,16 @@ export interface AppointmentsProps {
 interface AppointmentStoreType {
   service: string
   date: Date | null
-  data: CreateAppointmentDataProps
+  data: CreateAppointmentClientProps
   step: number
   appointments: AppointmentsProps[]
 
   setStep: (step: number) => void
   setService: (service: string) => void
   setDateAppointment: (date: Date) => void
-  setData: (data: CreateAppointmentDataProps) => void
-  createAppointment: (data: CreateAppointmentDataProps) => Promise<void>
+  setData: (data: CreateAppointmentClientProps) => void
+  createAppointment: (data: CreateAppointmentProps) => Promise<AppointmentProps>
+  createAppointmentAdmin: (data: CreateAppointmentAdminProps) => Promise<AppointmentProps>
   getAppointments: (status?: AppointmentStatus) => Promise<AppointmentsProps[] | []>
   editAppointment: (data: EditAppointmentProps) => Promise<AppointmentProps>
 }
@@ -82,7 +77,25 @@ export const useAppointmentStore = create<AppointmentStoreType>()(
         clientDescription: data.description ?? '',
       })
 
-      console.log(response, 'response store')
+      return response.appointment
+
+    } catch (error) {
+      console.error('Erro ao criar Appointment', error)
+      throw error
+    }
+    },
+    createAppointmentAdmin: async (data) => {
+    try {
+      const response = await appointmentService.createAdmin({
+        serviceName: data.serviceName,
+        serviceDate: data.serviceDate,
+        clientId: data.clientId,
+        employeeId: data.employeeId,
+        description: data.description,
+      })
+
+      return response.appointment
+
     } catch (error) {
       console.error('Erro ao criar Appointment', error)
       throw error

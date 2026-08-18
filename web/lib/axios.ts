@@ -1,4 +1,4 @@
-import type { AppointmentProps, CreateClientProps, EditAppointmentProps, EditClientProps } from "@/@types"
+import type { AppointmentProps, CreateAppointmentAdminProps, CreateClientProps, EditAppointmentProps, EditClientProps } from "@/@types"
 import type { AppointmentStatus } from "@/context/appointment-store"
 import axios from "axios"
 
@@ -35,8 +35,13 @@ export const appointmentService = {
   },
   create: async (data: AppointmentProps) => {
     const response = await api.post('/appointment', data)
-    return response
+    return response.data
   },
+  createAdmin: async (data: CreateAppointmentAdminProps) => {
+    const response = await api.post('/appointment/admin', data)
+    return response.data
+  },
+
   edit: async ({ id, status, date, description }: EditAppointmentProps) => {
     const response = await api.put('/appointment', { id, status, date, description })
     return response.data

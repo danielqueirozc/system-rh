@@ -25,6 +25,7 @@ import {
 import { useClientStore } from "@/context/client-store"
 import { useEmployeeStore } from "@/context/employee-stores"
 import { SERVICES } from "@/lib/constants"
+import { useAppointmentStore } from "@/context/appointment-store"
 
 const emptyForm = { clientId: "", service: "", employeeId: "", date: "", time: "" }
 
@@ -33,7 +34,8 @@ export function AppointmentFormDialog() {
   const [form, setForm] = useState(emptyForm)
 
   const { client, getClients } = useClientStore()
-  const { employee, getEmployees } = useEmployeeStore()
+  const { employee, getEmployees, } = useEmployeeStore()
+  const { createAppointmentAdmin } = useAppointmentStore()
 
   useEffect(() => {
     if (!open) return
@@ -46,8 +48,39 @@ export function AppointmentFormDialog() {
     setForm(prev => ({ ...prev, [field]: value }))
   }
 
+
+//   function handleSubmit(event: FormEvent) {
+//   event.preventDefault()
+
+//   const selectedClient = client.find(c => c.id === form.clientId)
+//   if (!selectedClient) return
+
+//   createAppointment({
+//     serviceName: form.service,
+//     serviceDate: `${form.date}T${form.time}:00.000Z`,
+//     clientName: selectedClient.name,
+//     clientEmail: selectedClient.email,
+//     clientPhone: selectedClient.phone,
+//     clientAddress: selectedClient.address,
+//   })
+
+//   setForm(emptyForm)
+//   setOpen(false)
+// }
+
+
+  
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
+
+    const serviceDate = new Date(`${form.date}T${form.time}:00.000Z`)
+
+    createAppointmentAdmin({
+      clientId: form.clientId,
+      employeeId: form.employeeId,
+      serviceName: form.service,
+      serviceDate,
+    })
 
     setForm(emptyForm)
     setOpen(false)

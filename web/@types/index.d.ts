@@ -15,12 +15,39 @@ export interface AppointmentProps {
   clientDescription: string
 }
 
+export interface CreateAppointmentAdminProps {
+  clientId: string
+  serviceName: string
+  employeeId: string
+  serviceDate: string | Date
+  description?: string
+}
+// export interface CreateAppointmentAdminProps {
+//   serviceName: string
+//   serviceDate: string
+//   clientName: string
+//   clientEmail: string
+//   clientPhone: string
+//   clientAddress: string
+//   clientDescription?: string
+// }
+
+export interface CreateAppointmentClientProps {
+  name: string
+  email: string
+  phone: string
+  address: string
+  description?: string
+}
+
 export interface EditAppointmentProps {
   id: string,
   date: string,
   status: AppointmentStatus
   description?: string,
 }
+
+
 export interface ClientProps {
   id: string
   name: string
