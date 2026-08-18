@@ -66,8 +66,16 @@ export function EditAppointmentDialog({ appointment }: EditAppointmentDialogProp
   
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    
-    editAppointment(form)
+
+    const serviceDate = new Date(`${form.date}T${form.time}:00.000Z`)
+
+    editAppointment({
+      id: form.id,
+      status: form.status,
+      date: serviceDate.toISOString(),
+      description: form.description,
+    })
+
     setOpen(false)
   }
 
