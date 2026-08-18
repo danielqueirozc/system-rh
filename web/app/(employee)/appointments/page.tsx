@@ -118,10 +118,16 @@ export default function Appointments() {
                     </div>
                   </div>
 
-                  <div className="flex gap-2">
-                    <EditAppointmentDialog appointment={app} />
-                    <AppointmentDetailsDialog appointment={app} />
-                  </div>
+                  {app.status === 'IN_PROGRESS' || app.status === 'COMPLETED' ? (
+                    <div className="px-32">
+                      <AppointmentDetailsDialog appointment={app} />
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <EditAppointmentDialog appointment={app} />
+                      <AppointmentDetailsDialog appointment={app} />
+                    </div>
+                  )}
                 </Card>
               ))}
             </div>
