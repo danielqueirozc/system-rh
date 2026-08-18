@@ -82,4 +82,26 @@ describe("Appointment", () => {
 
     expect(response.statusCode).toBe(200)
   })
+
+  test('[POST] /appointment/admin', async () => {
+    const client = await prisma.client.create({
+      data: {
+        name: 'Larissa',
+        email: 'larissa@test.com',
+        phone: '40088888',
+        address: 'Rua 3',
+        status: 'ACTIVE',
+      },
+    })
+
+    const response = await request(app.getHttpServer()).post('/appointment/admin').send({
+      clientId: client.id,
+      serviceName: 'Pintura',
+      employeeId: employee.id,
+      serviceDate: new Date(),
+      description: 'Agendado pelo funcionário',
+    })
+
+    expect(response.statusCode).toBe(201)
+  })
 })
