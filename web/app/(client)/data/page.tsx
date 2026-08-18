@@ -7,12 +7,27 @@ import { useAppointmentStore } from "@/context/appointment-store";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
 
+const emptyForm = { name: '', email: '', phone: '', address: '', description: '' }
+
 export default function Data() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth) // window.innerWidth = pega a largura atual da tela
+  const [form, setForm] = useState(emptyForm)
   
   const router = useRouter()
 
   const { setData, createAppointment } = useAppointmentStore()
+
+  function handleChange(field: keyof typeof emptyForm, value: string) {
+    setForm(prev => ({...prev, [field]: value}))
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    
+    await createAppointment(form)
+
+    router.push('/confirmation')
+  }
 
   useEffect(() => {
     function handleResize() {
@@ -25,54 +40,7 @@ export default function Data() {
 
   }, [windowWidth])
     
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const formData = new FormData(event.currentTarget)
-    const name = formData.get('name')
-    const email = formData.get('email')
-    const phone = formData.get('phone')
-    const address = formData.get('address')
-    const description = formData.get('description')
-
-    if (!name) {
-      // colocar algo para mostrar o erro na tela
-      alert('nome é obrigatório')
-    }
-
-    if (!email) {
-      // colocar algo para mostrar o erro na tela
-      alert('nome é obrigatório')
-    }
-    if (!phone) {
-      // colocar algo para mostrar o erro na tela
-      alert('nome é obrigatório')
-    }
-    if (!address) {
-      // colocar algo para mostrar o erro na tela
-      alert('nome é obrigatório')
-    }
-    if (!description) {
-      // colocar algo para mostrar o erro na tela
-      alert('nome é obrigatório')
-    }
-
-    try {
-      await createAppointment({
-        name: name as string,
-        email: email as string,
-        phone: phone as string,
-        address: address as string,
-        description: description as string
-      })
-
-      router.push('/confirmation')
-
-    } catch(error) {
-      console.log('erro ao enviar os dados para o context', error)
-    }
-
-  }
+  
 
   return (
     <div className="flex flex-col lg:items-center pb-25">
@@ -92,6 +60,8 @@ export default function Data() {
           <Input
             className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
             placeholder="Seu nome completo"
+            onChange={e => handleChange('name', e.target.value)}
+            value={form.name}
             name="name"
           />
         </div>
@@ -107,6 +77,8 @@ export default function Data() {
               <Input
                 className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
                 placeholder="Seu @email.com"
+                onChange={e => handleChange('email', e.target.value)}
+                value={form.email}
                 name="email"
               />
             </div>
@@ -120,6 +92,8 @@ export default function Data() {
               <Input
                 className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
                 placeholder="(00) 00000 0000"
+                onChange={e => handleChange('phone', e.target.value)}
+                value={form.phone}
                 name="phone"
               />
             </div>
@@ -135,6 +109,8 @@ export default function Data() {
               <Input
                 className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
                 placeholder="Seu @email.com"
+                onChange={e => handleChange('email', e.target.value)}
+                value={form.email}
                 name="email"
               />
             </div>
@@ -163,6 +139,8 @@ export default function Data() {
           <Input
             className="border-0 bg-[#F9F9F9] placeholder:text-sm transition-colors"
             placeholder="Rua, número, bairro, cidade"
+            onChange={e => handleChange('address', e.target.value)}
+            value={form.address}
             name="address"
           />
         </div>
@@ -176,6 +154,8 @@ export default function Data() {
             className="border-0 p-3 rounded-lg bg-[#F9F9F9] placeholder:text-sm transition-colors"
             placeholder="Conte-nos mais sobre o serviço que você precisa"
             name="description"
+            value={form.description}
+            onChange={e => handleChange('description', e.target.value)}
           />
 
         </div>

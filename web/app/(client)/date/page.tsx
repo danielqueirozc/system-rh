@@ -71,7 +71,6 @@ export default function DatePage() {
               {times.map(time => (
                 <Button
                   key={time}
-                  variant="date"
                   className="px-10 py-2"
                   onClick={() => handleConfirm(time)}
                 >
@@ -89,7 +88,6 @@ export default function DatePage() {
       <div className="w-full flex justify-center mt-7">
         <Link href='/'>
           <Button 
-            variant="date"
             className="px-8.5 py-2"
           >
             Voltar
