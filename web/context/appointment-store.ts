@@ -34,7 +34,7 @@ interface AppointmentStoreType {
   setService: (service: string) => void
   setDateAppointment: (date: Date) => void
   setData: (data: CreateAppointmentClientProps) => void
-  createAppointment: (data: CreateAppointmentProps) => Promise<AppointmentProps>
+  createAppointment: (data: CreateAppointmentClientProps) => Promise<AppointmentProps>
   createAppointmentAdmin: (data: CreateAppointmentAdminProps) => Promise<AppointmentProps>
   getAppointments: (status?: AppointmentStatus) => Promise<AppointmentsProps[] | []>
   editAppointment: (data: EditAppointmentProps) => Promise<AppointmentProps>
