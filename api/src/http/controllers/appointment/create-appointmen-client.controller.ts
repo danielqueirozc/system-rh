@@ -2,6 +2,7 @@ import { PrismaService } from "@/database/prisma/prisma.service";
 import { Body, Controller, HttpCode, NotFoundException, Post, UsePipes } from "@nestjs/common";
 import z from "zod";
 import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
+import { EmailService } from "@/email/email.service";
 
 const bodySchema = z.object({
   serviceName: z.string(),
@@ -16,8 +17,11 @@ const bodySchema = z.object({
 type CreateAppointmentType = z.infer<typeof bodySchema>
 
 @Controller()
-export class CreateAppointment {
-  constructor(private prisma: PrismaService) {}
+export class CreateAppointmentClient {
+  constructor(
+    private prisma: PrismaService,
+    private email: EmailService
+  ) {}
 
   @Post("/appointment")
   @HttpCode(201)
@@ -71,6 +75,9 @@ export class CreateAppointment {
         employee: { connect: { id: employee.id } },
       },
     })
+
+    await this.email.sendAppointmentConfirmation(clientEmail, { clientName, serviceDate, serviceName })
+    .catch(error => console.error('Erro ao enviar e-mail de confirmação', error))
 
     return { appointmentId: appointment.id };
   }
