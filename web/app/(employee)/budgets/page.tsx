@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { BudgetDetailsDialog } from "@/app/components/budget-details-dialog";
 import { BudgetFormDialog } from "@/app/components/budget-form-dialog";
 import { Card } from "@/app/components/ui/card";
 import { useBudgetStore } from "@/context/budget-store";
@@ -121,9 +122,7 @@ export default function Budgets() {
                           </td>
                           <td className="py-4 text-center">
                             <div className="flex items-center justify-center gap-2 px-2">
-                              <button className="border border-gray-300 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-lg">
-                                Ver
-                              </button>
+                              <BudgetDetailsDialog budget={budget} />
                               {budget.status === "PENDING" && (
                                 <>
                                   <button className="bg-[#1a1a8c] text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
@@ -207,9 +206,7 @@ export default function Budgets() {
                         </td>
                         <td className="py-4 text-center">
                           <div className="flex items-center justify-center gap-2 px-2">
-                            <button className="border border-gray-300 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-lg">
-                              Ver
-                            </button>
+                            <BudgetDetailsDialog budget={budget} />
                             {budget.status === "Pendente" && (
                               <>
                                 <button className="bg-[#1a1a8c] text-white text-xs font-semibold px-3 py-1.5 rounded-lg">

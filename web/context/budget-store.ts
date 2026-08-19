@@ -3,14 +3,14 @@ import { create } from 'zustand'
 
 const budgetStatus = {
   PENDING: 'PENDING',
-  APPROVED: 'INACTIVE',
+  APPROVED: 'APPROVED',
   REJECTED: 'REJECTED',
 }
 
 type BudgetStatus = (typeof budgetStatus)[keyof typeof budgetStatus]
 
 
-interface BudgetProps {
+export interface BudgetProps {
   id: string
   description: string
   value: number
