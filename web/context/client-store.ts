@@ -42,7 +42,6 @@ export const useClientStore = create<ClientStoreType>()(
         // console.log('estou no contexto', data)
         const response = await clientService.create(data)
         // coloquei return para se um dia precisar pegar o cliet recem-criado
-        console.log('resposta no context', response.client)
         set(state => ({ client: [... state.client, response.client] }))
         return response.client
         
