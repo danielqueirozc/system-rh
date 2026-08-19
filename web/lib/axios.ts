@@ -33,11 +33,13 @@ export const appointmentService = {
     const response = await api.get('/appointment', { params: { status } })
     return response.data
   },
-  create: async (data: AppointmentProps) => {
+  createClient: async (data: AppointmentProps) => {
     const response = await api.post('/appointment', data)
     return response.data
   },
   createAdmin: async (data: CreateAppointmentAdminProps) => {
+    console.log('axios', data)
+    
     const response = await api.post('/appointment/admin', data)
     return response.data
   },

@@ -22,15 +22,6 @@ export interface CreateAppointmentAdminProps {
   serviceDate: string | Date
   description?: string
 }
-// export interface CreateAppointmentAdminProps {
-//   serviceName: string
-//   serviceDate: string
-//   clientName: string
-//   clientEmail: string
-//   clientPhone: string
-//   clientAddress: string
-//   clientDescription?: string
-// }
 
 export interface CreateAppointmentClientProps {
   name: string

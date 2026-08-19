@@ -48,34 +48,12 @@ export function AppointmentFormDialog() {
     setForm(prev => ({ ...prev, [field]: value }))
   }
 
-
-//   function handleSubmit(event: FormEvent) {
-//   event.preventDefault()
-
-//   const selectedClient = client.find(c => c.id === form.clientId)
-//   if (!selectedClient) return
-
-//   createAppointment({
-//     serviceName: form.service,
-//     serviceDate: `${form.date}T${form.time}:00.000Z`,
-//     clientName: selectedClient.name,
-//     clientEmail: selectedClient.email,
-//     clientPhone: selectedClient.phone,
-//     clientAddress: selectedClient.address,
-//   })
-
-//   setForm(emptyForm)
-//   setOpen(false)
-// }
-
-
-  
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
     const serviceDate = new Date(`${form.date}T${form.time}:00.000Z`)
 
-    createAppointmentAdmin({
+    await createAppointmentAdmin({
       clientId: form.clientId,
       employeeId: form.employeeId,
       serviceName: form.service,

@@ -15,7 +15,7 @@ export default function Data() {
   
   const router = useRouter()
 
-  const { setData, createAppointment } = useAppointmentStore()
+  const { createAppointmentClient } = useAppointmentStore()
 
   function handleChange(field: keyof typeof emptyForm, value: string) {
     setForm(prev => ({...prev, [field]: value}))
@@ -24,7 +24,7 @@ export default function Data() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     
-    await createAppointment(form)
+    await createAppointmentClient(form)
 
     router.push('/confirmation')
   }
@@ -40,8 +40,6 @@ export default function Data() {
 
   }, [windowWidth])
     
-  
-
   return (
     <div className="flex flex-col lg:items-center pb-25">
       <div className="text-center">

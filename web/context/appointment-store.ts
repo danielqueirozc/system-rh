@@ -26,15 +26,13 @@ export interface AppointmentsProps {
 interface AppointmentStoreType {
   service: string
   date: Date | null
-  data: CreateAppointmentClientProps
   step: number
   appointments: AppointmentsProps[]
 
   setStep: (step: number) => void
   setService: (service: string) => void
   setDateAppointment: (date: Date) => void
-  setData: (data: CreateAppointmentClientProps) => void
-  createAppointment: (data: CreateAppointmentClientProps) => Promise<AppointmentProps>
+  createAppointmentClient: (data: CreateAppointmentClientProps) => Promise<AppointmentProps>
   createAppointmentAdmin: (data: CreateAppointmentAdminProps) => Promise<AppointmentProps>
   getAppointments: (status?: AppointmentStatus) => Promise<AppointmentsProps[] | []>
   editAppointment: (data: EditAppointmentProps) => Promise<AppointmentProps>
@@ -58,16 +56,15 @@ export const useAppointmentStore = create<AppointmentStoreType>()(
     setStep: (step) => set ({ step }),
     setService: (service) => set({ service }),
     setDateAppointment: (date) => set({ date }),
-    setData: (data) => { set({ data }), console.log(data) },
     getAppointments: async (status) => {
       const response = await appointmentService.get(status)
       set({ appointments: response.appointments })
       return response.appointments
     },
-    createAppointment: async (data) => {
+    createAppointmentClient: async (data) => {
     const { service, date } = get()
     try {
-      const response = await appointmentService.create({
+      const response = await appointmentService.createClient({
         serviceName: service,
         serviceDate: date!,
         clientName: data.name,
@@ -93,6 +90,10 @@ export const useAppointmentStore = create<AppointmentStoreType>()(
         employeeId: data.employeeId,
         description: data.description,
       })
+
+      set(state => ({
+        appointments: [...state.appointments, response.appointment]
+      }))
 
       return response.appointment
 
