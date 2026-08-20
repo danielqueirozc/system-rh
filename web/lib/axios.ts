@@ -87,7 +87,15 @@ export const budgetService = {
     return response.data
   },
   create: async (data: CreateBudgetProps) => {
+    console.log('axios', data)
     const response = await api.post('/budget', data)
+    return response.data
+  }
+}
+
+export const serviceService = {
+  get: async () => {
+    const response = await api.get('/service')
     return response.data
   }
 }

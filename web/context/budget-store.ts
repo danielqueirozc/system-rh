@@ -1,5 +1,5 @@
 import type { BudgetProps, CreateBudgetProps } from '@/@types'
-import { budgetService, clientService, employeeService } from '@/lib/axios'
+import { budgetService } from '@/lib/axios'
 import { create } from 'zustand'
 
 const budgetStatus = {
@@ -90,9 +90,16 @@ export const useBudgetStore = create<BudgetStoreType>()(
     createBudget: async (data) => {
       try {
         const response = await budgetService.create(data)
-        return response.budget
-      } catch (error) {
 
+        set(state => ({
+          budgets: [...state.budgets, response.budget]
+        }))
+
+        return response.budget
+
+      } catch (error) {
+        console.error('Erro ao criar budget', error)
+        throw error
       }
     }
   })

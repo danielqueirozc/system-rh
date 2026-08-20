@@ -24,27 +24,41 @@ import {
 } from "@/app/components/ui/select"
 import { Textarea } from "@/app/components/ui/textarea"
 import { useClientStore } from "@/context/client-store"
+import { useEmployeeStore } from "@/context/employee-stores"
+import { useServiceStore } from "@/context/service-store"
+import { useBudgetStore } from "@/context/budget-store"
 
-const emptyForm = { clientId: "", service: "", description: "", value: "" }
+const emptyForm = { clientId: "", serviceId: "", employeeId: "", description: "", value: '', date: "" }
 
 export function BudgetFormDialog() {
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState(emptyForm)
 
   const { client, getClients } = useClientStore()
+  const { employee, getEmployees } = useEmployeeStore()
+  const { service, getServices } = useServiceStore()
+  const { createBudget } = useBudgetStore()
 
   useEffect(() => {
     if (!open) return
 
     getClients()
+    getEmployees()
+    getServices()
   }, [open])
 
   function handleChange(field: keyof typeof emptyForm, value: string) {
     setForm(prev => ({ ...prev, [field]: value }))
   }
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault()
+
+    await createBudget({
+      ...form,
+      value: Number(form.value),
+      serviceId: Number(form.serviceId),
+    })
 
     setForm(emptyForm)
     setOpen(false)
@@ -84,13 +98,36 @@ export function BudgetFormDialog() {
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="budget-service">Serviço</Label>
-            <Input
-              id="budget-service"
-              placeholder="Nome do serviço"
-              value={form.service}
-              onChange={e => handleChange("service", e.target.value)}
-              required
-            />
+            <Select
+              value={form.serviceId}
+              onValueChange={value => handleChange("serviceId", value)}
+            >
+              <SelectTrigger id="budget-service" className="w-full">
+                <SelectValue placeholder="Selecione o serviço" />
+              </SelectTrigger>
+              <SelectContent>
+                {service.map(s => (
+                  <SelectItem key={s.id} value={String(s.id)}>{s.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="budget-employee">Funcionário</Label>
+            <Select
+              value={form.employeeId}
+              onValueChange={value => handleChange("employeeId", value)}
+            >
+              <SelectTrigger id="budget-employee" className="w-full">
+                <SelectValue placeholder="Selecione o funcionário" />
+              </SelectTrigger>
+              <SelectContent>
+                {employee.map(e => (
+                  <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -112,6 +149,17 @@ export function BudgetFormDialog() {
               placeholder="0,00"
               value={form.value}
               onChange={e => handleChange("value", e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="budget-date">Data</Label>
+            <Input
+              id="budget-date"
+              type="date"
+              value={form.date}
+              onChange={e => handleChange("date", e.target.value)}
               required
             />
           </div>

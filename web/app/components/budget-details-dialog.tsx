@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import type { BudgetProps } from "@/context/budget-store"
+import type { BudgetProps } from "@/@types"
 import { Button } from "@/app/components/ui/button"
 import {
   Dialog,

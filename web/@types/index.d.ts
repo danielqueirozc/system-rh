@@ -93,6 +93,15 @@ export interface CreateBudgetProps {
   value: number
   date: Date | string
   clientId: string
-  serviceId: string
-  employee: string
+  serviceId: number
+  employeeId: string
+}
+
+///////////////// SERVICE ///////////////
+export interface ServiceProps {
+  id: number
+  name: string
+  description: string
+  createdAt: Date
+  updatedAt: Date
 }

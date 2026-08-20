@@ -31,7 +31,7 @@ export default function Budgets() {
     getPending
   } = useBudgetStore()
   
-  // const formated
+  // console.log(budgets)
 
   useEffect(() => {
     function handleResize() {
