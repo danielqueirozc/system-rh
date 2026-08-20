@@ -5,6 +5,7 @@ import { BudgetModule } from "./controllers/budget/budget.module";
 import { ClientModule } from "./controllers/client/client.module";
 import { EmployeeModule } from "./controllers/employee/employee.module";
 import { ReportModule } from "./controllers/report/report.module";
+import { ServiceModule } from "./controllers/service/service.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ReportModule } from "./controllers/report/report.module";
     ClientModule,
     EmployeeModule,
     ReportModule,
+    ServiceModule,
   ]
 })
 export class HttpModule {}
