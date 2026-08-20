@@ -5,6 +5,8 @@ const AppointmentStatus = {
   COMPLETED: 'COMPLETED',
 } as const
 
+
+/////// APPOINTMENT//////////
 export interface AppointmentProps {
   serviceName: string
   serviceDate: Date
@@ -38,7 +40,7 @@ export interface EditAppointmentProps {
   description?: string,
 }
 
-
+////////////// CLIENT ///////////////////
 export interface ClientProps {
   id: string
   name: string
@@ -71,4 +73,26 @@ export interface EditClientProps {
   phone: string
   address: string
   status: ClientStatus
+}
+
+///////////////// BUDGET ///////////////
+export interface BudgetProps {
+  id: string
+  description: string
+  value: number
+  date: Date
+  client: { name: string }
+  service: {name: string}
+  status: BudgetStatus
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CreateBudgetProps {
+  description: string
+  value: number
+  date: Date | string
+  clientId: string
+  serviceId: string
+  employee: string
 }

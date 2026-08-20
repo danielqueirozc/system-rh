@@ -1,3 +1,4 @@
+import type { BudgetProps, CreateBudgetProps } from '@/@types'
 import { budgetService, clientService, employeeService } from '@/lib/axios'
 import { create } from 'zustand'
 
@@ -10,18 +11,6 @@ const budgetStatus = {
 type BudgetStatus = (typeof budgetStatus)[keyof typeof budgetStatus]
 
 
-export interface BudgetProps {
-  id: string
-  description: string
-  value: number
-  date: Date
-  client: { name: string }
-  service: {name: string}
-  status: BudgetStatus
-  createdAt: Date
-  updatedAt: Date
-}
-
 interface BudgetStoreType {
   budgets: BudgetProps[] | []
   total: number
@@ -32,6 +21,7 @@ interface BudgetStoreType {
   getTotal: () => Promise<number>
   getApproved: () => Promise<number>
   getPending: () => Promise<number>
+  createBudget: (data: CreateBudgetProps) => Promise<BudgetProps>
 }
 
 export const useBudgetStore = create<BudgetStoreType>()(
@@ -96,5 +86,14 @@ export const useBudgetStore = create<BudgetStoreType>()(
         throw error
       }
     },
+
+    createBudget: async (data) => {
+      try {
+        const response = await budgetService.create(data)
+        return response.budget
+      } catch (error) {
+
+      }
+    }
   })
 )
