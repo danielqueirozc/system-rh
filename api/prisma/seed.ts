@@ -1754,6 +1754,11 @@ async function main() {
     })
   }
 
+  // Service e Budget são seedados com id explícito, o que não avança a sequence de autoincrement sozinho —
+  // sem isso, o próximo create() tentaria reusar um id já ocupado e falharia com "unique constraint failed"
+  await prisma.$executeRawUnsafe(`SELECT setval('services_id_seq', (SELECT MAX(id) FROM services))`)
+  await prisma.$executeRawUnsafe(`SELECT setval('budgets_id_seq', (SELECT MAX(id) FROM budgets))`)
+
   console.log("Seed concluído com sucesso.");
 }
 

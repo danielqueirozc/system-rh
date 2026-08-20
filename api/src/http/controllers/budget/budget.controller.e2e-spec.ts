@@ -21,7 +21,49 @@ describe("Budget", () => {
   })
 
   test('[POST] /budget', async () => {
-     const client = await prisma.client.create({
+    const client = await prisma.client.create({
+      data: {
+       name: 'Maria Silva',
+       email: 'maria.silva@gmail.com',
+       phone: '40028933',
+       address: 'Rua 2',
+       status: 'ACTIVE'
+      },
+    })
+
+    const service = await prisma.service.create({
+      data: { name: 'Pintura', description: 'Pintura interna e externa' },
+    })
+
+    const employee = await prisma.employee.create({
+      data: {
+        name: 'Roberto Alves',
+        function: 'Pintor',
+        status: 'ACTIVE',
+        email: 'roberto.alves@avila.com',
+        phone: '(11) 91111-0006',
+      },
+    })
+
+    const budget = await request(app.getHttpServer()).post('/budget').send({
+      description: 'pintar todos os comodos da casa',
+      value: 8000,
+      date: new Date(),
+      clientId: client.id,
+      serviceId: service.id,
+      employeeId: employee.id,
+    })
+
+    expect(budget.statusCode).toBe(201)
+    expect(budget.body.budget).toMatchObject({
+      description: 'pintar todos os comodos da casa',
+      client: { name: 'Maria Silva' },
+      service: { name: 'Pintura' },
+    })
+  })
+
+  test('[PATCH] /budget', async () => {
+    const client = await prisma.client.create({
       data: {
        name: 'John Doe',
        email: 'johndoe@gmail.com',
@@ -45,18 +87,26 @@ describe("Budget", () => {
       },
     })
 
-    const budget = await request(app.getHttpServer()).post('/budget').send({
-      description: 'pintar todos os comodos da casa',
-      value: 8000,
-      date: new Date(),
-      clientId: client.id,
-      serviceId: service.id,
-      employeeId: employee.id,
+    const budget = await prisma.budget.create({
+      data: {
+        description: 'pintar todos os comodos da casa',
+        value: 8000,
+        date: new Date(),
+        status: 'PENDING',
+        clientId: client.id,
+        serviceId: service.id,
+        employeeId: employee.id,
+      }
     })
 
-    expect(budget.statusCode).toBe(201)
-    expect(budget.body).toEqual({
-      budgetId: 1
+    const changeStatus = await request(app.getHttpServer()).patch('/budget').send({
+      id: budget.id,
+      status: 'APPROVED'
+    })
+
+    expect(changeStatus.statusCode).toBe(200)
+    expect(changeStatus.body.budget).toMatchObject({
+      status: 'APPROVED'
     })
   })
 })

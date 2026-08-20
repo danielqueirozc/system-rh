@@ -24,6 +24,8 @@ export class CreateBudget {
   async handle(@Body() body: CreateBudgetType) {
     const { description, value, date, clientId, serviceId, employeeId } = body
 
+    console.log(body)
+
     const client = await this.prisma.client.findUnique({
       where: { id: clientId }
     })
@@ -57,9 +59,13 @@ export class CreateBudget {
         client: { connect: { id: client.id } },
         service: { connect: { id: service.id } },
         employee: { connect: { id: employee.id } },
-      }
+      },
+      include: {
+        client: { select: { name: true } },
+        service: { select: { name: true } },
+      },
     })
 
-    return { budgetId: budget.id }
+    return { budget }
   }
 }
