@@ -5,7 +5,7 @@ import { Test } from "@nestjs/testing"
 import request from 'supertest'
 import { number } from "zod"
 
-describe("Create Budget", () => {
+describe("Budget", () => {
   let app: INestApplication
   let prisma: PrismaService
 
