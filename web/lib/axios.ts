@@ -1,4 +1,4 @@
-import type { AppointmentProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, EditAppointmentProps, EditClientProps } from "@/@types"
+import type { AppointmentProps, ChangeStatusProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, EditAppointmentProps, EditClientProps } from "@/@types"
 import type { AppointmentStatus } from "@/context/appointment-store"
 import axios from "axios"
 
@@ -89,6 +89,10 @@ export const budgetService = {
   create: async (data: CreateBudgetProps) => {
     console.log('axios', data)
     const response = await api.post('/budget', data)
+    return response.data
+  },
+  changeStatus: async ({ id, status }: ChangeStatusProps) => {
+    const response = await api.patch('/budget', { id, status })
     return response.data
   }
 }

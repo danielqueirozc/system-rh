@@ -76,6 +76,20 @@ export interface EditClientProps {
 }
 
 ///////////////// BUDGET ///////////////
+// enum BudgetStatus {
+//   PENDING
+//   APPROVED
+//   REJECTED
+// }
+
+export const BudgetStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+} as const
+
+export type BudgetStatus = typeof BudgetStatus[keyof typeof BudgetStatus]
+
 export interface BudgetProps {
   id: string
   description: string
@@ -95,6 +109,11 @@ export interface CreateBudgetProps {
   clientId: string
   serviceId: number
   employeeId: string
+}
+
+export interface ChangeStatusProps {
+  id: string
+  status: BudgetStatus
 }
 
 ///////////////// SERVICE ///////////////

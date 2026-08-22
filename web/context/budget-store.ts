@@ -1,15 +1,6 @@
-import type { BudgetProps, CreateBudgetProps } from '@/@types'
+import type { BudgetProps, ChangeStatusProps, CreateBudgetProps } from '@/@types'
 import { budgetService } from '@/lib/axios'
 import { create } from 'zustand'
-
-const budgetStatus = {
-  PENDING: 'PENDING',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-}
-
-type BudgetStatus = (typeof budgetStatus)[keyof typeof budgetStatus]
-
 
 interface BudgetStoreType {
   budgets: BudgetProps[] | []
@@ -22,6 +13,7 @@ interface BudgetStoreType {
   getApproved: () => Promise<number>
   getPending: () => Promise<number>
   createBudget: (data: CreateBudgetProps) => Promise<BudgetProps>
+  changeStatus: ({ id, status }: ChangeStatusProps) => Promise<BudgetProps>
 }
 
 export const useBudgetStore = create<BudgetStoreType>()(
@@ -101,6 +93,16 @@ export const useBudgetStore = create<BudgetStoreType>()(
         console.error('Erro ao criar budget', error)
         throw error
       }
-    }
+    },
+
+    changeStatus: async ({ id, status }) => {
+      try {
+        const response = await budgetService.changeStatus({ id, status })
+        return response.budget
+      } catch(error) {
+        console.error('Erro ao trocar status do Budget', error)
+        throw error
+      }
+    },
   })
 )

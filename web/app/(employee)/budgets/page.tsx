@@ -8,6 +8,7 @@ import { Card } from "@/app/components/ui/card";
 import { useBudgetStore } from "@/context/budget-store";
 import { dateFormatter } from "@/utils/date-formartter";
 import { currencyFormatter } from '@/utils/currency-formatter';
+import { BudgetStatus } from '@/@types'
 
 const budgets = [
   { id: 1, client: "Pedro Alves",    service: "Reforma Completa",   description: "Reforma de 3 cômodos",     value: "8.500,00", date: "07/10/2025", status: "Pendente" },
@@ -28,10 +29,13 @@ export default function Budgets() {
     approved,
     getApproved,
     pending,
-    getPending
+    getPending,
+    changeStatus,
   } = useBudgetStore()
   
-  // console.log(budgets)
+  async function handleChange(id: string, status: BudgetStatus) {
+    await changeStatus({ id, status })
+  }
 
   useEffect(() => {
     function handleResize() {
@@ -125,10 +129,16 @@ export default function Budgets() {
                               <BudgetDetailsDialog budget={budget} />
                               {budget.status === "PENDING" && (
                                 <>
-                                  <button className="bg-[#1a1a8c] text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                                  <button
+                                    onClick={() => handleChange(budget.id, BudgetStatus.APPROVED)}
+                                    className="bg-[#1a1a8c] text-white text-xs font-semibold px-3 py-1.5 rounded-lg"
+                                  >
                                     Aprovar
                                   </button>
-                                  <button className="bg-red-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                                  <button
+                                    onClick={() => handleChange(budget.id, BudgetStatus.REJECTED)}
+                                    className="bg-red-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg"
+                                  >
                                     Rejeitar
                                   </button>
                                 </>
@@ -197,22 +207,28 @@ export default function Budgets() {
                         <td className="py-4 text-center">
                           <span className={cn(
                             "inline-block px-2 py-1 rounded-full text-xs font-semibold",
-                            budget.status === "Aprovado" && "bg-[#1a1a8c] text-white",
-                            budget.status === "Pendente" && "border border-gray-400 text-gray-600",
-                            budget.status === "Rejeitado" && "bg-red-500 text-white"
+                            budget.status === "APPROVED" && "bg-[#1a1a8c] text-white",
+                            budget.status === "PENDING" && "border border-gray-400 text-gray-600",
+                            budget.status === "REJECTED" && "bg-red-500 text-white"
                           )}>
-                            {budget.status}
+                            {budget.status === 'PENDING' ? 'Pendente' : budget.status === 'REJECTED' ? 'Rejeitado' : 'Aprovado'}
                           </span>
                         </td>
                         <td className="py-4 text-center">
                           <div className="flex items-center justify-center gap-2 px-2">
                             <BudgetDetailsDialog budget={budget} />
-                            {budget.status === "Pendente" && (
+                            {budget.status === "PENDING" && (
                               <>
-                                <button className="bg-[#1a1a8c] text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                                <button
+                                  onClick={() => handleChange(budget.id, BudgetStatus.APPROVED)}
+                                  className="bg-[#1a1a8c] text-white text-xs font-semibold px-3 py-1.5 rounded-lg"
+                                >
                                   Aprovar
                                 </button>
-                                <button className="bg-red-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
+                                <button
+                                  onClick={() => handleChange(budget.id, BudgetStatus.REJECTED)}
+                                  className="bg-red-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg"
+                                >
                                   Rejeitar
                                 </button>
                               </>
