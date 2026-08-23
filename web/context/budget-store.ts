@@ -88,7 +88,6 @@ export const useBudgetStore = create<BudgetStoreType>()(
         }))
 
         return response.budget
-
       } catch (error) {
         console.error('Erro ao criar budget', error)
         throw error
@@ -98,6 +97,13 @@ export const useBudgetStore = create<BudgetStoreType>()(
     changeStatus: async ({ id, status }) => {
       try {
         const response = await budgetService.changeStatus({ id, status })
+
+        set(state => ({
+          budgets: state.budgets.map(budget => 
+            budget.id === id ? {...budget, ...response.budget} : budget
+          )
+        }))
+
         return response.budget
       } catch(error) {
         console.error('Erro ao trocar status do Budget', error)
