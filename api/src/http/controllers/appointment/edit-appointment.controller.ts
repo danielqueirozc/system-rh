@@ -10,18 +10,18 @@ const bodySchema = z.object({
   description: z.string(),
 })
 
-type EditAppointment = z.infer<typeof bodySchema>
+type EditAppointmentType = z.infer<typeof bodySchema>
 
 @Controller()
-export class EditAppoinment {
+export class EditAppointment {
   constructor(private prisma: PrismaService) {}
 
   @Put('/appointment')
   @UsePipes(new ZodValidationPipe(bodySchema))
   @HttpCode(200)
-  async handle(@Body() body: EditAppointment) {
+  async handle(@Body() body: EditAppointmentType) {
     const { id, status, date, description } = body
-
+    
     const appointmentAlreadyExists = await this.prisma.appointment.findUnique({
       where: { id }
     })
@@ -31,7 +31,7 @@ export class EditAppoinment {
     }
 
     const appointment = await this.prisma.appointment.update({
-      where: {id},
+      where: { id },
       data: { status, serviceDate: date, description }
     })
 
