@@ -1,4 +1,4 @@
-import type { AppointmentProps, ChangeStatusProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, EditAppointmentProps, EditClientProps } from "@/@types"
+import type { AppointmentProps, ChangeStatusProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, CreateEmployee, EditAppointmentProps, EditClientProps, EditEmployee } from "@/@types"
 import type { AppointmentStatus } from "@/context/appointment-store"
 import axios from "axios"
 
@@ -58,6 +58,17 @@ export const employeeService = {
   get: async () => {
     const response = await api.get('/employee')
     return response.data
+  },
+  create: async (data: CreateEmployee) => {
+    const response = await api.post('/employee', data)
+    return response.data
+  },
+  edit: async (data: EditEmployee) => {
+    const response = await api.put('/employee', data)
+    return response.data
+  },
+  delete: async (id: string) => {
+    const response = await api.delete(`/employee/${id}`)
   }
 }
 
