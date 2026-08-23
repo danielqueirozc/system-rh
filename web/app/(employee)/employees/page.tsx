@@ -1,5 +1,6 @@
 'use client'
 
+import { EditEmployeeDialog } from "@/app/components/edit-employee-dialog";
 import { EmployeeFormDialog } from "@/app/components/employee-form-dialog";
 import { Card } from "@/app/components/ui/card";
 import { useEmployeeStore } from "@/context/employee-stores";
@@ -11,7 +12,7 @@ export default function Enployees() {
   const [windowWidth, setWindowWidth] = useState(0)
   const [search, setSearch] = useState('')
 
-  const { employee, getEmployees } = useEmployeeStore()
+  const { employee, getEmployees, deleteEmployee } = useEmployeeStore()
   
   useEffect(() => {
     function handleResize() {
@@ -95,12 +96,12 @@ export default function Enployees() {
                   </div>
 
                   <div className="flex gap-2">
-                    <button className="w-full flex justify-center items-center gap-4 py-1 border font-medium transition-colors border-violet-100 rounded-lg hover:bg-violet-100 hover:text-blue">
-                      <SquarePen size={16} />
-                      Editar
-                    </button>
+                    <EditEmployeeDialog employee={emp} />
 
-                    <button className="border border-violet-100 px-2.5 py-1 rounded-lg hover:bg-violet-100">
+                    <button
+                      onClick={() => deleteEmployee(emp.id)}
+                      className="border border-violet-100 px-2.5 py-1 rounded-lg hover:bg-violet-100"
+                    >
                       <Trash2 className="text-red-500" size={16} />
                     </button>
                   </div>
