@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/app/components/ui/select"
 import { EMPLOYEE_FUNCTIONS } from "@/lib/constants"
+import { useEmployeeStore } from "@/context/employee-stores"
 
 const emptyForm = { name: "", function: "", email: "", phone: "" }
 
@@ -30,12 +31,16 @@ export function EmployeeFormDialog() {
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState(emptyForm)
 
+  const { createEmployee } = useEmployeeStore()
+
   function handleChange(field: keyof typeof emptyForm, value: string) {
     setForm(prev => ({ ...prev, [field]: value }))
   }
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
+
+    createEmployee(form)
 
     setForm(emptyForm)
     setOpen(false)
