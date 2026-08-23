@@ -5,6 +5,8 @@ const AppointmentStatus = {
   COMPLETED: 'COMPLETED',
 } as const
 
+type AppointmentStatus = typeof AppointmentStatus[keyof typeof AppointmentStatus]
+
 
 /////// APPOINTMENT//////////
 export interface AppointmentProps {
@@ -66,6 +68,8 @@ const ClientStatus = {
   INACTIVE: 'INACTIVE',
 } as const
 
+type ClientStatus = typeof ClientStatus[keyof typeof ClientStatus]
+
 export interface EditClientProps {
   id: string
   name: string
@@ -123,4 +127,42 @@ export interface ServiceProps {
   description: string
   createdAt: Date
   updatedAt: Date
+}
+
+/////////// employee/////////////
+export const EmployeeStatus = {
+  ACTIVE: 'ACTIVE',
+  INATIVO: 'INACTIVE',
+  VACATION: 'VACATION',
+} as const
+
+export type EmployeeStatus = typeof EmployeeStatus[keyof typeof EmployeeStatus]
+
+export interface EmployeeProps {
+  id: string
+  name: string
+  function: string
+  status: EmployeeStatus
+  email: string
+  phone: string
+  createdAt: Date
+  updatedAt: Date
+  employeeServices: []
+  appointment: []
+}
+
+export interface CreateEmployee {
+  name: string
+  email: string
+  phone: string
+  function: string
+}
+
+export interface EditEmployee {
+  id: string
+  name: string
+  email: string
+  phone: string
+  function: string
+  status: EmployeeStatus
 }
