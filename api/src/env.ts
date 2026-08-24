@@ -6,6 +6,8 @@ export const envSchema = z.object({
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
   RESEND_API_KEY: z.string(),
+  ADMIN_EMAIL: z.string(),
+  ADMIN_PASSWORD: z.string(),
 })
 
 export type Env = z.infer<typeof envSchema>
