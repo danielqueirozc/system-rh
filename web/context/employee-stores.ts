@@ -1,4 +1,4 @@
-import type { CreateEmployee, EditEmployee, EmployeeProps, EmployeeStatus } from '@/@types'
+import type { CreateEmployee, EditEmployee, EmployeeProps } from '@/@types'
 import { employeeService } from '@/lib/axios'
 import { create } from 'zustand'
 
