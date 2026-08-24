@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { hash } from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 import { PrismaClient } from "../generated/prisma/client.js";
@@ -8,6 +9,25 @@ const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
+  // Admin
+  const adminEmail = process.env.ADMIN_EMAIL
+  const adminPassword = process.env.ADMIN_PASSWORD
+
+  if (!adminEmail || !adminPassword) {
+    throw new Error("ADMIN_EMAIL e ADMIN_PASSWORD precisam estar definidos no .env para rodar o seed")
+  }
+
+  await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: {},
+    create: {
+      name: "Administrador",
+      email: adminEmail,
+      password: await hash(adminPassword, 8),
+      role: "ADMIN",
+    },
+  })
+
   // Serviços
   const encanamento = await prisma.service.upsert({
     where: { id: 1 },
