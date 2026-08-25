@@ -1,9 +1,19 @@
 import { cn } from "@/lib/utils"
-import { BarChart2, Calendar, FileText, LayoutDashboard, LogOut, UserCog, Users } from "lucide-react"
+import { useAuthStore } from "@/context/auth-store"
+import { Role } from "@/@types"
+import { BarChart2, Calendar, FileText, LayoutDashboard, LogOut, ShieldUser, UserCog, Users } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 export function NavbarMenuDesktop() {
+  const { user, logout } = useAuthStore()
+  const router = useRouter()
+
+  function handleLogout() {
+    logout()
+    router.push('/login')
+  }
+
   const navItems = [
     { label: "Dashboard",    href: "/dashboard",    icon: LayoutDashboard },
     { label: "Clientes",     href: "/clients",      icon: Users },
@@ -11,6 +21,7 @@ export function NavbarMenuDesktop() {
     { label: "Orçamentos",   href: "/budgets",    icon: FileText },
     { label: "Funcionários", href: "/employees",  icon: UserCog },
     { label: "Relatórios",   href: "/reports",    icon: BarChart2 },
+    ...(user?.role === Role.ADMIN ? [{ label: "Usuários", href: "/users", icon: ShieldUser }] : []),
   ]
 
   const route = usePathname()
@@ -36,7 +47,7 @@ export function NavbarMenuDesktop() {
         </div>
 
         <div className="flex flex-col gap-2 p-4 border-t border-gray-200">
-          <button className="flex gap-4 items-center text-gray-800 py-2 px-3 cursor-pointer">
+          <button onClick={handleLogout} className="flex gap-4 items-center text-gray-800 py-2 px-3 cursor-pointer">
             <LogOut size={16} />
             <span className="text-sm">Sair</span>
           </button>

@@ -1,17 +1,26 @@
 'use client'
 
-import { BarChart2, Calendar, FileText, LayoutDashboard, LogOut, UserCog, Users } from "lucide-react";
+import { BarChart2, Calendar, FileText, LayoutDashboard, LogOut, ShieldUser, UserCog, Users } from "lucide-react";
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from "./ui/sheet";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ButtonHamburguer } from "./ui/button-hamburguer";
 import { useState } from "react";
+import { useAuthStore } from "@/context/auth-store";
+import { Role } from "@/@types";
 
 export function NavbarMenuMobile() {
   const [isOpen, setIsOpen] = useState(false)
 
   const route = usePathname()
+  const router = useRouter()
+  const { user, logout } = useAuthStore()
+
+  function handleLogout() {
+    logout()
+    router.push('/login')
+  }
 
   const navItems = [
     { label: "Dashboard",    href: "/dashboard",    icon: LayoutDashboard },
@@ -20,6 +29,7 @@ export function NavbarMenuMobile() {
     { label: "Orçamentos",   href: "/budgets",    icon: FileText },
     { label: "Funcionários", href: "/employees",  icon: UserCog },
     { label: "Relatórios",   href: "/reports",    icon: BarChart2 },
+    ...(user?.role === Role.ADMIN ? [{ label: "Usuários", href: "/users", icon: ShieldUser }] : []),
   ]
 
   return (
@@ -48,7 +58,7 @@ export function NavbarMenuMobile() {
           </div>
 
           <div className="flex flex-col gap-2 px-6">
-            <button className="flex gap-4 items-center text-gray-800 font-semibold py-2 px-3">
+            <button onClick={handleLogout} className="flex gap-4 items-center text-gray-800 font-semibold py-2 px-3">
               <LogOut size={20} />
               <span className="md:text-lg">Sair</span>
             </button>

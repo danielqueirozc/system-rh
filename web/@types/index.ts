@@ -1,10 +1,37 @@
+
 ///////////// users /////////////
+export const Role = {
+  ADMIN: 'ADMIN',
+  EMPLOYEE: 'EMPLOYEE'
+} as const
+
+export type RoleType = typeof Role[keyof typeof Role]
+
+export interface UserProps {
+  id: string
+  name: string
+  email: string
+  role: RoleType
+  employeeId: string | null
+}
+
 export interface CreateAccountProps {
   name: string
   email: string
   password: string
+  role: RoleType
+  employeeId?: string
 }
 
+export interface AuthenticateProps {
+  email: string
+  password: string
+}
+
+export interface AuthenticateResponseProps {
+  user: UserProps
+  token: string
+}
 
 /////// APPOINTMENT//////////
 const AppointmentStatus = {

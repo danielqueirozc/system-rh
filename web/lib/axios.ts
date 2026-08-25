@@ -1,36 +1,42 @@
-import type { AppointmentProps, ChangeStatusProps, CreateAccountProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, CreateEmployee, EditAppointmentProps, EditClientProps, EditEmployee } from "@/@types"
+import type { AppointmentProps, AuthenticateProps, ChangeStatusProps, CreateAccountProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, CreateEmployee, EditAppointmentProps, EditClientProps, EditEmployee } from "@/@types"
 import type { AppointmentStatus } from "@/context/appointment-store"
+import { useAuthStore } from "@/context/auth-store"
 import axios from "axios"
 
 export const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL
 })
 
-// api.interceptors.request.use((config) => {
-//   const token = useAuthStore.getState().token
+api.interceptors.request.use((config) => {
+  const token = useAuthStore.getState().token
 
-//    if (token) {
-//     config.headers.Authorization = `Bearer ${token}`
-//   }
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
 
-//   return config
-// })
+  return config
+})
 
-// api.interceptors.response.use(
-//  (response) => response,
-//   (error) => {
-//     if (error.response?.status === 401) {
-//       // Usa a action logout da própria store
-//       useAuthStore.getState().logout()
-//       window.location.href = '/login'
-//     }
-//     return Promise.reject(error)
-//   }
-// )
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      useAuthStore.getState().logout()
+      window.location.href = '/login'
+    }
+    return Promise.reject(error)
+  }
+)
 
 export const authService = {
-  create: async ({ name, email, password }: CreateAccountProps) => {
-    const response = await api.post('/accounts', { name, email, password })
+  create: async ({ name, email, password, role, employeeId }: CreateAccountProps) => {
+    const response = await api.post('/accounts', { name, email, password, role, employeeId })
+    return response.data
+  },
+  autheticate: async ({ email, password }: AuthenticateProps) => {
+    console.log('indo')
+    const response = await api.post('/sessions', { email, password })
+    console.log(response.data)
     return response.data
   }
 }

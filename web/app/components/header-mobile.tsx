@@ -13,6 +13,7 @@ export function HeaderMobile() {
     { title: "Orçamentos",   href: "/budgets" },
     { title: "Funcionários", href: "/employees" },
     { title: "Relatórios",   href: "/reports" },
+    { title: "Usuários",     href: "/users" },
   ]
 
   return (
