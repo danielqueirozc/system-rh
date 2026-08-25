@@ -35,10 +35,12 @@ describe('Authenticate (E2E)', () => {
       password: '1234567',
     })
 
-    // expect(response.statusCode).toBe(201)
+    expect(response.statusCode).toBe(200)
 
-     expect(response.body).toEqual({
+    expect(response.body).toMatchObject({
       access_token: expect.any(String),
+      user: { email: 'johnsnow817@gmail.com' },
     })
+    expect(response.body.user.password).toBeUndefined()
   })
 })

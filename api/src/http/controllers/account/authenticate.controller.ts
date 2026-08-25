@@ -23,6 +23,8 @@ export class AuthenticateController {
   @UsePipes(new ZodValidationPipe(bodySchema))
   @HttpCode(200)
   async handle(@Body() body:AuthenticateBodyType) {
+    console.log(body)
+
     const { email, password } = body
 
     const user = await this.prisma.user.findUnique({
@@ -41,8 +43,11 @@ export class AuthenticateController {
 
     const accessToken = this.jwt.sign({ sub: user.id })
 
+    const { password: _, ...userWithoutPassword } = user
+
     return {
+      user: userWithoutPassword,
       access_token: accessToken
     }
-  } 
+  }
 }
