@@ -4,10 +4,20 @@ import { Calendar, Wrench } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, type FormEvent } from "react";
+import { useAuthStore } from "@/context/auth-store";
+import axios from "axios";
+import { useRouter } from 'next/navigation'
+
+const emptyForm = { email: '', password: '' }
 
 export default function Login() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [form, setForm] = useState(emptyForm)
+
+  const { authenticate } = useAuthStore()
+
+  const router = useRouter()
 
   useEffect(() => {
     function handleResize() {
@@ -18,6 +28,25 @@ export default function Login() {
 
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  function handleChange(field: keyof typeof emptyForm, value: string) {
+    setForm(prev => ({ ... prev, [field]: value }))
+  }
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault()
+
+    try {
+      await authenticate(form)
+      router.push('/dashboard')
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data?.error)
+      } else if(error instanceof Error) {
+        console.error(error.message)
+      }
+    }
+  }
 
   return (
     <Fragment>
@@ -70,6 +99,8 @@ export default function Login() {
                 <div className="flex flex-col gap-1">
                   <label className="text-black font-medium text-sm">E-mail</label>
                   <Input
+                    value={form.email}
+                    onChange={e => handleChange('email', e.target.value)}
                     className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
                     placeholder="seu@email.com"
                   />
@@ -78,6 +109,8 @@ export default function Login() {
                 <div className="flex flex-col gap-1">
                   <label className="text-black font-medium text-sm">Senha</label>
                   <Input
+                    value={form.password}
+                    onChange={e => handleChange('password', e.target.value)}
                     className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
                     placeholder="******"
                   />
@@ -94,6 +127,7 @@ export default function Login() {
               </div>
 
               <Link
+                onClick={handleSubmit}
                 className="w-full"
                 href='/dashboard'
               >
@@ -148,6 +182,8 @@ export default function Login() {
             <div className="flex flex-col gap-1">
               <label className="text-black font-medium text-sm">E-mail</label>
               <Input
+                value={form.email}
+                onChange={e => handleChange('email', e.target.value)}
                 className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
                 placeholder="seu@email.com"
               />
@@ -156,6 +192,8 @@ export default function Login() {
             <div className="flex flex-col gap-1">
               <label className="text-black font-medium text-sm">Senha</label>
               <Input
+                value={form.password}
+                onChange={e => handleChange('password', e.target.value)}
                 className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
                 placeholder="******"
               />
