@@ -1,4 +1,4 @@
-import type { AppointmentProps, ChangeStatusProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, CreateEmployee, EditAppointmentProps, EditClientProps, EditEmployee } from "@/@types"
+import type { AppointmentProps, ChangeStatusProps, CreateAccountProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, CreateEmployee, EditAppointmentProps, EditClientProps, EditEmployee } from "@/@types"
 import type { AppointmentStatus } from "@/context/appointment-store"
 import axios from "axios"
 
@@ -28,6 +28,13 @@ export const api = axios.create({
 //   }
 // )
 
+export const authService = {
+  create: async ({ name, email, password }: CreateAccountProps) => {
+    const response = await api.post('/accounts', { name, email, password })
+    return response.data
+  }
+}
+
 export const appointmentService = {
   get: async (status?: AppointmentStatus) => {
     const response = await api.get('/appointment', { params: { status } })
@@ -48,10 +55,6 @@ export const appointmentService = {
     const response = await api.put('/appointment', { id, status, date, description })
     return response.data
   }
-}
-
-export const authService = {
-  create: async () => {}
 }
 
 export const employeeService = {

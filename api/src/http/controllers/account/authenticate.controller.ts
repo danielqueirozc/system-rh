@@ -1,5 +1,5 @@
 import { PrismaService } from "@/database/prisma/prisma.service";
-import { Body, Controller, Post, UnauthorizedException, UsePipes } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, UnauthorizedException, UsePipes } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import z from "zod";
 import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
@@ -21,6 +21,7 @@ export class AuthenticateController {
 
   @Post('/sessions')
   @UsePipes(new ZodValidationPipe(bodySchema))
+  @HttpCode(200)
   async handle(@Body() body:AuthenticateBodyType) {
     const { email, password } = body
 

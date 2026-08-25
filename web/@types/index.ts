@@ -1,3 +1,12 @@
+///////////// users /////////////
+export interface CreateAccountProps {
+  name: string
+  email: string
+  password: string
+}
+
+
+/////// APPOINTMENT//////////
 const AppointmentStatus = {
   CONFIRMED: 'CONFIRMED',
   IN_PROGRESS: 'IN_PROGRESS',
@@ -8,7 +17,6 @@ const AppointmentStatus = {
 type AppointmentStatus = typeof AppointmentStatus[keyof typeof AppointmentStatus]
 
 
-/////// APPOINTMENT//////////
 export interface AppointmentProps {
   serviceName: string
   serviceDate: Date

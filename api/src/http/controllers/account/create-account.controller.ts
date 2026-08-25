@@ -22,22 +22,24 @@ export class CreateAccount {
   async handle(@Body() body:CreateAccountType ) {
     const { name, email, password } = body
 
-    const userWithSameEmail = this.prisma.user.findUnique({
+    const userWithSameEmail = await this.prisma.user.findUnique({
       where: { email }
     })
 
-    if (!userWithSameEmail) {
+    if (userWithSameEmail) {
        throw new ConflictException('User with same email adress already exists.')
     }
 
     const hashedPassword = await hash(password, 8)
 
-    await this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword
       }
     })
+
+    return { user }
   }
 }
