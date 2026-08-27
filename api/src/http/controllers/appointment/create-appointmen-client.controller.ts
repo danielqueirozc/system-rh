@@ -74,11 +74,16 @@ export class CreateAppointmentClient {
         service: { connect: { id: service.id } },
         employee: { connect: { id: employee.id } },
       },
+      include: {
+        client: { select: { name: true } },
+        service: { select: { name: true } },
+        employee: { select: { name: true } },
+      },
     })
 
     await this.email.sendAppointmentConfirmation(clientEmail, { clientName, serviceDate, serviceName })
     .catch(error => console.error('Erro ao enviar e-mail de confirmação', error))
 
-    return { appointmentId: appointment.id };
+    return { appointment }
   }
 }

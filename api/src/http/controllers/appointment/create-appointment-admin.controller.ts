@@ -56,6 +56,11 @@ export class CreateAppointmentAdmin {
         service: { connect: { id: service.id } },
         employee: { connect: { id: employee.id } },
       },
+      include: {
+        client: { select: { name: true } },
+        service: { select: { name: true } },
+        employee: { select: { name: true } },
+      },
     })
 
     return { appointment }
