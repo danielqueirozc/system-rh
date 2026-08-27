@@ -15,7 +15,7 @@ export default function Login() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [form, setForm] = useState(emptyForm)
 
-  const { authenticate } = useAuthStore()
+  const { authenticate, token, hasHydrated } = useAuthStore()
 
   const router = useRouter()
 
@@ -28,6 +28,12 @@ export default function Login() {
 
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  useEffect(() => {
+    if (hasHydrated && token) {
+      router.replace('/dashboard')
+    }
+  }, [hasHydrated, token, router])
 
   function handleChange(field: keyof typeof emptyForm, value: string) {
     setForm(prev => ({ ... prev, [field]: value }))
@@ -46,6 +52,10 @@ export default function Login() {
         console.error(error.message)
       }
     }
+  }
+
+  if (!hasHydrated || token) {
+    return null
   }
 
   return (
