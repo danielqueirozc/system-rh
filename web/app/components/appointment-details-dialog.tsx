@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import type { AppointmentsProps } from "@/context/appointment-store"
+import type { AppointmentsProps } from "@/@types"
 import { Button } from "@/app/components/ui/button"
 import {
   Dialog,

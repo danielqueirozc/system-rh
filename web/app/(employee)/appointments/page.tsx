@@ -17,6 +17,8 @@ export default function Appointments() {
 
   const { appointments, getAppointments } = useAppointmentStore()
 
+  console.log(appointments)
+
   const status = ["Todos", "Pendentes", "Confirmados", "Em Andamento", "Concluídos"]
 
   function handleStatus(query: string) {
@@ -47,7 +49,7 @@ export default function Appointments() {
   return (
     <Fragment>
       {windowWidth >= 1024 ? (
-        <div className="flex-1 flex flex-col gap-6">
+          <div className="flex-1 flex flex-col gap-6">
           <header className="p-5.5 text-gray-700 border-b border-gray-200">
             Agendamentos
           </header>

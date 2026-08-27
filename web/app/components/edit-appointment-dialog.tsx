@@ -2,7 +2,8 @@
 
 import { FormEvent, useState } from "react"
 
-import { useAppointmentStore, type AppointmentsProps } from "@/context/appointment-store"
+import { useAppointmentStore } from "@/context/appointment-store"
+import type { AppointmentsProps } from "@/@types"
 import { Button } from "@/app/components/ui/button"
 import {
   Dialog,

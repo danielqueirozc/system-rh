@@ -1,27 +1,6 @@
-import type { AppointmentProps, CreateAppointmentAdminProps, CreateAppointmentClientProps, EditAppointmentProps } from '@/@types'
+import type { AppointmentsProps, AppointmentStatus, CreateAppointmentAdminProps, CreateAppointmentClientProps, EditAppointmentProps } from '@/@types'
 import { appointmentService } from '@/lib/axios'
 import { create } from 'zustand'
-
-
-  const AppointmentStatus = {
-    CONFIRMED: 'CONFIRMED',
-    IN_PROGRESS: 'IN_PROGRESS',
-    PENDING: 'PENDING',
-    COMPLETED: 'COMPLETED'
-  } as const
-  
-  export type AppointmentStatus = (typeof AppointmentStatus) [keyof typeof AppointmentStatus]
-export interface AppointmentsProps {
-  id: string
-  client: { name: string }
-  service: { name: string }
-  employee: { name: string } | null
-  description: string
-  serviceDate: Date
-  status: AppointmentStatus
-  createdAt: Date
-  updatedAt: Date
-}
 
 interface AppointmentStoreType {
   service: string
@@ -32,10 +11,10 @@ interface AppointmentStoreType {
   setStep: (step: number) => void
   setService: (service: string) => void
   setDateAppointment: (date: Date) => void
-  createAppointmentClient: (data: CreateAppointmentClientProps) => Promise<AppointmentProps>
-  createAppointmentAdmin: (data: CreateAppointmentAdminProps) => Promise<AppointmentProps>
+  createAppointmentClient: (data: CreateAppointmentClientProps) => Promise<AppointmentsProps>
+  createAppointmentAdmin: (data: CreateAppointmentAdminProps) => Promise<AppointmentsProps>
   getAppointments: (status?: AppointmentStatus) => Promise<AppointmentsProps[] | []>
-  editAppointment: (data: EditAppointmentProps) => Promise<AppointmentProps>
+  editAppointment: (data: EditAppointmentProps) => Promise<AppointmentsProps>
 }
 
 export const useAppointmentStore = create<AppointmentStoreType>()(

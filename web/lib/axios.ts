@@ -1,5 +1,4 @@
-import type { AppointmentProps, AuthenticateProps, ChangeStatusProps, CreateAccountProps, CreateAppointmentAdminProps, CreateBudgetProps, CreateClientProps, CreateEmployee, EditAppointmentProps, EditClientProps, EditEmployee } from "@/@types"
-import type { AppointmentStatus } from "@/context/appointment-store"
+import type { AppointmentStatus, AuthenticateProps, ChangeStatusProps, CreateAccountProps, CreateAppointmentAdminProps, CreateAppointmentClientPayload, CreateBudgetProps, CreateClientProps, CreateEmployee, EditAppointmentProps, EditClientProps, EditEmployee } from "@/@types"
 import { useAuthStore } from "@/context/auth-store"
 import axios from "axios"
 
@@ -46,7 +45,7 @@ export const appointmentService = {
     const response = await api.get('/appointment', { params: { status } })
     return response.data
   },
-  createClient: async (data: AppointmentProps) => {
+  createClient: async (data: CreateAppointmentClientPayload) => {
     const response = await api.post('/appointment', data)
     return response.data
   },

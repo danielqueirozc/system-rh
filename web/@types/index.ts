@@ -41,17 +41,18 @@ const AppointmentStatus = {
   COMPLETED: 'COMPLETED',
 } as const
 
-type AppointmentStatus = typeof AppointmentStatus[keyof typeof AppointmentStatus]
+export type AppointmentStatus = typeof AppointmentStatus[keyof typeof AppointmentStatus]
 
-
-export interface AppointmentProps {
-  serviceName: string
+export interface AppointmentsProps {
+  id: string
+  client: { name: string }
+  service: { name: string }
+  employee: { name: string } | null
+  description: string
   serviceDate: Date
-  clientName: string
-  clientEmail: string
-  clientAddress: string
-  clientPhone: string
-  clientDescription: string
+  status: AppointmentStatus
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface CreateAppointmentAdminProps {
@@ -68,6 +69,16 @@ export interface CreateAppointmentClientProps {
   phone: string
   address: string
   description?: string
+}
+
+export interface CreateAppointmentClientPayload {
+  serviceName: string
+  serviceDate: string | Date
+  clientName: string
+  clientEmail: string
+  clientPhone: string
+  clientAddress: string
+  clientDescription?: string
 }
 
 export interface EditAppointmentProps {

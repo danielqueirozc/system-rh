@@ -14,7 +14,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog"
-import { useAppointmentStore, type AppointmentsProps } from "@/context/appointment-store"
+import { useAppointmentStore } from "@/context/appointment-store"
+import type { AppointmentsProps } from "@/@types"
 
 const STATUS_LABEL: Record<AppointmentsProps["status"], string> = {
   PENDING: "Pendente",
