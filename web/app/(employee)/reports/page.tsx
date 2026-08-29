@@ -8,11 +8,12 @@ import { ServiceTypeChart } from "@/app/components/ui/service-type-chart";
 import { ServicesQuantityChart } from "@/app/components/ui/services-quantity-chart";
 import { EmployeePerformanceChart } from "@/app/components/ui/employee-performance-chart";
 import { cn } from "@/lib/utils";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useReportStore } from "@/context/report-store";
 import { currencyFormatter } from "@/utils/currency-formatter";
 import { DetailedEmployeePerformance } from "@/app/components/detailed-employee-performance";
 import { percentFormatter } from "@/utils/percent-formatter";
+import { exportReportToPdf } from "@/utils/export-report-pdf";
 
 const employeePerformance = [
   { id: 1, employeeName: "Carlos Tech", completedServices: 45, generatedRevenue: 12500.00, averagePerService: 277.78 },
@@ -24,8 +25,11 @@ const employeePerformance = [
 
 export default function Reports() {
   const [windowWidth, setWindowWidth] = useState(0)
+  const [isExporting, setIsExporting] = useState(false)
 
-  const { 
+  const reportContentRef = useRef<HTMLDivElement>(null)
+
+  const {
     revenueTotal,
     totalRevenueVariation,
     servicesRealized,
@@ -35,7 +39,7 @@ export default function Reports() {
     conversionRate,
     conversionRateVariation,
   } = useReportStore()
-  
+
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth)
@@ -43,11 +47,25 @@ export default function Reports() {
 
 
     handleResize()
-    
+
     window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  async function handleExport() {
+    if (!reportContentRef.current) return
+
+    setIsExporting(true)
+
+    try {
+      await exportReportToPdf(reportContentRef.current, 'relatorio-analises.pdf')
+    } catch (error) {
+      console.error('Erro ao exportar relatório', error)
+    } finally {
+      setIsExporting(false)
+    }
+  }
 
   return (
     <Fragment>
@@ -62,15 +80,19 @@ export default function Reports() {
           <div className="flex justify-baseline gap-4">
             <SelectYear />
 
-            <button className="flex items-center gap-3 border border-purple rounded-lg px-3">
+            <button
+              onClick={handleExport}
+              disabled={isExporting}
+              className="flex items-center gap-3 border border-purple rounded-lg px-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <Download size={14} />
-              Exportar
+              {isExporting ? 'Exportando...' : 'Exportar'}
             </button>
           </div>
         </div>
 
         {/* { reports.map(report => ( */}
-          <main className="flex-1 flex flex-col px-4 pt-1 pb-8 overflow-y-auto">
+          <main ref={reportContentRef} className="flex-1 flex flex-col px-4 pt-1 pb-8 overflow-y-auto">
             <div className="flex flex-col gap-6 text-gray-900 text-sm">
               <div className="grid grid-cols-4 gap-4">
                 <Card className="flex flex-col gap-8 p-6">
@@ -178,15 +200,20 @@ export default function Reports() {
           <div className="flex flex-col gap-6 text-gray-900 text-sm">
             <p>Relatórios e Análises</p>
             <div className="flex justify-baseline gap-4">
-              
+
               <SelectYear />
 
-              <button className="flex items-center gap-3 border border-purple rounded-lg px-3">
+              <button
+                onClick={handleExport}
+                disabled={isExporting}
+                className="flex items-center gap-3 border border-purple rounded-lg px-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 <Download size={14} />
-                Exportar
+                {isExporting ? 'Exportando...' : 'Exportar'}
               </button>
             </div>
 
+            <div ref={reportContentRef} className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
               <Card className="flex flex-col gap-8 p-6">
                 <div className="flex items-center justify-between">
@@ -264,6 +291,7 @@ export default function Reports() {
                   </table>
                 </div>
               </Card>
+            </div>
             </div>
           </div>
         </div>
