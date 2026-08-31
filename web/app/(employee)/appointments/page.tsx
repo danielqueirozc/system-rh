@@ -158,37 +158,45 @@ export default function Appointments() {
             </div>
           </div>
 
-          <div className="border border-violet-100 rounded-lg p-3 flex flex-col gap-8 text-sm">
-            <div className="flex justify-between">
-              <div className="flex flex-col">
-                <p className="text-gray-800 font-medium">Joao Silva</p>
-                <span className="text-gray-500">Reparo Elétrico</span>
-              </div>
-              <span className="flex items-center font-semibold rounded-lg px-3 h-5 bg-blue text-white text-xs">Confirmado</span>
-            </div>
-
-            <div className="flex flex-col gap-4 text-gray-500 font-medium">
+          {appointments.map(app => (
+            <div key={app.id} className="border border-violet-100 rounded-lg p-3 flex flex-col gap-8 text-sm">
               <div className="flex justify-between">
-                <div className="w-full flex items-center gap-2">
-                  <Calendar size={16} />
-                  08/10/2025
+                <div className="flex flex-col">
+                  <p className="text-gray-800 font-medium">{app.client.name}</p>
+                  <span className="text-gray-500">{app.service.name}</span>
                 </div>
-                <div className="text-left w-full">
-                  <div className="text-left">09:00</div>
+                <span className="flex items-center font-semibold rounded-lg px-3 h-5 bg-blue text-white text-xs">{app.status}</span>
+              </div>
+
+              <div className="flex flex-col gap-4 text-gray-500 font-medium">
+                <div className="flex justify-between">
+                  <div className="w-full flex items-center gap-2">
+                    <Calendar size={16} />
+                    {dateFormatter(app.serviceDate)}
+                  </div>
+                  <div className="text-left w-full">
+                    <div className="text-left">{timeFormatter(app.serviceDate)}</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <User size={16} />
+                  {app.employee?.name}
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                <User size={16} />
-                Carlos Tech
-              </div>
+              {app.status === 'IN_PROGRESS' || app.status === 'COMPLETED' ? (
+                <div className="px-32">
+                  <AppointmentDetailsDialog appointment={app} />
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <EditAppointmentDialog appointment={app} />
+                  <AppointmentDetailsDialog appointment={app} />
+                </div>
+              )}
             </div>
-
-            <div className="flex gap-2">
-              <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1">Editar</button>
-              <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1">Detalhes</button>
-            </div>
-          </div>
+          ))}
         </div>
       )}
     </Fragment>
