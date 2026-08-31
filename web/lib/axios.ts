@@ -65,6 +65,7 @@ export const appointmentService = {
 export const employeeService = {
   get: async () => {
     const response = await api.get('/employee')
+    console.log(response.data)
     return response.data
   },
   create: async (data: CreateEmployee) => {

@@ -5,14 +5,19 @@ import { EmployeeFormDialog } from "@/app/components/employee-form-dialog";
 import { Card } from "@/app/components/ui/card";
 import { useEmployeeStore } from "@/context/employee-stores";
 import { cn } from "@/lib/utils";
+import { getInitials } from "@/utils/get-initials";
 import { Briefcase, Mail, Phone, Search, SquarePen, Trash2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 
 export default function Enployees() {
   const [windowWidth, setWindowWidth] = useState(0)
   const [search, setSearch] = useState('')
-
+  
   const { employee, getEmployees, deleteEmployee } = useEmployeeStore()
+
+  const filtered = employee.filter(f => 
+    f.employee.name.toLowerCase().includes(search.toLowerCase())
+  )
   
   useEffect(() => {
     function handleResize() {
@@ -56,24 +61,24 @@ export default function Enployees() {
             </div>
 
             <div className="grid grid-cols-3 gap-4 overflow-y-auto p-1">
-              {employee.map(emp => (
-                <Card key={emp.id} className="p-6 flex flex-col gap-10 justify-between">
+              {filtered.map(emp => (
+                <Card key={emp.employee.id} className="p-6 flex flex-col gap-10 justify-between">
                   <div className="w-full flex justify-baseline gap-4">
                     <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
                       PH
                     </div>
                     <div className="flex flex-col gap-3">
-                      <p>{emp.name}</p>
+                      <p>{emp.employee.name}</p>
 
                       <div className="flex items-center gap-2">
                         <Briefcase size={16} />
-                        {emp.function}
+                        {emp.employee.function}
                       </div>
 
                       <div className={cn("flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs",
-                        emp.status === 'VACATION' ? 'bg-gray-100 text-blue' : ''
+                        emp.employee.status === 'VACATION' ? 'bg-gray-100 text-blue' : ''
                       )}>
-                        {emp.status === 'ACTIVE' ? 'ativo' : emp.status === 'VACATION' ? 'férias' : 'inativo'}
+                        {emp.employee.status === 'ACTIVE' ? 'ativo' : emp.employee.status === 'VACATION' ? 'férias' : 'inativo'}
                       </div>
                     </div>
                   </div>
@@ -81,25 +86,25 @@ export default function Enployees() {
                   <div className="flex flex-col gap-3 text-gray-500">
                     <div className="flex items-center gap-2">
                       <Mail size={16} />
-                      {emp.email}
+                      {emp.employee.email}
                     </div>
 
                     <div className="flex items-center gap-2">
                       <Phone size={16} />
-                      {emp.phone}
+                      {emp.employee.phone}
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
                     <p className="text-gray-500">Serviços Concluídos</p>
-                    <span className="text-green-600">45</span>
+                    <span className="text-purple-600">{emp.completedServices}</span>
                   </div>
 
                   <div className="flex gap-2">
-                    <EditEmployeeDialog employee={emp} />
+                    <EditEmployeeDialog employee={emp.employee} />
 
                     <button
-                      onClick={() => deleteEmployee(emp.id)}
+                      onClick={() => deleteEmployee(emp.employee.id)}
                       className="border border-violet-100 px-2.5 py-1 rounded-lg hover:bg-violet-100"
                     >
                       <Trash2 className="text-red-500" size={16} />
@@ -107,237 +112,6 @@ export default function Enployees() {
                   </div>
                 </Card>
               ))}
-
-
-              {/* <Card className="p-6 flex flex-col gap-10 justify-between border-purple">
-                <div className="w-full flex justify-baseline gap-4">
-                  <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
-                    PH
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <p>Pedro Hidro</p>
-
-                    <div className="flex items-center gap-2">
-                      <Briefcase size={16} />
-                      Encanador
-                    </div>
-
-                    <div className="flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs">Ativo</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <Mail size={16} />
-                    carlos@avila.com
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Phone size={16} />
-                    (11) 98111-1111
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
-                  <p className="text-gray-500">Serviços Concluídos</p>
-                  <span className="text-green-600">45</span>
-                </div>
-
-                <div className="flex gap-2">
-                  <button className="w-full flex justify-center items-center gap-4 py-1 border font-medium transition-colors border-purple rounded-lg hover:bg-violet-100 hover:text-blue">
-                    <SquarePen size={16} />
-                    Editar
-                  </button>
-
-                  <button className="border border-purple px-2.5 py-1 rounded-lg hover:bg-violet-100">
-                    <Trash2 className="text-red-500" size={16} />
-                  </button>
-                </div>
-              </Card>
-
-               <Card className="p-6 flex flex-col gap-10 justify-between border-purple">
-                <div className="w-full flex justify-baseline gap-4">
-                  <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
-                    PH
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <p>Pedro Hidro</p>
-
-                    <div className="flex items-center gap-2">
-                      <Briefcase size={16} />
-                      Encanador
-                    </div>
-
-                    <div className="flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs">Ativo</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <Mail size={16} />
-                    carlos@avila.com
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Phone size={16} />
-                    (11) 98111-1111
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
-                  <p className="text-gray-500">Serviços Concluídos</p>
-                  <span className="text-green-600">45</span>
-                </div>
-
-                <div className="flex gap-2">
-                  <button className="w-full flex justify-center items-center gap-4 py-1 border font-medium transition-colors border-purple rounded-lg hover:bg-violet-100 hover:text-blue">
-                    <SquarePen size={16} />
-                    Editar
-                  </button>
-
-                  <button className="border border-purple px-2.5 py-1 rounded-lg hover:bg-violet-100">
-                    <Trash2 className="text-red-500" size={16} />
-                  </button>
-                </div>
-              </Card>
-
-               <Card className="p-6 flex flex-col gap-10 justify-between border-purple">
-                <div className="w-full flex justify-baseline gap-4">
-                  <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
-                    PH
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <p>Pedro Hidro</p>
-
-                    <div className="flex items-center gap-2">
-                      <Briefcase size={16} />
-                      Encanador
-                    </div>
-
-                    <div className="flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs">Ativo</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <Mail size={16} />
-                    carlos@avila.com
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Phone size={16} />
-                    (11) 98111-1111
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
-                  <p className="text-gray-500">Serviços Concluídos</p>
-                  <span className="text-green-600">45</span>
-                </div>
-
-                <div className="flex gap-2">
-                  <button className="w-full flex justify-center items-center gap-4 py-1 border font-medium transition-colors border-purple rounded-lg hover:bg-violet-100 hover:text-blue">
-                    <SquarePen size={16} />
-                    Editar
-                  </button>
-
-                  <button className="border border-purple px-2.5 py-1 rounded-lg hover:bg-violet-100">
-                    <Trash2 className="text-red-500" size={16} />
-                  </button>
-                </div>
-              </Card>
-
-               <Card className="p-6 flex flex-col gap-10 justify-between border-purple">
-                <div className="w-full flex justify-baseline gap-4">
-                  <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
-                    PH
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <p>Pedro Hidro</p>
-
-                    <div className="flex items-center gap-2">
-                      <Briefcase size={16} />
-                      Encanador
-                    </div>
-
-                    <div className="flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs">Ativo</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <Mail size={16} />
-                    carlos@avila.com
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Phone size={16} />
-                    (11) 98111-1111
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
-                  <p className="text-gray-500">Serviços Concluídos</p>
-                  <span className="text-green-600">45</span>
-                </div>
-
-                <div className="flex gap-2">
-                  <button className="w-full flex justify-center items-center gap-4 py-1 border font-medium transition-colors border-purple rounded-lg hover:bg-violet-100 hover:text-blue">
-                    <SquarePen size={16} />
-                    Editar
-                  </button>
-
-                  <button className="border border-purple px-2.5 py-1 rounded-lg hover:bg-violet-100">
-                    <Trash2 className="text-red-500" size={16} />
-                  </button>
-                </div>
-              </Card>
-
-               <Card className="p-6 flex flex-col gap-10 justify-between border-purple">
-                <div className="w-full flex justify-baseline gap-4">
-                  <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
-                    PH
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <p>Pedro Hidro</p>
-
-                    <div className="flex items-center gap-2">
-                      <Briefcase size={16} />
-                      Encanador
-                    </div>
-
-                    <div className="flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs">Ativo</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <Mail size={16} />
-                    carlos@avila.com
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Phone size={16} />
-                    (11) 98111-1111
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
-                  <p className="text-gray-500">Serviços Concluídos</p>
-                  <span className="text-green-600">45</span>
-                </div>
-
-                <div className="flex gap-2">
-                  <button className="w-full flex justify-center items-center gap-4 py-1 border font-medium transition-colors border-purple rounded-lg hover:bg-violet-100 hover:text-blue">
-                    <SquarePen size={16} />
-                    Editar
-                  </button>
-
-                  <button className="border border-purple px-2.5 py-1 rounded-lg hover:bg-violet-100">
-                    <Trash2 className="text-red-500" size={16} />
-                  </button>
-                </div>
-              </Card> */}
             </div>
           </Card>
         </main>
@@ -350,6 +124,8 @@ export default function Enployees() {
             <div className="flex items-center gap-4 px-4 text-gray-500 bg-gray-50 rounded-lg focus-within:ring-3 focus-within:border focus-within:border-blue focus-within:ring-[#8080C7]">
             <Search size={18} />
             <input
+              value={search}
+              onChange={e => setSearch(e.target.value)}
               type="text"
               placeholder="Buscar funcionários"
               className="w-full h-8 focus:outline-none placeholder:text-gray-500"
@@ -360,51 +136,55 @@ export default function Enployees() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <Card className="p-6 flex flex-col gap-10">
-              <div className="w-full flex justify-baseline gap-4">
-                <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
-                  PH
-                </div>
-                <div className="flex flex-col gap-3">
-                  <p>Pedro Hidro</p>
+            {filtered.map(emp => (
+              <Card key={emp.employee.id} className="p-6 flex flex-col gap-10">
+                <div className="w-full flex justify-baseline gap-4">
+                  <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
+                    {getInitials(emp.employee.name)}
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    <p>{emp.employee.name}</p>
 
+                    <div className="flex items-center gap-2">
+                      <Briefcase size={16} />
+                      {emp.employee.function}
+                    </div>
+
+                    <div className="flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs">Ativo</div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3 text-gray-500">
                   <div className="flex items-center gap-2">
-                    <Briefcase size={16} />
-                    Encanador
+                    <Mail size={16} />
+                    {emp.employee.email}
                   </div>
 
-                  <div className="flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs">Ativo</div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-3 text-gray-500">
-                <div className="flex items-center gap-2">
-                  <Mail size={16} />
-                  carlos@avila.com
+                  <div className="flex items-center gap-2">
+                    <Phone size={16} />
+                    {emp.employee.phone}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Phone size={16} />
-                  (11) 98111-1111
+                <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
+                  <p className="text-gray-500">Serviços Concluídos</p>
+                  <span className="text-green-600">{emp.completedServices}</span>
                 </div>
-              </div>
 
-              <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
-                <p className="text-gray-500">Serviços Concluídos</p>
-                <span className="text-green-600">45</span>
-              </div>
-
-              <div className="flex gap-2">
-                <button className="w-full flex justify-center items-center gap-4 py-1 border border-purple rounded-lg">
-                  <SquarePen size={16} />
-                  Editar
-                </button>
-
-                <button className="border border-purple px-2.5 py-1 rounded-lg">
-                  <Trash2 className="text-red-500" size={16} />
-                </button>
-              </div>
-            </Card>
+                <div className="flex gap-2">
+                  <button className="w-full flex justify-center items-center gap-4 py-1 border border-violet-100 rounded-lg">
+                    <SquarePen size={16} />
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => deleteEmployee(emp.employee.id)}
+                    className="border border-violet-100 px-2.5 py-1 rounded-lg"
+                  >
+                    <Trash2 className="text-red-500" size={16} />
+                  </button>
+                </div>
+              </Card>
+            ))}
           </div>
           </Card>
         </div>

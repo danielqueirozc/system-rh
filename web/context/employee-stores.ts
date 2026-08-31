@@ -1,11 +1,11 @@
-import type { CreateEmployee, EditEmployee, EmployeeProps } from '@/@types'
+import type { CreateEmployee, EditEmployee, EmployeePerformance, EmployeeProps } from '@/@types'
 import { employeeService } from '@/lib/axios'
 import { create } from 'zustand'
 
 interface EmployeeStoreType {
-  employee: EmployeeProps[] | []
+  employee: EmployeePerformance[] | []
 
-  getEmployees: () => Promise<EmployeeProps[] | []>
+  getEmployees: () => Promise<EmployeePerformance[] | []>
   createEmployee: (data: CreateEmployee) => Promise<EmployeeProps>
   editEmployee: (data: EditEmployee) => Promise<EmployeeProps>
   deleteEmployee: (id: string) => Promise<void>
@@ -19,9 +19,9 @@ export const useEmployeeStore = create<EmployeeStoreType>()(
       try {
         const response = await employeeService.get()
 
-        set({ employee: response.employee })
+        set({ employee: response.employeePerformance })
 
-        return response.employee
+        return response.employeePerformance
 
       } catch (error) {
         console.error('Erro ao listar employees', error)
@@ -48,7 +48,7 @@ export const useEmployeeStore = create<EmployeeStoreType>()(
 
         set(state => ({
           employee: state.employee.map(emp => 
-            emp.id === data.id ? { ...emp, ...response.employee } : emp
+            emp.employee.id === data.id ? { ...emp, ...response.employee } : emp
           )
         }))
 
@@ -60,10 +60,11 @@ export const useEmployeeStore = create<EmployeeStoreType>()(
     },
     deleteEmployee: async (id: string) => {
       try {
+        console.log(id, 'context')
         await employeeService.delete(id)
 
         set(state => ({
-          employee: state.employee.filter(emp => emp.id !== id)
+          employee: state.employee.filter(emp => emp.employee.id !== id)
         }))
       } catch(error) {
         console.error('Erro ao deletar employee', error)

@@ -193,8 +193,10 @@ export interface EmployeeProps {
   phone: string
   createdAt: Date
   updatedAt: Date
-  employeeServices: []
-  appointment: []
+}
+export interface EmployeePerformance {
+  completedServices: number
+  employee: EmployeeProps
 }
 
 export interface CreateEmployee {
