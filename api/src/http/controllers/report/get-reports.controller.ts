@@ -13,7 +13,7 @@ export class GetReports {
   @Get('/report')
   @HttpCode(200)
   async handle(@Query('year') year?: string) {
-    // query param sempre chega como string (ou undefined) na URL, por isso convertemos pra number aqui
+    // query param sempre chega como string (ou undefined) na URL, por isso convervti pra number aqui
     const selectedYear = year ? Number(year) : new Date().getFullYear()
 
     // intervalo [1º de janeiro, 1º de janeiro do ano seguinte) do ano selecionado
@@ -28,7 +28,7 @@ export class GetReports {
     const previousMonthStart = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1))
     const previousMonthEnd = monthStart // início do mês atual = fim do mês anterior
 
-    // roda as 3 queries em paralelo, igual no get-budgets.controller.ts
+    // roda as queries em paralelo, igual no get-budgets.controller.ts
     const [
       approvedBudgets,
       approvedBudgetsByMonth,
@@ -40,11 +40,12 @@ export class GetReports {
       previousTotalBudgetsInMonth,
     ] = await Promise.all([
       // orçamentos aprovados no ano -> base de toda a receita do relatório
-      // lt = less than (menor que, estritamente)
+      // lt = less than = (menor que, estritamente)
       // WHERE date >= yearStart AND date < yearEnd
 
       this.prisma.budget.findMany({
         // gte = greater than or equal (maior ou igual)
+      // lt = less than = (menor que, estritamente)
         where: { status: 'APPROVED', date: { gte: yearStart, lt: yearEnd } },
         select: {
           value: true,
@@ -156,6 +157,7 @@ export class GetReports {
     }))
 
     // agrupa os orçamentos aprovados por funcionário: quantidade de serviços fechados e receita gerada
+    // chave string = somente employeeId, valor obj
     const employeePerformanceById = new Map<string, {
       employeeId: string
       employeeName: string
