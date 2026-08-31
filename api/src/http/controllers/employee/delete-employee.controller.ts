@@ -8,16 +8,22 @@ export class DeleteEmployee {
   @Delete('/employee/:id')
   @HttpCode(204)
   async handle(@Param('id') id: string) {
+    console.log(id, 'controller')
     const employeeAlreadyExists = await this.prisma.employee.findUnique({
         where: { id }
     })
   
     if (!employeeAlreadyExists) {
-        throw new NotFoundException(`Employee não existe no banco ou ja foi apagado "${employeeAlreadyExists}"`)
+        throw new NotFoundException(`Employee não existe no banco"${id}"`)
     }
 
-    await this.prisma.employee.delete({
-      where: { id }
+     if (employeeAlreadyExists.deletedAt !== null) {
+        throw new NotFoundException(`Employee ja foi apagado"${employeeAlreadyExists}"`)
+    }
+
+    await this.prisma.employee.update({
+      where: { id },
+      data: { deletedAt: new Date() }
     })
   }
 }
