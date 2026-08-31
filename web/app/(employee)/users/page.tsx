@@ -150,7 +150,7 @@ export default function Users() {
                   </SelectTrigger>
                   <SelectContent>
                     {employee.map(e => (
-                      <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>
+                      <SelectItem key={e.employee.id} value={e.employee.id}>{e.employee.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
