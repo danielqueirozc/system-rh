@@ -56,9 +56,10 @@ export class CreateBudget {
         value,
         date,
         status: 'PENDING',
+        employeeName: employee.name,
         client: { connect: { id: client.id } },
         service: { connect: { id: service.id } },
-        employee: { connect: { id: employee.id } },
+        employee: { connect: { id: employee.id, } },
       },
       include: {
         client: { select: { name: true } },

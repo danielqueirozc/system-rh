@@ -15,13 +15,13 @@ import { DetailedEmployeePerformance } from "@/app/components/detailed-employee-
 import { percentFormatter } from "@/utils/percent-formatter";
 import { exportReportToPdf } from "@/utils/export-report-pdf";
 
-const employeePerformance = [
-  { id: 1, employeeName: "Carlos Tech", completedServices: 45, generatedRevenue: 12500.00, averagePerService: 277.78 },
-  { id: 2, employeeName: "Ana Pintura", completedServices: 52, generatedRevenue: 15200.00, averagePerService: 292.31 },
-  { id: 3, employeeName: "Pedro Hidro", completedServices: 38, generatedRevenue: 10800.00, averagePerService: 284.21 },
-  { id: 4, employeeName: "João Reforma", completedServices: 67, generatedRevenue: 18900.00, averagePerService: 282.09 },
-  { id: 5, employeeName: "Maria Geral", completedServices: 28, generatedRevenue: 7920.00, averagePerService: 282.86 },
-]
+// const employeePerformance = [
+//   { id: 1, employeeName: "Carlos Tech", completedServices: 45, generatedRevenue: 12500.00, averagePerService: 277.78 },
+//   { id: 2, employeeName: "Ana Pintura", completedServices: 52, generatedRevenue: 15200.00, averagePerService: 292.31 },
+//   { id: 3, employeeName: "Pedro Hidro", completedServices: 38, generatedRevenue: 10800.00, averagePerService: 284.21 },
+//   { id: 4, employeeName: "João Reforma", completedServices: 67, generatedRevenue: 18900.00, averagePerService: 282.09 },
+//   { id: 5, employeeName: "Maria Geral", completedServices: 28, generatedRevenue: 7920.00, averagePerService: 282.86 },
+// ]
 
 export default function Reports() {
   const [windowWidth, setWindowWidth] = useState(0)
@@ -38,6 +38,7 @@ export default function Reports() {
     averageTicketVariation,
     conversionRate,
     conversionRateVariation,
+    employeePerformance
   } = useReportStore()
 
   useEffect(() => {
@@ -275,7 +276,7 @@ export default function Reports() {
                     <tbody>
                       {employeePerformance.map((employee, i) => (
                         <tr
-                          key={employee.id}
+                          key={employee.employeeId}
                           className={cn(
                             'border-t border-gray-100 rounded-lg text-center',
                             i % 2 === 0 ? 'bg-[#f0f0fa]' : 'bg-white'

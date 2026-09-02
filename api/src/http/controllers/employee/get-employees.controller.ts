@@ -8,44 +8,19 @@ export class GetEmployees {
   @Get('/employee')
   @HttpCode(200)
   async handle() {
-    const approvedBudgets = await this.prisma.budget.findMany({
-      where: { status: 'APPROVED' },
-      select: {
-        employee: true
+   const employees = await this.prisma.employee.findMany({
+    include: {
+      _count: {
+        select: { budgets: { where: { status: 'APPROVED' } } }
       }
-    })
-
-    const employeePerformanceById = new Map()
-
-    for (const budget of approvedBudgets) {
-      const employee = budget.employee
-      const employeeId = budget.employee.id
-
-      const current = employeePerformanceById.get(employeeId) ?? {
-        employee,
-        completedServices: 0
-      }
-
-      current.completedServices += 1
-      employeePerformanceById.set(employeeId, current)
     }
+   })
 
-    const employeePerformance = Array.from(employeePerformanceById.values())
+   const employeePerformance = employees.map(({ _count, ...employee }) => ({
+    employee,
+    completedServices: _count.budgets
+   }))
 
-    return { employeePerformance }
+   return { employeePerformance }
   }
 }
-
- // const employee = await this.prisma.employee.findMany({
-    //   orderBy: {
-    //     createdAt: 'desc'
-    //   }
-    // })
-
-    // // const employeIdd = employee.map(emp => emp.id)
-    // // const completedServices = await this.prisma.appointment.findMany({
-    // //   where: {status: 'COMPLETED'},
-    // //   select: {
-    // //     employee: {}
-    // //   }
-    // // })

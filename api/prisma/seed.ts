@@ -411,6 +411,7 @@ async function main() {
       clientId: maria.id,
       serviceId: encanamento.id,
       employeeId: carlos.id,
+      employeeName: carlos.name,
     },
     {
       id: 2,
@@ -421,6 +422,7 @@ async function main() {
       clientId: joao.id,
       serviceId: eletrica.id,
       employeeId: roberto.id,
+      employeeName: roberto.name,
     },
     {
       id: 3,
@@ -431,6 +433,7 @@ async function main() {
       clientId: ricardo.id,
       serviceId: pintura.id,
       employeeId: fernanda.id,
+      employeeName: fernanda.name,
     },
     {
       id: 4,
@@ -441,6 +444,7 @@ async function main() {
       clientId: anaBeatriz.id,
       serviceId: encanamento.id,
       employeeId: marcos.id,
+      employeeName: marcos.name,
     },
     {
       id: 5,
@@ -451,6 +455,7 @@ async function main() {
       clientId: julianaRocha.id,
       serviceId: eletrica.id,
       employeeId: andre.id,
+      employeeName: andre.name,
     },
     {
       id: 6,
@@ -461,6 +466,7 @@ async function main() {
       clientId: fernando.id,
       serviceId: servicosGerais.id,
       employeeId: carlos.id,
+      employeeName: carlos.name,
     },
     {
       id: 7,
@@ -471,6 +477,7 @@ async function main() {
       clientId: maria.id,
       serviceId: pintura.id,
       employeeId: paulo.id,
+      employeeName: paulo.name,
     },
     {
       id: 8,
@@ -481,6 +488,7 @@ async function main() {
       clientId: ricardo.id,
       serviceId: eletrica.id,
       employeeId: thiago.id,
+      employeeName: thiago.name,
     },
     {
       id: 9,
@@ -491,6 +499,7 @@ async function main() {
       clientId: patricia.id,
       serviceId: marcenaria.id,
       employeeId: julianaMartins.id,
+      employeeName: julianaMartins.name,
     },
     {
       id: 10,
@@ -501,6 +510,7 @@ async function main() {
       clientId: eduardo.id,
       serviceId: jardinagem.id,
       employeeId: camila.id,
+      employeeName: camila.name,
     },
     {
       id: 11,
@@ -511,6 +521,7 @@ async function main() {
       clientId: camilaDuarte.id,
       serviceId: limpezaPosObra.id,
       employeeId: diego.id,
+      employeeName: diego.name,
     },
     {
       id: 12,
@@ -521,6 +532,7 @@ async function main() {
       clientId: brunoAzevedo.id,
       serviceId: arCondicionado.id,
       employeeId: rafael.id,
+      employeeName: rafael.name,
     },
     {
       id: 13,
@@ -531,6 +543,7 @@ async function main() {
       clientId: larissa.id,
       serviceId: marcenaria.id,
       employeeId: bruno.id,
+      employeeName: bruno.name,
     },
     {
       id: 14,
@@ -541,6 +554,7 @@ async function main() {
       clientId: marcelo.id,
       serviceId: arCondicionado.id,
       employeeId: rafael.id,
+      employeeName: rafael.name,
     },
     {
       id: 15,
@@ -551,6 +565,7 @@ async function main() {
       clientId: patricia.id,
       serviceId: jardinagem.id,
       employeeId: camila.id,
+      employeeName: camila.name,
     },
     {
       id: 16,
@@ -561,6 +576,7 @@ async function main() {
       clientId: eduardo.id,
       serviceId: limpezaPosObra.id,
       employeeId: sandra.id,
+      employeeName: sandra.name,
     },
     {
       id: 17,
@@ -571,6 +587,7 @@ async function main() {
       clientId: larissa.id,
       serviceId: eletrica.id,
       employeeId: roberto.id,
+      employeeName: roberto.name,
     },
     {
       id: 18,
@@ -581,6 +598,7 @@ async function main() {
       clientId: marcelo.id,
       serviceId: pintura.id,
       employeeId: fernanda.id,
+      employeeName: fernanda.name,
     },
     {
       id: 19,
@@ -591,6 +609,7 @@ async function main() {
       clientId: maria.id,
       serviceId: servicosGerais.id,
       employeeId: roberto.id,
+      employeeName: roberto.name,
     },
     {
       id: 20,
@@ -601,6 +620,7 @@ async function main() {
       clientId: joao.id,
       serviceId: marcenaria.id,
       employeeId: julianaMartins.id,
+      employeeName: julianaMartins.name,
     },
     {
       id: 21,
@@ -611,6 +631,7 @@ async function main() {
       clientId: anaBeatriz.id,
       serviceId: jardinagem.id,
       employeeId: camila.id,
+      employeeName: camila.name,
     },
     {
       id: 22,
@@ -621,6 +642,7 @@ async function main() {
       clientId: ricardo.id,
       serviceId: limpezaPosObra.id,
       employeeId: diego.id,
+      employeeName: diego.name,
     },
     {
       id: 23,
@@ -631,6 +653,7 @@ async function main() {
       clientId: julianaRocha.id,
       serviceId: arCondicionado.id,
       employeeId: rafael.id,
+      employeeName: rafael.name,
     },
     {
       id: 24,
@@ -641,6 +664,7 @@ async function main() {
       clientId: fernando.id,
       serviceId: encanamento.id,
       employeeId: carlos.id,
+      employeeName: carlos.name,
     },
     {
       id: 25,
@@ -651,6 +675,7 @@ async function main() {
       clientId: patricia.id,
       serviceId: eletrica.id,
       employeeId: andre.id,
+      employeeName: andre.name,
     },
     {
       id: 26,
@@ -661,6 +686,7 @@ async function main() {
       clientId: eduardo.id,
       serviceId: pintura.id,
       employeeId: paulo.id,
+      employeeName: paulo.name,
     },
     {
       id: 27,
@@ -671,6 +697,7 @@ async function main() {
       clientId: camilaDuarte.id,
       serviceId: servicosGerais.id,
       employeeId: diego.id,
+      employeeName: diego.name,
     },
     {
       id: 28,
@@ -681,6 +708,7 @@ async function main() {
       clientId: brunoAzevedo.id,
       serviceId: marcenaria.id,
       employeeId: bruno.id,
+      employeeName: bruno.name,
     },
     {
       id: 29,
@@ -691,6 +719,7 @@ async function main() {
       clientId: larissa.id,
       serviceId: jardinagem.id,
       employeeId: camila.id,
+      employeeName: camila.name,
     },
     {
       id: 30,
@@ -701,6 +730,7 @@ async function main() {
       clientId: marcelo.id,
       serviceId: limpezaPosObra.id,
       employeeId: sandra.id,
+      employeeName: sandra.name,
     },
     {
       id: 31,
@@ -711,6 +741,7 @@ async function main() {
       clientId: maria.id,
       serviceId: arCondicionado.id,
       employeeId: rafael.id,
+      employeeName: rafael.name,
     },
     {
       id: 32,
@@ -721,6 +752,7 @@ async function main() {
       clientId: joao.id,
       serviceId: encanamento.id,
       employeeId: marcos.id,
+      employeeName: marcos.name,
     },
     {
       id: 33,
@@ -731,6 +763,7 @@ async function main() {
       clientId: anaBeatriz.id,
       serviceId: eletrica.id,
       employeeId: thiago.id,
+      employeeName: thiago.name,
     },
     {
       id: 34,
@@ -741,6 +774,7 @@ async function main() {
       clientId: ricardo.id,
       serviceId: pintura.id,
       employeeId: fernanda.id,
+      employeeName: fernanda.name,
     },
     {
       id: 35,
@@ -751,6 +785,7 @@ async function main() {
       clientId: julianaRocha.id,
       serviceId: servicosGerais.id,
       employeeId: paulo.id,
+      employeeName: paulo.name,
     },
     {
       id: 36,
@@ -761,6 +796,7 @@ async function main() {
       clientId: fernando.id,
       serviceId: marcenaria.id,
       employeeId: julianaMartins.id,
+      employeeName: julianaMartins.name,
     },
     {
       id: 37,
@@ -771,6 +807,7 @@ async function main() {
       clientId: patricia.id,
       serviceId: jardinagem.id,
       employeeId: camila.id,
+      employeeName: camila.name,
     },
     {
       id: 38,
@@ -781,6 +818,7 @@ async function main() {
       clientId: eduardo.id,
       serviceId: limpezaPosObra.id,
       employeeId: diego.id,
+      employeeName: diego.name,
     },
     {
       id: 39,
@@ -791,6 +829,7 @@ async function main() {
       clientId: camilaDuarte.id,
       serviceId: arCondicionado.id,
       employeeId: rafael.id,
+      employeeName: rafael.name,
     },
     {
       id: 40,
@@ -801,6 +840,7 @@ async function main() {
       clientId: brunoAzevedo.id,
       serviceId: encanamento.id,
       employeeId: carlos.id,
+      employeeName: carlos.name,
     },
     {
       id: 41,
@@ -811,6 +851,7 @@ async function main() {
       clientId: larissa.id,
       serviceId: eletrica.id,
       employeeId: roberto.id,
+      employeeName: roberto.name,
     },
     {
       id: 42,
@@ -821,6 +862,7 @@ async function main() {
       clientId: marcelo.id,
       serviceId: pintura.id,
       employeeId: paulo.id,
+      employeeName: paulo.name,
     },
     {
       id: 43,
@@ -831,6 +873,7 @@ async function main() {
       clientId: maria.id,
       serviceId: servicosGerais.id,
       employeeId: bruno.id,
+      employeeName: bruno.name,
     },
     {
       id: 44,
@@ -841,6 +884,7 @@ async function main() {
       clientId: joao.id,
       serviceId: marcenaria.id,
       employeeId: bruno.id,
+      employeeName: bruno.name,
     },
     {
       id: 45,
@@ -851,6 +895,7 @@ async function main() {
       clientId: anaBeatriz.id,
       serviceId: jardinagem.id,
       employeeId: camila.id,
+      employeeName: camila.name,
     },
     {
       id: 46,
@@ -861,6 +906,7 @@ async function main() {
       clientId: ricardo.id,
       serviceId: limpezaPosObra.id,
       employeeId: sandra.id,
+      employeeName: sandra.name,
     },
     {
       id: 47,
@@ -871,6 +917,7 @@ async function main() {
       clientId: julianaRocha.id,
       serviceId: arCondicionado.id,
       employeeId: rafael.id,
+      employeeName: rafael.name,
     },
     {
       id: 48,
@@ -881,6 +928,7 @@ async function main() {
       clientId: fernando.id,
       serviceId: encanamento.id,
       employeeId: marcos.id,
+      employeeName: marcos.name,
     },
     {
       id: 49,
@@ -891,6 +939,7 @@ async function main() {
       clientId: patricia.id,
       serviceId: eletrica.id,
       employeeId: andre.id,
+      employeeName: andre.name,
     },
     {
       id: 50,
@@ -901,6 +950,7 @@ async function main() {
       clientId: eduardo.id,
       serviceId: pintura.id,
       employeeId: fernanda.id,
+      employeeName: fernanda.name,
     },
     {
       id: 51,
@@ -911,6 +961,7 @@ async function main() {
       clientId: camilaDuarte.id,
       serviceId: servicosGerais.id,
       employeeId: carlos.id,
+      employeeName: carlos.name,
     },
     {
       id: 52,
@@ -921,6 +972,7 @@ async function main() {
       clientId: brunoAzevedo.id,
       serviceId: marcenaria.id,
       employeeId: julianaMartins.id,
+      employeeName: julianaMartins.name,
     },
   ]
 

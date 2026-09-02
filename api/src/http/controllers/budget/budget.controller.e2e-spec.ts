@@ -96,6 +96,7 @@ describe("Budget", () => {
         clientId: client.id,
         serviceId: service.id,
         employeeId: employee.id,
+        employeeName: employee.name,
       }
     })
 

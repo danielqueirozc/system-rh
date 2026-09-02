@@ -1,5 +1,6 @@
 import { PrismaService } from "@/database/prisma/prisma.service";
 import { Controller, Get, HttpCode, Query } from "@nestjs/common";
+import type { EmployeeStatus } from "../../../../generated/prisma/enums";
 
 const MONTHS = [
   "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
@@ -30,6 +31,7 @@ export class GetReports {
 
     // roda as queries em paralelo, igual no get-budgets.controller.ts
     const [
+      allEmployees,
       approvedBudgets,
       approvedBudgetsByMonth,
       previousApprovedBudgets,
@@ -39,6 +41,10 @@ export class GetReports {
       totalBudgetsInMonth,
       previousTotalBudgetsInMonth,
     ] = await Promise.all([
+      this.prisma.employee.findMany({
+        select: { id: true, name: true, status: true }
+      }),
+
       // orçamentos aprovados no ano -> base de toda a receita do relatório
       // lt = less than = (menor que, estritamente)
       // WHERE date >= yearStart AND date < yearEnd
@@ -50,7 +56,8 @@ export class GetReports {
         select: {
           value: true,
           date: true,
-          employee: { select: { id: true, name: true } },
+          employeeId: true,
+          employeeName: true,
         },
       }),
 
@@ -60,7 +67,8 @@ export class GetReports {
         select: {
           value: true,
           date: true,
-          employee: { select: { id: true, name: true } },
+          employeeId: true,
+          employeeName: true,
         },
       }),
 
@@ -69,7 +77,8 @@ export class GetReports {
         select: {
           value: true,
           date: true,
-          employee: { select: { id: true, name: true } }
+          employeeId: true,
+          employeeName: true,
         }
       }),
 
@@ -78,7 +87,8 @@ export class GetReports {
         select: {
           value: true,
           date: true,
-          employee: { select: { id: true, name: true } }
+          employeeId: true,
+          employeeName: true,
         }
       }),
       // agendamentos concluídos no ano -> base de "serviços realizados", distribuição e quantidade mensal
@@ -159,29 +169,42 @@ export class GetReports {
     // agrupa os orçamentos aprovados por funcionário: quantidade de serviços fechados e receita gerada
     // chave string = somente employeeId, valor obj
     const employeePerformanceById = new Map<string, {
-      employeeId: string
+      employeeId: string | null
       employeeName: string
+      employeeStatus: EmployeeStatus | null
       completedServices: number
       generatedRevenue: number
     }>()
+
+    for (const employee of allEmployees) {
+      employeePerformanceById.set(employee.id, {
+        employeeId: employee.id,
+        employeeName: employee.name,
+        employeeStatus: employee.status,
+        completedServices: 0,
+        generatedRevenue: 0,
+      })
+    }
+
     for (const budget of approvedBudgets) {
-      const employeeId = budget.employee.id
-      const current = employeePerformanceById.get(employeeId) ?? {
-        employeeId,
-        employeeName: budget.employee.name,
+      const key = budget.employeeId ?? budget.employeeName
+      const current = employeePerformanceById.get(key) ?? {
+        employeeId: budget.employeeId,
+        employeeName: budget.employeeName,
+        employeeStatus: null,
         completedServices: 0,
         generatedRevenue: 0,
       }
 
       current.completedServices += 1
       current.generatedRevenue += Number(budget.value)
-
-      employeePerformanceById.set(employeeId, current)
+      employeePerformanceById.set(key, current)
     }
-    const employeePerformance = Array.from(employeePerformanceById.values()).map((employee) => ({
-      ...employee,
-      averagePerService: employee.completedServices > 0 ? employee.generatedRevenue / employee.completedServices : 0,
-    }))
+
+     const employeePerformance = Array.from(employeePerformanceById.values()).map((employee) => ({
+        ...employee,
+        averagePerService: employee.completedServices > 0 ? employee.generatedRevenue / employee.completedServices : 0,
+      }))
 
     return {
       year: selectedYear,
