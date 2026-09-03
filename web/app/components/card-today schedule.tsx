@@ -86,7 +86,7 @@ export function CardTodaySchedule() {
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="button" variant="outline">Fechar</Button>
+                <Button type="button" variant="outline" className="border-purple-100">Fechar</Button>
               </DialogClose>
             </DialogFooter>
           </DialogContent>
