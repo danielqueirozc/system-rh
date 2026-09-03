@@ -203,6 +203,11 @@ export interface EmployeePerformance {
   generatedRevenue: number
 }
 
+export interface EmployeeWithBudgetCount {
+  employee: EmployeeProps
+  completedServices: number
+}
+
 export interface CreateEmployee {
   name: string
   email: string
