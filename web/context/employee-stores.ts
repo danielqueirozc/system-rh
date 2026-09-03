@@ -1,11 +1,11 @@
-import type { CreateEmployee, EditEmployee, EmployeePerformance, EmployeeProps } from '@/@types'
+import type { CreateEmployee, EditEmployee, EmployeeProps, EmployeeWithBudgetCount } from '@/@types'
 import { employeeService } from '@/lib/axios'
 import { create } from 'zustand'
 
 interface EmployeeStoreType {
-  employee: EmployeePerformance[] | []
+  employee: EmployeeWithBudgetCount[] | []
 
-  getEmployees: () => Promise<EmployeePerformance[] | []>
+  getEmployees: () => Promise<EmployeeWithBudgetCount[] | []>
   createEmployee: (data: CreateEmployee) => Promise<EmployeeProps>
   editEmployee: (data: EditEmployee) => Promise<EmployeeProps>
   deleteEmployee: (id: string) => Promise<void>
