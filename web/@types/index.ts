@@ -195,8 +195,12 @@ export interface EmployeeProps {
   updatedAt: Date
 }
 export interface EmployeePerformance {
+  averagePerService: number
   completedServices: number
-  employee: EmployeeProps
+  employeeId: string | null
+  employeeName: string
+  employeeStatus: EmployeeStatus | null
+  generatedRevenue: number
 }
 
 export interface CreateEmployee {
