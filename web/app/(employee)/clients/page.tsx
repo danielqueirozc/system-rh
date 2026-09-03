@@ -103,7 +103,7 @@ export default function Clients() {
                               ? "bg-[#1a1a8c] text-white"
                               : "border border-gray-400 text-gray-600"
                           )}>
-                            {client.status}
+                            {client.status === 'ACTIVE' ? 'Ativo' : 'Inativo' }
                           </span>
                         </td>
                         <td className="py-4 text-center">
