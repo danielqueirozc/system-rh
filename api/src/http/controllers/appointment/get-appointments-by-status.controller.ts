@@ -9,7 +9,6 @@ export class GetAppointmentByStatus {
   @Get('/appointment')
   @HttpCode(200)
   async handle(@Query('status') status?: AppointmentStatus) {
-    console.log(status)
     const appointments = await this.prisma.appointment.findMany({
       where: status ? { status } : undefined,
       orderBy: {

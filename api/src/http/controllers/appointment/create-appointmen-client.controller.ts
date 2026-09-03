@@ -29,8 +29,6 @@ export class CreateAppointmentClient {
   async handle(@Body() body: CreateAppointmentType) {
     const { serviceName, serviceDate, clientName, clientEmail, clientPhone, clientAddress } = body
 
-    console.log(body)
-
     const service = await this.prisma.service.findFirst({
       where: { name: serviceName },
     })
