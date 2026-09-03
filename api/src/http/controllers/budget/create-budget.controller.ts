@@ -57,6 +57,7 @@ export class CreateBudget {
         date,
         status: 'PENDING',
         employeeName: employee.name,
+        // linka esse budget novo a um registro que ja existe
         client: { connect: { id: client.id } },
         service: { connect: { id: service.id } },
         employee: { connect: { id: employee.id, } },
