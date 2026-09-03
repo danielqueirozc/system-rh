@@ -11,15 +11,9 @@ import {
   type ChartConfig,
 } from "@/app/components/ui/chart"
 import { Card, CardHeader, CardTitle, CardContent } from "@/app/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/app/components/ui/tooltip"
 import { useReportStore } from "@/context/report-store"
-
-const data = [
-  { employee: "Carlos Tech", servicos: 43 },
-  { employee: "Ana Pintura", servicos: 51 },
-  { employee: "Pedro Hidro", servicos: 37 },
-  { employee: "João Reforma", servicos: 66 },
-  { employee: "Maria Geral", servicos: 27 },
-]
+import { cn } from "@/lib/utils"
 
 const chartConfig = {
   completedServices: { label: "Serviços", color: "#9333EA" },
@@ -27,6 +21,41 @@ const chartConfig = {
 
 export function EmployeePerformanceChart() {
   const { employeePerformance } = useReportStore()
+
+  function EmployeeNameTick({ x, y, payload }: any) {
+    const employee = employeePerformance.find(emp => emp.employeeName === payload.value)
+
+    const text = (
+      <text
+        x={x}
+        y={y}
+        dy={4}
+        textAnchor="end"
+        className={cn(
+          "text-xs",
+          employee?.employeeStatus === 'INACTIVE' && "fill-red-600",
+          employee?.employeeStatus === null && "fill-gray-600/50"
+        )}
+      >
+        {payload.value}
+      </text>
+    )
+
+    if (employee?.employeeStatus === 'INACTIVE' || employee?.employeeStatus === null) {
+      return (
+        <Tooltip>
+          <TooltipTrigger asChild>{text}</TooltipTrigger>
+          <TooltipContent>
+            {employee.employeeStatus === 'INACTIVE'
+              ? 'Funcionário inativo'
+              : 'Funcionário não faz mais parte da empresa'}
+          </TooltipContent>
+        </Tooltip>
+      )
+    }
+
+    return text
+  }
 
   return (
     <Card className="flex flex-col gap-4 p-6">
@@ -47,6 +76,7 @@ export function EmployeePerformanceChart() {
               axisLine={false}
               tickMargin={8}
               width={90}
+              tick={<EmployeeNameTick />}
             />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <Bar
