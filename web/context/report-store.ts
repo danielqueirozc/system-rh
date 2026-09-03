@@ -1,3 +1,4 @@
+import type { EmployeePerformance } from '@/@types'
 import { reportService } from '@/lib/axios'
 import { create } from 'zustand'
 
@@ -19,9 +20,7 @@ interface ReportStoreType {
     monthlyRevenue: [
       { month: string, total: number }
     ],
-    employeePerformance: [
-      { employeeId: string, employeeName: string, completedServices: number, generatedRevenue: number, averagePerService: number }
-    ]
+    employeePerformance: EmployeePerformance[]
 
   getReports: (year?: number) => Promise<{}>
 }
@@ -39,7 +38,7 @@ export const useReportStore = create<ReportStoreType>()(
     servicesQuantity: [{ month: '', count: 0 }],
     serviceDistribution: [{ service: '', count: 0, percentage: 0 }],
     monthlyRevenue: [{  month: '', total: 0}],
-    employeePerformance: [{ employeeId: '', employeeName: '', completedServices: 0, generatedRevenue: 0, averagePerService: 0 }],
+    employeePerformance: [],
 
     getReports: async (year?: number) => {
       try {
@@ -48,21 +47,22 @@ export const useReportStore = create<ReportStoreType>()(
         console.log(response.realizedServicesVariation)
         console.log(response.averageTicketVariation)
         console.log(response.conversionRateVariation)
+        console.log(response.employeePerformance)
 
-          set({
-            revenueTotal: response.revenueTotal,
-            totalRevenueVariation: response.totalRevenueVariation,
-            servicesRealized: response.servicesRealized,
-            realizedServicesVariation: response.realizedServicesVariation,
-            averageTicket: response.averageTicket,
-            averageTicketVariation: response.averageTicketVariation,
-            conversionRate: response.conversionRate,
-            conversionRateVariation: response.conversionRateVariation,
-            servicesQuantity: response.servicesQuantity,
-            serviceDistribution: response.serviceDistribution,
-            monthlyRevenue: response.monthlyRevenue,
-            employeePerformance: response.employeePerformance,
-          })
+        set({
+          revenueTotal: response.revenueTotal,
+          totalRevenueVariation: response.totalRevenueVariation,
+          servicesRealized: response.servicesRealized,
+          realizedServicesVariation: response.realizedServicesVariation,
+          averageTicket: response.averageTicket,
+          averageTicketVariation: response.averageTicketVariation,
+          conversionRate: response.conversionRate,
+          conversionRateVariation: response.conversionRateVariation,
+          servicesQuantity: response.servicesQuantity,
+          serviceDistribution: response.serviceDistribution,
+          monthlyRevenue: response.monthlyRevenue,
+          employeePerformance: response.employeePerformance,
+        })
 
         return response
 
