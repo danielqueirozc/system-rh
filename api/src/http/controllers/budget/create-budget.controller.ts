@@ -24,8 +24,6 @@ export class CreateBudget {
   async handle(@Body() body: CreateBudgetType) {
     const { description, value, date, clientId, serviceId, employeeId } = body
 
-    console.log(body)
-
     const client = await this.prisma.client.findUnique({
       where: { id: clientId }
     })
