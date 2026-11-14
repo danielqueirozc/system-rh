@@ -3,6 +3,7 @@ import { Body, Controller, HttpCode, NotFoundException, Post, UsePipes } from "@
 import z from "zod";
 import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
 import { EmailService } from "@/email/email.service";
+import { Public } from "@/auth/public.decorator";
 
 const bodySchema = z.object({
   serviceName: z.string(),
@@ -23,6 +24,7 @@ export class CreateAppointmentClient {
     private email: EmailService
   ) {}
 
+  @Public()
   @Post("/appointment")
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(bodySchema))

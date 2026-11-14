@@ -22,7 +22,7 @@ export class CreateAccount {
   constructor(private prisma: PrismaService) {}
 
   @Post('/accounts')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(RolesGuard)
   @Roles('ADMIN')
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(bodySchema))

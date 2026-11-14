@@ -4,6 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import z from "zod";
 import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
 import { compare } from "bcryptjs";
+import { Public } from "@/auth/public.decorator";
 
 const bodySchema = z.object({
   email: z.string(),
@@ -19,6 +20,7 @@ export class AuthenticateController {
     private jwt: JwtService,
   ) {}
 
+  @Public()
   @Post('/sessions')
   @UsePipes(new ZodValidationPipe(bodySchema))
   @HttpCode(200)
