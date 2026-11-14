@@ -8,7 +8,7 @@ import { CardPendingBudgets } from "@/app/components/ui/card-pending-bugets";
 
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(0)
 
 
   function handleOpen() {
@@ -19,6 +19,8 @@ export default function Dashboard() {
     function handleResize() {
       setWindowWidth(window.innerWidth)
     }
+
+    handleResize()
     
     window.addEventListener('resize', handleResize)
 

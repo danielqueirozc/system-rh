@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 const emptyForm = { email: '', password: '' }
 
 export default function Login() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(0)
   const [form, setForm] = useState(emptyForm)
 
   const { authenticate, token, hasHydrated } = useAuthStore()
@@ -23,6 +23,8 @@ export default function Login() {
     function handleResize() {
       setWindowWidth(window.innerWidth)
     }
+
+    handleResize()
 
     window.addEventListener('resize', handleResize)
 

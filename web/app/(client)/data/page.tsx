@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 const emptyForm = { name: '', email: '', phone: '', address: '', description: '' }
 
 export default function Data() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth) // window.innerWidth = pega a largura atual da tela
+  const [windowWidth, setWindowWidth] = useState(0) 
   const [form, setForm] = useState(emptyForm)
   
   const router = useRouter()
@@ -30,11 +30,14 @@ export default function Data() {
   }
 
   useEffect(() => {
+    // window.innerWidth = pega a largura atual da tela
     function handleResize() {
       setWindowWidth(window.innerWidth)
-
-      window.addEventListener('resize', handleResize)
     }
+
+    handleResize()
+    
+    window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
 
