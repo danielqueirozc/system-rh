@@ -104,7 +104,7 @@ export default function Login() {
               </p>
             </div>
 
-            <form className="flex flex-col gap-6">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
                   <label className="text-black font-medium text-sm">E-mail</label>
@@ -136,13 +136,7 @@ export default function Login() {
                 </Link>
               </div>
 
-              <Link
-                onClick={handleSubmit}
-                className="w-full"
-                href='/dashboard'
-              >
-                <Button className="bg-blue py-4.5 w-full">Entrar</Button>
-              </Link>
+              <Button type="submit" className="bg-blue py-4.5 w-full">Entrar</Button>
 
               <div className="flex justify-center gap-2">
                 <p className="text-gray-600 text-sm">Não tem uma conta?</p>
@@ -187,7 +181,7 @@ export default function Login() {
           </p>
         </div>
 
-        <form className="flex flex-col gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <label className="text-black font-medium text-sm">E-mail</label>
@@ -219,7 +213,7 @@ export default function Login() {
             </Link>
           </div>
 
-          <Button className="bg-blue py-4.5">Entrar</Button>
+          <Button type="submit" className="bg-blue py-4.5">Entrar</Button>
 
           <div className="flex justify-center gap-2">
             <p className="text-gray-500 text-sm">Não tem uma conta?</p>
