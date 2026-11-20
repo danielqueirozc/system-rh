@@ -159,17 +159,17 @@ export default function Budgets() {
           <div className="flex flex-col gap-4 px-4 pt-24">
             <Card className="flex flex-col gap-7 p-4">
               <p className="text-gray-500">Total Orçado</p>
-              <span className="text-gray-900 font-medium text-lg">R$ 24.200</span>
+              <span className="text-gray-900 font-medium text-lg">{currencyFormatter(total)}</span>
             </Card>
 
             <Card className="flex flex-col gap-7 p-4">
               <p className="text-gray-500">Aprovados</p>
-              <span className="text-green-600 font-medium text-lg">R$ 8.000</span>
+              <span className="text-green-600 font-medium text-lg">{currencyFormatter(approved)}</span>
             </Card>
 
             <Card className="flex flex-col gap-7 p-4">
               <p className="text-gray-500">Pendentes</p>
-              <span className="text-red-500 font-medium text-lg">R$ 11.700</span>
+              <span className="text-red-500 font-medium text-lg">{currencyFormatter(pending)}</span>
             </Card>
 
             <BudgetFormDialog />
@@ -202,7 +202,7 @@ export default function Budgets() {
                         <td className="py-4 pr-4 font-medium text-gray-800">{budget.client.name}</td>
                         <td className="py-4 pr-4 text-gray-500">{budget.service.name}</td>
                         <td className="py-4 pr-4 text-gray-500">{budget.description}</td>
-                        <td className="py-4 pr-4 text-green-600 font-medium">R$ {budget.value}</td>
+                        <td className="py-4 pr-4 text-green-600 font-medium">{currencyFormatter(budget.value)}</td>
                         <td className="py-4 pr-4 text-gray-500">{dateFormatter(budget.date)}</td>
                         <td className="py-4 text-center">
                           <span className={cn(

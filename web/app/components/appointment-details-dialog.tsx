@@ -38,7 +38,7 @@ export function AppointmentDetailsDialog({ appointment }: AppointmentDetailsDial
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="w-full border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">
+        <button className="w-full max-w-32 border border-gray-200 rounded-md text-gray-900 text-sm font-medium py-1 hover:bg-violet-100 hover:text-violet-900">
           Detalhes
         </button>
       </DialogTrigger>

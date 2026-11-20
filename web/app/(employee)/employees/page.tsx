@@ -7,7 +7,7 @@ import { useAuthStore } from "@/context/auth-store";
 import { useEmployeeStore } from "@/context/employee-stores";
 import { cn } from "@/lib/utils";
 import { getInitials } from "@/utils/get-initials";
-import { Briefcase, Mail, Phone, Search, SquarePen, Trash2 } from "lucide-react";
+import { Briefcase, Mail, Phone, Search, Trash2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import { Role } from "@/@types";
 
@@ -157,7 +157,11 @@ export default function Enployees() {
                       {emp.employee.function}
                     </div>
 
-                    <div className="flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs">Ativo</div>
+                    <div className={cn("flex justify-center w-12 py-0.5 rounded-lg bg-blue text-white text-xs",
+                      emp.employee.status === 'VACATION' ? 'bg-gray-100 text-blue' : ''
+                    )}>
+                      {emp.employee.status === 'ACTIVE' ? 'ativo' : emp.employee.status === 'VACATION' ? 'férias' : 'inativo'}
+                    </div>
                   </div>
                 </div>
 
@@ -175,18 +179,16 @@ export default function Enployees() {
 
                 <div className="flex flex-col gap-2 rounded-lg bg-violet-100 p-2">
                   <p className="text-gray-500">Serviços Concluídos</p>
-                  <span className="text-green-600">{emp.completedServices}</span>
+                  <span className="text-purple-600">{emp.completedServices}</span>
                 </div>
 
                 {isAdmin && (
                   <div className="flex gap-2">
-                    <button className="w-full flex justify-center items-center gap-4 py-1 border border-violet-100 rounded-lg">
-                      <SquarePen size={16} />
-                      Editar
-                    </button>
+                    <EditEmployeeDialog employee={emp.employee} />
+
                     <button
                       onClick={() => deleteEmployee(emp.employee.id)}
-                      className="border border-violet-100 px-2.5 py-1 rounded-lg"
+                      className="border border-violet-100 px-2.5 py-1 rounded-lg hover:bg-violet-100"
                     >
                       <Trash2 className="text-red-500" size={16} />
                     </button>

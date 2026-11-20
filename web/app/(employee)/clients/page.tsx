@@ -195,7 +195,7 @@ export default function Clients() {
                           ? "bg-[#1a1a8c] text-white"
                           : "border border-gray-400 text-gray-600"
                       )}>
-                        {client.status}
+                        {client.status === 'ACTIVE' ? 'Ativo' : 'Inativo' }
                       </span>
                     </td>
                     {isAdmin && (
@@ -204,7 +204,7 @@ export default function Clients() {
                           <EditClientDialog client={client} />
                           <button
                             onClick={() => handleDelete(client.id)}
-                            className="text-red-400 hover:text-red-600"
+                            className="w-10 h-10 flex items-center justify-center rounded-lg text-red-400 transition-colors hover:text-red-600 hover:bg-violet-100"
                           >
                             <Trash2 size={16} />
                           </button>

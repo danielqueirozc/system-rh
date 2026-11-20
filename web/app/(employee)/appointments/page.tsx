@@ -124,11 +124,11 @@ export default function Appointments() {
                   </div>
 
                   {app.status === 'IN_PROGRESS' || app.status === 'COMPLETED' ? (
-                    <div className="px-32">
+                    <div className="flex justify-center">
                       <AppointmentDetailsDialog appointment={app} />
                     </div>
                   ) : (
-                    <div className="flex gap-2">
+                    <div className="flex justify-center gap-2">
                       {isAdmin && (
                         <EditAppointmentDialog appointment={app} />
                       )}
@@ -170,7 +170,21 @@ export default function Appointments() {
                   <p className="text-gray-800 font-medium">{app.client.name}</p>
                   <span className="text-gray-500">{app.service.name}</span>
                 </div>
-                <span className="flex items-center font-semibold rounded-lg px-3 h-5 bg-blue text-white text-xs">{app.status}</span>
+                <span
+                  className={cn(
+                    'flex items-center font-medium rounded-lg px-3 h-5 text-xs',
+                    app.status === 'PENDING' ? ' bg-white text-black border border-violet-100':
+                    app.status === 'COMPLETED' ? 'text-gray-900' :
+                    app.status === 'IN_PROGRESS' ? 'bg-gray-100 text-blue' :
+                    'bg-blue text-white'
+                  )}
+                >
+                  {app.status === 'CONFIRMED' ? 'Confirmado':
+                    app.status === 'PENDING' ? 'Pendente' :
+                    app.status === 'IN_PROGRESS' ? 'Em Andamento' :
+                    'Concluído'
+                  }
+                </span>
               </div>
 
               <div className="flex flex-col gap-4 text-gray-500 font-medium">
@@ -179,23 +193,24 @@ export default function Appointments() {
                     <Calendar size={16} />
                     {dateFormatter(app.serviceDate)}
                   </div>
-                  <div className="text-left w-full">
+                  <div className="flex items-center gap-2 text-left w-full">
+                    <Clock size={16} />
                     <div className="text-left">{timeFormatter(app.serviceDate)}</div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <User size={16} />
-                  {app.employee?.name}
+                  {app.employee?.name ?? 'Não atribuído'}
                 </div>
               </div>
 
               {app.status === 'IN_PROGRESS' || app.status === 'COMPLETED' ? (
-                <div className="px-32">
+                <div className="flex justify-center">
                   <AppointmentDetailsDialog appointment={app} />
                 </div>
               ) : (
-                <div className="flex gap-2">
+                <div className="flex justify-center gap-2">
                   {isAdmin && (
                     <EditAppointmentDialog appointment={app} />
                   )}
