@@ -3,7 +3,6 @@ import z from "zod";
 import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
 import { hash } from "bcryptjs";
 import { PrismaService } from "@/database/prisma/prisma.service";
-import { JwtAuthGuard } from "@/auth/jwt-auth.guard";
 import { RolesGuard } from "@/auth/roles.guard";
 import { Roles } from "@/auth/roles.decorator";
 

@@ -10,7 +10,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   canActivate(context: ExecutionContext) {
-    // procura o metadado primeiro no método zhandler) e depois na classe (controller)
+    // procura o metadado primeiro no método handler e depois na classe controller
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
