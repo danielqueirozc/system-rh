@@ -1,3 +1,4 @@
+import { Roles } from "@/auth/roles.decorator";
 import { PrismaService } from "@/database/prisma/prisma.service";
 import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
 import { Body, Controller, HttpCode, NotFoundException, Put, UsePipes } from "@nestjs/common";
@@ -16,6 +17,7 @@ type EditAppointmentType = z.infer<typeof bodySchema>
 export class EditAppointment {
   constructor(private prisma: PrismaService) {}
 
+  @Roles('ADMIN')
   @Put('/appointment')
   @UsePipes(new ZodValidationPipe(bodySchema))
   @HttpCode(200)

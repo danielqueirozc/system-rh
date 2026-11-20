@@ -1,3 +1,4 @@
+import { Roles } from "@/auth/roles.decorator";
 import { PrismaService } from "@/database/prisma/prisma.service";
 import { ConflictException, Controller, Delete, HttpCode, NotFoundException, Param } from "@nestjs/common";
 
@@ -5,6 +6,7 @@ import { ConflictException, Controller, Delete, HttpCode, NotFoundException, Par
 export class DeleteEmployee {
   constructor(private prisma: PrismaService) {}
 
+  @Roles('ADMIN')
   @Delete('/employee/:id')
   @HttpCode(204)
   async handle(@Param('id') id: string) {
