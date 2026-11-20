@@ -10,14 +10,6 @@ import { dateFormatter } from "@/utils/date-formartter";
 import { currencyFormatter } from '@/utils/currency-formatter';
 import { BudgetStatus } from '@/@types'
 
-const budgets = [
-  { id: 1, client: "Pedro Alves",    service: "Reforma Completa",   description: "Reforma de 3 cômodos",     value: "8.500,00", date: "07/10/2025", status: "Pendente" },
-  { id: 2, client: "Lucia Mendes",   service: "Reparo de Telhado",  description: "Troca de telhas e calhas",  value: "3.200,00", date: "06/10/2025", status: "Pendente" },
-  { id: 3, client: "Roberto Lima",   service: "Instalação Elétrica", description: "Nova instalação completa", value: "2.800,00", date: "05/10/2025", status: "Aprovado" },
-  { id: 4, client: "Fernanda Costa", service: "Pintura Externa",    description: "Pintura de fachada",        value: "4.500,00", date: "04/10/2025", status: "Aprovado" },
-  { id: 5, client: "Marcos Silva",   service: "Impermeabilização",  description: "Laje e paredes",            value: "5.200,00", date: "03/10/2025", status: "Rejeitado" },
-]
-
 export default function Budgets() {
   const [windowWidth, setWindowWidth] = useState(0)
 
@@ -61,7 +53,7 @@ export default function Budgets() {
       {windowWidth >= 1024 ? (
         <div className="flex-1 flex flex-col gap-6">
           <header className="p-5.5 text-gray-700 border-b border-gray-200">
-            Agendamentos
+            Orçamentos
           </header>
 
           <main className="flex flex-col gap-4">
@@ -103,7 +95,7 @@ export default function Budgets() {
                       </tr>
                     </thead>
                     <tbody>
-                      {budgets.map((budget, i) => (
+                      {budgets.map((budget) => (
                         <tr
                           key={budget.id}
                           className="border-b border-violet-100 rounded-lg bg-white transition-colors hover:bg-violet-50"
@@ -112,7 +104,7 @@ export default function Budgets() {
                           <td className="py-4 pr-4 font-medium text-gray-800">{budget.client.name}</td>
                           <td className="py-4 pr-4 text-gray-500">{budget.service.name}</td>
                           <td className="py-4 pr-4 text-gray-500">{budget.description}</td>
-                          <td className="py-4 pr-4 text-green-600 font-medium">R$ {currencyFormatter(budget.value)}</td>
+                          <td className="py-4 pr-4 text-green-600 font-medium">{currencyFormatter(budget.value)}</td>
                           <td className="py-4 pr-4 text-gray-500">{dateFormatter(budget.date)}</td>
                           <td className="py-4 text-center">
                             <span className={cn(

@@ -70,7 +70,7 @@ export default function Enployees() {
                 <Card key={emp.employee.id} className="p-6 flex flex-col gap-10 justify-between">
                   <div className="w-full flex justify-baseline gap-4">
                     <div className="flex justify-center items-center w-18 h-18 rounded-full bg-blue text-white">
-                      PH
+                      {getInitials(emp.employee.name)}
                     </div>
                     <div className="flex flex-col gap-3">
                       <p>{emp.employee.name}</p>
