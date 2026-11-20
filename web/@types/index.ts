@@ -30,7 +30,7 @@ export interface AuthenticateProps {
 
 export interface AuthenticateResponseProps {
   user: UserProps
-  token: string
+  access_token: string
 }
 
 /////// APPOINTMENT//////////
