@@ -21,19 +21,16 @@ export function ButtonHamburguer({ isOpen, onClick, className }: HamburgerButton
       <span
         className={cn(
           "block h-px w-3.5 rounded-full bg-foreground transition-all duration-300",
-          isOpen && "translate-y-1 rotate-45"
+        )}
+      />
+      <span
+        className={cn(
+          "block h-px w-3.5 rounded-full bg-foreground transition-all duration-300"
         )}
       />
       <span
         className={cn(
           "block h-px w-3.5 rounded-full bg-foreground transition-all duration-300",
-          isOpen && "opacity-0"
-        )}
-      />
-      <span
-        className={cn(
-          "block h-px w-3.5 rounded-full bg-foreground transition-all duration-300",
-          isOpen && "-translate-y-1 -rotate-45"
         )}
       />
     </button>
