@@ -2,15 +2,6 @@ import type { ClientProps, CreateClientProps, EditClientProps,  } from '@/@types
 import { clientService } from '@/lib/axios'
 import { create } from 'zustand'
 
-const ClientStatus = {
-  ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE',
-} as const
-
-type ClientStatus = (typeof ClientStatus)[keyof typeof ClientStatus]
-
-
-
 interface ClientStoreType {
   client: ClientProps[] | []
 

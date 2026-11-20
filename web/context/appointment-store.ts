@@ -97,14 +97,4 @@ export const useAppointmentStore = create<AppointmentStoreType>()(
       }
     }
   }),
-  // {
-  //     name: 'appointment-storage',
-  //     partialize: (state) => ({
-  //       service: state.service,
-  //       date: state.date,
-  //       data: state.data,
-  //       step: state.step,
-  //     }),
-  //   }
-  // )
 )

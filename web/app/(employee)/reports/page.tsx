@@ -46,7 +46,6 @@ export default function Reports() {
       setWindowWidth(window.innerWidth)
     }
 
-
     handleResize()
 
     window.addEventListener('resize', handleResize)

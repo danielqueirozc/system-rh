@@ -63,6 +63,7 @@ export function EditClientDialog({ client }: EditClientDialogProps) {
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
+
     editClient(form)
     setOpen(false)
   }
@@ -70,7 +71,12 @@ export function EditClientDialog({ client }: EditClientDialogProps) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <button className="w-10 h-10 flex items-center justify-center rounded-lg text-gray-500 transition-colors hover:text-blue hover:bg-violet-100">
+        <button
+          className="
+            w-10 h-10 flex items-center justify-center rounded-lg text-gray-500 
+            transition-colors hover:text-blue hover:bg-violet-100
+          "
+        >
           <SquarePen size={16} />
         </button>
       </DialogTrigger>

@@ -43,7 +43,7 @@ export const useAuthStore = create<UserStoreType>()(
       }
     }),
     {
-      name: 'auth-storage', // Nome da chave no localStorage
+      name: 'auth-storage', // nome da chave no localStorage
       partialize: (state) => ({
         token: state.token,
         user: state.user,
