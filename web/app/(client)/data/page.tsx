@@ -41,7 +41,7 @@ export default function Data() {
 
     return () => window.removeEventListener('resize', handleResize)
 
-  }, [windowWidth])
+  }, [])
     
   return (
     <div className="flex flex-col lg:items-center pb-25">
