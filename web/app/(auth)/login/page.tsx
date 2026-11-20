@@ -111,6 +111,7 @@ export default function Login() {
                 <div className="flex flex-col gap-1">
                   <label className="text-black font-medium text-sm">E-mail</label>
                   <Input
+                    type="email"
                     value={form.email}
                     onChange={e => handleChange('email', e.target.value)}
                     className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
@@ -121,6 +122,7 @@ export default function Login() {
                 <div className="flex flex-col gap-1">
                   <label className="text-black font-medium text-sm">Senha</label>
                   <Input
+                    type="password"
                     value={form.password}
                     onChange={e => handleChange('password', e.target.value)}
                     className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
@@ -188,6 +190,7 @@ export default function Login() {
             <div className="flex flex-col gap-1">
               <label className="text-black font-medium text-sm">E-mail</label>
               <Input
+                type="email"
                 value={form.email}
                 onChange={e => handleChange('email', e.target.value)}
                 className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
@@ -198,6 +201,7 @@ export default function Login() {
             <div className="flex flex-col gap-1">
               <label className="text-black font-medium text-sm">Senha</label>
               <Input
+                type="password"
                 value={form.password}
                 onChange={e => handleChange('password', e.target.value)}
                 className="border-0 bg-gray-50 focus:border placeholder:text-gray-500 placeholder:text-sm transition-colors"
