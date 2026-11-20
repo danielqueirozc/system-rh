@@ -2,16 +2,21 @@
 
 import { ClientFormDialog } from "@/app/components/client-form-dialog";
 import { EditClientDialog } from "@/app/components/edit-client-dialog";
+import { useAuthStore } from "@/context/auth-store";
 import { useClientStore } from "@/context/client-store";
 import { cn } from "@/lib/utils";
 import { Mail, Phone, Search, Trash2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
+import { Role } from '@/@types'
 
 export default function Clients() {
   const [search, setSearch] = useState("")
   const [windowWidth, setWindowWidth] = useState(0)
 
   const { client, getClients, deleteClient } = useClientStore()
+
+  const { user } = useAuthStore()
+  const isAdmin = user?.role === Role.ADMIN
 
   const filtered = client.filter(c =>
     // uma string mesmo vazia continua sendo uma string, entao passa na comparacao com o obj.name
@@ -73,7 +78,9 @@ export default function Clients() {
                       <th className="pb-3 pl-4 font-bold text-base text-gray-900">Endereço</th>
                       <th className="pb-3 pl-4 font-bold text-base text-gray-900 text-center">Serviços</th>
                       <th className="pb-3 pl-4 font-bold text-base text-gray-900 text-center">Status</th>
-                      <th className="pb-3 pl-4 font-bold text-base text-gray-900 text-center">Ações</th>
+                      {isAdmin && (
+                        <th className="pb-3 pl-4 font-bold text-base text-gray-900 text-center">Ações</th>
+                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -106,17 +113,19 @@ export default function Clients() {
                             {client.status === 'ACTIVE' ? 'Ativo' : 'Inativo' }
                           </span>
                         </td>
-                        <td className="py-4 text-center">
-                          <div className="flex items-center justify-center gap-5 px-2">
-                            <EditClientDialog client={client} />
-                            <button
-                              onClick={() => handleDelete(client.id)}
-                              className="w-10 h-10 flex items-center justify-center rounded-lg text-red-400 transition-colors hover:text-red-600 hover:bg-violet-100"
-                            >
-                              <Trash2 size={16} />
-                            </button>
-                          </div>
-                        </td>
+                        {isAdmin && (
+                          <td className="py-4 text-center">
+                            <div className="flex items-center justify-center gap-5 px-2">
+                              <EditClientDialog client={client} />
+                              <button
+                                onClick={() => handleDelete(client.id)}
+                                className="w-10 h-10 flex items-center justify-center rounded-lg text-red-400 transition-colors hover:text-red-600 hover:bg-violet-100"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -151,7 +160,9 @@ export default function Clients() {
                   <th className="pb-3 font-semibold text-gray-900">Endereço</th>
                   <th className="pb-3 font-semibold text-gray-900 text-center">Serviços</th>
                   <th className="pb-3 font-semibold text-gray-900 text-center">Status</th>
-                  <th className="pb-3 font-semibold text-gray-900 text-center">Ações</th>
+                  {isAdmin && (
+                    <th className="pb-3 font-semibold text-gray-900 text-center">Ações</th>
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -187,17 +198,19 @@ export default function Clients() {
                         {client.status}
                       </span>
                     </td>
-                    <td className="py-4 text-center">
-                      <div className="flex items-center justify-center gap-5 px-2">
-                        <EditClientDialog client={client} />
-                        <button
-                          onClick={() => handleDelete(client.id)}
-                          className="text-red-400 hover:text-red-600"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
+                    {isAdmin && (
+                      <td className="py-4 text-center">
+                        <div className="flex items-center justify-center gap-5 px-2">
+                          <EditClientDialog client={client} />
+                          <button
+                            onClick={() => handleDelete(client.id)}
+                            className="text-red-400 hover:text-red-600"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

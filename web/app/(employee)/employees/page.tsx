@@ -3,17 +3,22 @@
 import { EditEmployeeDialog } from "@/app/components/edit-employee-dialog";
 import { EmployeeFormDialog } from "@/app/components/employee-form-dialog";
 import { Card } from "@/app/components/ui/card";
+import { useAuthStore } from "@/context/auth-store";
 import { useEmployeeStore } from "@/context/employee-stores";
 import { cn } from "@/lib/utils";
 import { getInitials } from "@/utils/get-initials";
 import { Briefcase, Mail, Phone, Search, SquarePen, Trash2 } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
+import { Role } from "@/@types";
 
 export default function Enployees() {
   const [windowWidth, setWindowWidth] = useState(0)
   const [search, setSearch] = useState('')
   
   const { employee, getEmployees, deleteEmployee } = useEmployeeStore()
+
+  const { user } = useAuthStore()
+  const isAdmin = user?.role === Role.ADMIN
 
   const filtered = employee.filter(f => 
     f.employee.name.toLowerCase().includes(search.toLowerCase())
@@ -100,16 +105,18 @@ export default function Enployees() {
                     <span className="text-purple-600">{emp.completedServices}</span>
                   </div>
 
-                  <div className="flex gap-2">
-                    <EditEmployeeDialog employee={emp.employee} />
+                 {isAdmin && (
+                    <div className="flex gap-2">
+                      <EditEmployeeDialog employee={emp.employee} />
 
-                    <button
-                      onClick={() => deleteEmployee(emp.employee.id)}
-                      className="border border-violet-100 px-2.5 py-1 rounded-lg hover:bg-violet-100"
-                    >
-                      <Trash2 className="text-red-500" size={16} />
-                    </button>
-                  </div>
+                      <button
+                        onClick={() => deleteEmployee(emp.employee.id)}
+                        className="border border-violet-100 px-2.5 py-1 rounded-lg hover:bg-violet-100"
+                      >
+                        <Trash2 className="text-red-500" size={16} />
+                      </button>
+                    </div>
+                 )}
                 </Card>
               ))}
             </div>
@@ -171,18 +178,20 @@ export default function Enployees() {
                   <span className="text-green-600">{emp.completedServices}</span>
                 </div>
 
-                <div className="flex gap-2">
-                  <button className="w-full flex justify-center items-center gap-4 py-1 border border-violet-100 rounded-lg">
-                    <SquarePen size={16} />
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => deleteEmployee(emp.employee.id)}
-                    className="border border-violet-100 px-2.5 py-1 rounded-lg"
-                  >
-                    <Trash2 className="text-red-500" size={16} />
-                  </button>
-                </div>
+                {isAdmin && (
+                  <div className="flex gap-2">
+                    <button className="w-full flex justify-center items-center gap-4 py-1 border border-violet-100 rounded-lg">
+                      <SquarePen size={16} />
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => deleteEmployee(emp.employee.id)}
+                      className="border border-violet-100 px-2.5 py-1 rounded-lg"
+                    >
+                      <Trash2 className="text-red-500" size={16} />
+                    </button>
+                  </div>
+                )}
               </Card>
             ))}
           </div>

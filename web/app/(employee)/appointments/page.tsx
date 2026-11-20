@@ -5,11 +5,13 @@ import { AppointmentFormDialog } from "@/app/components/appointment-form-dialog"
 import { EditAppointmentDialog } from "@/app/components/edit-appointment-dialog";
 import { Card } from "@/app/components/ui/card";
 import { useAppointmentStore } from "@/context/appointment-store";
+import { useAuthStore } from "@/context/auth-store";
 import { cn } from "@/lib/utils";
 import { dateFormatter } from "@/utils/date-formartter";
 import { timeFormatter } from "@/utils/time-formatter";
 import { Calendar, Clock, User } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
+import { Role } from "@/@types";
 
 export default function Appointments() {
   const [activeStatus, setActiveStatus] = useState("Todos")
@@ -17,7 +19,8 @@ export default function Appointments() {
 
   const { appointments, getAppointments } = useAppointmentStore()
 
-  console.log(appointments)
+  const { user } = useAuthStore()
+  const isAdmin = user?.role === Role.ADMIN
 
   const status = ["Todos", "Pendentes", "Confirmados", "Em Andamento", "Concluídos"]
 
@@ -126,7 +129,9 @@ export default function Appointments() {
                     </div>
                   ) : (
                     <div className="flex gap-2">
-                      <EditAppointmentDialog appointment={app} />
+                      {isAdmin && (
+                        <EditAppointmentDialog appointment={app} />
+                      )}
                       <AppointmentDetailsDialog appointment={app} />
                     </div>
                   )}
@@ -191,7 +196,9 @@ export default function Appointments() {
                 </div>
               ) : (
                 <div className="flex gap-2">
-                  <EditAppointmentDialog appointment={app} />
+                  {isAdmin && (
+                    <EditAppointmentDialog appointment={app} />
+                  )}
                   <AppointmentDetailsDialog appointment={app} />
                 </div>
               )}
