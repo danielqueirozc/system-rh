@@ -18,10 +18,10 @@ export class DeleteEmployee {
         throw new NotFoundException(`Employee not found, ${id}`)
     }
 
-    await this.prisma.employeeService.deleteMany({ where: { employeeId: id } })
-
-    await this.prisma.employee.delete({
-      where: { id },
-    })
+    // apague os serviços e o funcionario, se não der pra fazer os dois, não faça nenhum"
+    await this.prisma.$transaction([
+      this.prisma.employeeService.deleteMany({ where: { employeeId: id } }),
+      this.prisma.employee.delete({ where: { id } }),
+    ])
   }
 }
