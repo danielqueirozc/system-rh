@@ -1,6 +1,6 @@
 import { Roles } from "@/auth/roles.decorator";
 import { PrismaService } from "@/database/prisma/prisma.service";
-import { ConflictException, Controller, Delete, HttpCode, NotFoundException, Param } from "@nestjs/common";
+import { Controller, Delete, HttpCode, NotFoundException, Param } from "@nestjs/common";
 
 @Controller()
 export class DeleteEmployee {
@@ -15,7 +15,7 @@ export class DeleteEmployee {
     })
 
     if (!employeeAlreadyExists) {
-        throw new NotFoundException(`Employee não existe no banco"${id}"`)
+        throw new NotFoundException(`Employee not found, ${id}`)
     }
 
     await this.prisma.employeeService.deleteMany({ where: { employeeId: id } })

@@ -16,7 +16,7 @@ export class DeleteClient {
     })
 
     if (!clientAlreadyExists) {
-      throw new NotFoundException(`Client não existe no banco ou ja foi apagado "${clientAlreadyExists}"`)
+      throw new NotFoundException(`Client não existe no banco ou ja foi apagado, id: ${id}`)
     }
 
     await this.prisma.client.delete({

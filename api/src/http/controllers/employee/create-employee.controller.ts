@@ -1,6 +1,6 @@
 import { PrismaService } from "@/database/prisma/prisma.service";
 import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
-import { Body, Controller, HttpCode, NotFoundException, Post, UsePipes } from "@nestjs/common";
+import { Body, ConflictException, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
 import z from "zod";
 
 const bodySchema = z.object({
@@ -26,7 +26,7 @@ export class CreateEmployee {
     })
 
     if(employeeAlreadyExists) {
-      throw new NotFoundException(`Client já criado "${employeeAlreadyExists.id}"`)
+      throw new ConflictException(`Client já criado "${employeeAlreadyExists.id}"`)
     }
 
     const employee = await this.prisma.employee.create({
