@@ -56,7 +56,7 @@ export class CreateAppointmentClient {
 
     const client = await this.prisma.client.upsert({
       where: { email: clientEmail },
-      update: { name: clientName, phone: clientPhone, address: clientAddress },
+      update: {},
       create: {
         name: clientName,
         email: clientEmail,
@@ -81,7 +81,7 @@ export class CreateAppointmentClient {
       },
     })
 
-    await this.email.sendAppointmentConfirmation(clientEmail, { clientName, serviceDate, serviceName })
+    await this.email.sendAppointmentConfirmation(clientEmail, { clientName: client.name, serviceDate, serviceName })
     .catch(error => console.error('Erro ao enviar e-mail de confirmação', error))
 
     return { appointment }
