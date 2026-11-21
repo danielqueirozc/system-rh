@@ -29,7 +29,7 @@ export class CreateAppointmentClient {
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(bodySchema))
   async handle(@Body() body: CreateAppointmentType) {
-    const { serviceName, serviceDate, clientName, clientEmail, clientPhone, clientAddress } = body
+    const { serviceName, serviceDate, clientName, clientEmail, clientPhone, clientAddress, clientDescription } = body
 
     const service = await this.prisma.service.findFirst({
       where: { name: serviceName },
@@ -70,6 +70,7 @@ export class CreateAppointmentClient {
       data: {
         serviceDate,
         status: "PENDING",
+        description: clientDescription,
         client: { connect: { id: client.id } },
         service: { connect: { id: service.id } },
         employee: { connect: { id: employee.id } },
