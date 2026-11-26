@@ -1,6 +1,12 @@
 import { PrismaService } from "@/database/prisma/prisma.service";
 import { Controller, Get, HttpCode, Query } from "@nestjs/common";
 import type { EmployeeStatus } from "../../../../generated/prisma/enums";
+import z from "zod";
+import { ZodValidationPipe } from "@/http/pipes/zod-validation-pipe";
+
+
+// query param sempre chega como string (ou undefined) na URL, por isso convervti pra number aqui
+const yearSchema = z.coerce.number().int().min(2000).max(2100).optional()
 
 const MONTHS = [
   "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
@@ -13,9 +19,8 @@ export class GetReports {
 
   @Get('/report')
   @HttpCode(200)
-  async handle(@Query('year') year?: string) {
-    // query param sempre chega como string (ou undefined) na URL, por isso convervti pra number aqui
-    const selectedYear = year ? Number(year) : new Date().getFullYear()
+  async handle(@Query('year', new ZodValidationPipe(yearSchema)) year?: number) {
+    const selectedYear = year ?? new Date().getFullYear()
 
     // intervalo [1º de janeiro, 1º de janeiro do ano seguinte) do ano selecionado
     const yearStart = new Date(`${selectedYear}-01-01T00:00:00.000Z`)
