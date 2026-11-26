@@ -18,6 +18,8 @@ export class ZodValidationPipe implements PipeTransform {
           errors: fromZodError(error),
         })
       }
+
+      throw error
     }
   }
 }
